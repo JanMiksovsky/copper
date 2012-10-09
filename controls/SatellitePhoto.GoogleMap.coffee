@@ -6,8 +6,12 @@ class window.SatellitePhoto extends Control
 
   inherited:
     content: [
-      { control: "GoogleMap", ref: "map", mapTypeId: google.maps.MapTypeId.SATELLITE }
+      { control: "GoogleMap", ref: "map", mapTypeId: google.maps.MapTypeId.SATELLITE }      
       { html: "div", ref: "caption" }
+      { html: "<img src='resources/crosshairs.png'/>", ref: "crosshairs1", class: "crosshairs" }
+      { html: "<img src='resources/crosshairs.png'/>", ref: "crosshairs2", class: "crosshairs" }
+      { html: "<img src='resources/crosshairs.png'/>", ref: "crosshairs3", class: "crosshairs" }
+      { html: "<img src='resources/crosshairs.png'/>", ref: "crosshairs4", class: "crosshairs" }
     ]
 
   initialize: ->
