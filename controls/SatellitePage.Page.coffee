@@ -6,15 +6,13 @@ class window.SatellitePage extends Control
       ref: "photo"
 
   initialize: ->
-    # TODO: Use Sucker Punch API key. The following is a quickui.org key.
-    apiKey = "AIzaSyBv9uyS4BISNFq3Nqy1nEIacR8rZq9mbKQ"
-    latLng = new google.maps.LatLng 47.61504, -122.19617
-    lat = latLng.lat()
-    lng = latLng.lng()
-    radius = 1000
-    keyword = "Subway"
-    sensor = false
-    parameters = "key=#{apiKey}&keyword=#{keyword}&location=#{lat},#{lng}&radius=#{radius}&sensor=#{sensor}"
-    url = "https://maps.googleapis.com/maps/api/place/search/json?#{parameters}&callback=?"
-    $.getJSON url, ( data ) ->
-      debugger
+    map = @$photo().map()
+    placesService = new google.maps.places.PlacesService map
+    request =
+      keyword: "Subway"
+      location: map.getCenter()
+      rankBy: google.maps.places.RankBy.DISTANCE
+    placesService.search request, ( results ) =>
+      if results?.length > 0
+        result = results[0]
+        map.setCenter result.geometry.location
