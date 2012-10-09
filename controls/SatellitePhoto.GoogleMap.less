@@ -1,12 +1,35 @@
 .SatellitePhoto {
 
-  img {
-    filter: grayscale( 100% ); /* Current draft standard */
-    -webkit-filter: grayscale( 100% ); /* New WebKit */
-    -moz-filter: grayscale( 100% );
-    -ms-filter: grayscale( 100% ); 
-    -o-filter: grayscale( 100% ); /* Not yet supported in Gecko, Opera or IE */ 
-    filter: gray; /* IE */
+  box-sizing: border-box;
+  border: 20px solid white;
+  color: white;
+  font-family: "Courier New", monospace;
+  font-size: 18px;
+  font-weight: bold;
+  display: inline-block;
+  position: relative;
+
+  .caption {
+    padding: 0.5em;
+    position: absolute;
+    text-shadow: 0px 0px 4px rgba(0, 0, 0, 0.5);
+    top: 0;
+  }
+
+  .map {
+
+    height: 600px;
+    width: 800px;
+
+    /* Make map grayscale */
+    img {
+      filter: grayscale( 100% ); /* Current draft standard */
+      -webkit-filter: grayscale( 100% ); /* New WebKit */
+      -moz-filter: grayscale( 100% );
+      -ms-filter: grayscale( 100% ); 
+      -o-filter: grayscale( 100% ); /* Not yet supported in Gecko, Opera or IE */ 
+      filter: gray; /* IE */
+    }
   }
 
 }
