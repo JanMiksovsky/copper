@@ -17,7 +17,7 @@ class window.GoogleMap extends Control
       mapTypeControl: false
       navigationControlOptions:
         style: google.maps.NavigationControlStyle.SMALL
-      mapTypeId: google.maps.MapTypeId.ROADMAP
+      mapTypeId: @mapTypeId()
     map = new google.maps.Map canvas, options
     @map map # Save reference for later
 
@@ -33,6 +33,10 @@ class window.GoogleMap extends Control
 
   # The current Google Map
   map: Control.property()
+
+  mapTypeId: Control.property( ( mapTypeId ) ->
+    @map()?.setMapTypeId mapTypeId
+  , google.maps.MapTypeId.ROADMAP )
 
   _unsupported: ->
     # TODO
