@@ -24,6 +24,5 @@ class window.SatellitePhoto extends Control
       streetViewControl: false
       tilt: 0
       zoomControl: false
-    @$map().address "1521 41st Ave E, Seattle, WA" # "300 110th Ave NE # 105, Bellevue, WA"
 
   map: Control.chain "$map", "map"

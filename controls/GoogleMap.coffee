@@ -20,7 +20,6 @@ class window.GoogleMap extends Control
     # Create map
     canvas = this.$canvas()[0]
     options =
-      center: ( new google.maps.LatLng 47.632867, -122.28035 ) # 47.61504, -122.19617 )
       zoom: 18
       mapTypeControl: false
       navigationControlOptions:
