@@ -1,0 +1,3 @@
+*.sublime-project
+controls/controls.*
+node_modules
