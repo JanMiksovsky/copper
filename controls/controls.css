@@ -1,0 +1,91 @@
+.DupPage {
+  margin: 0;
+  padding: 0.5in;
+}
+
+.GoogleMap {
+  position: relative;
+}
+.GoogleMap .map {
+  position: relative;
+}
+.GoogleMap .canvas {
+  height: 100%;
+  width: 100%;
+}
+
+.SatellitePage {
+  background: black;
+  margin: 0;
+  padding: 0.5in;
+}
+.SatellitePage .photo {
+  visibility: hidden;
+}
+
+.SatellitePhoto {
+  box-sizing: border-box;
+  border: 20px solid white;
+  color: white;
+  font-family: "Courier New", monospace;
+  font-size: 18px;
+  font-weight: bold;
+  display: inline-block;
+  position: relative;
+}
+.SatellitePhoto .caption {
+  padding: 0.5em;
+  position: absolute;
+  text-shadow: 0px 0px 5px black;
+  top: 0;
+}
+.SatellitePhoto .crosshairs {
+  position: absolute;
+}
+.SatellitePhoto .crosshairs1 {
+  top: 100px;
+  left: 100px;
+}
+.SatellitePhoto .crosshairs2 {
+  top: 100px;
+  right: 100px;
+}
+.SatellitePhoto .crosshairs3 {
+  bottom: 100px;
+  left: 100px;
+}
+.SatellitePhoto .crosshairs4 {
+  bottom: 100px;
+  right: 100px;
+}
+.SatellitePhoto .map {
+  height: 600px;
+  width: 800px;
+  /* Make map grayscale */
+
+}
+.SatellitePhoto .map img {
+  filter: grayscale(100%);
+  /* Current draft standard */
+
+  -webkit-filter: grayscale(100%);
+  /* New WebKit */
+
+  -moz-filter: grayscale(100%);
+  -ms-filter: grayscale(100%);
+  -o-filter: grayscale(100%);
+  /* Not yet supported in Gecko, Opera or IE */
+  filter: gray;
+  /* IE */
+
+}
+
+.TextBoxWithButton2 .TextBoxWithButton_textBox {
+  margin-right: 0.5em;
+}
+
+.AccountPage .address .TextBox {
+  /* Shouldn't really hack into TextBoxWithButton */
+
+  width: 500px;
+}
