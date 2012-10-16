@@ -92,6 +92,55 @@
 
   })(Control);
 
+  window.RegisterPage = (function(_super) {
+
+    __extends(RegisterPage, _super);
+
+    function RegisterPage() {
+      return RegisterPage.__super__.constructor.apply(this, arguments);
+    }
+
+    RegisterPage.prototype.inherited = {
+      content: "Register here"
+    };
+
+    RegisterPage.prototype.initialize = function() {
+      var js;
+      if (typeof console !== "undefined" && console !== null) {
+        console.log("loading Facebook script...");
+      }
+      if ($("script#facebook-jssdk").length > 0) {
+        return;
+      }
+      js = $("script")[0];
+      js.async = true;
+      js.src = "//connect.facebook.net/en_US/all.js";
+      return $("script").before(js);
+    };
+
+    return RegisterPage;
+
+  })(DupPage);
+
+  window.fbAsyncInit = function() {
+    var _this = this;
+    if (typeof console !== "undefined" && console !== null) {
+      console.log("fbAsyncInit");
+    }
+    FB.init({
+      appId: "136995693107715",
+      channelUrl: "//localhost/copper/dup/channel.html",
+      status: true,
+      cookie: true,
+      xfbml: true
+    });
+    return FB.login(function() {
+      return FB.api("/me", function(data) {
+        return typeof console !== "undefined" && console !== null ? console.log("Your name is " + data.name) : void 0;
+      });
+    });
+  };
+
   window.SatellitePage = (function(_super) {
 
     __extends(SatellitePage, _super);
@@ -321,7 +370,7 @@
       var _this = this;
       this.$address().find("input").focus();
       return this.$address().on("goButtonClick", function() {
-        return window.location = "satellite.html?address=" + (_this.address());
+        return window.location = "agent/satellite.html?address=" + (_this.address());
       });
     };
 

@@ -19,7 +19,7 @@ module.exports = function(grunt) {
         coffee: {
             controls: {
                 src: sortDependencies.sortClassFiles( "controls/*.coffee" ),
-                dest: "controls/controls.js",
+                dest: "dup.js",
                 options: { bare: false }
             },
             app: {
@@ -31,7 +31,7 @@ module.exports = function(grunt) {
         less: {
             controls: {
                 files: {
-                    "controls/controls.css": sortDependencies.sortClassFiles( "controls/*.less" ),
+                    "dup.css": sortDependencies.sortClassFiles( "controls/*.less" )
                 }
             }
         }
