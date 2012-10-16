@@ -4,6 +4,10 @@ class window.RegisterPage extends DupPage
     content: "Register here"
 
   initialize: ->
+    facebookAuthorizer.authorize "136995693107715", "http://localhost/copper/dup/citizen/register.html"
+
+  ###
+  initialize: ->
     console?.log "loading Facebook script..."
     if $( "script#facebook-jssdk" ).length > 0
       return
@@ -23,3 +27,4 @@ window.fbAsyncInit = ->
   FB.login =>
     FB.api "/me", ( data ) =>
       console?.log "Your name is " + data.name
+  ###

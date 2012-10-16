@@ -1,2 +1,4 @@
 *.sublime*
+controls/controls.*
+models/models.*
 node_modules

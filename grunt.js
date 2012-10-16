@@ -19,7 +19,12 @@ module.exports = function(grunt) {
         coffee: {
             controls: {
                 src: sortDependencies.sortClassFiles( "controls/*.coffee" ),
-                dest: "dup.js",
+                dest: "controls/controls.js",
+                options: { bare: false }
+            },
+            models: {
+                src: sortDependencies.sortClassFiles( "models/*.coffee" ),
+                dest: "models/models.js",
                 options: { bare: false }
             },
             app: {
@@ -27,6 +32,15 @@ module.exports = function(grunt) {
                 dest: "app.js",
                 options: { bare: false }
             }
+        },
+        concat: {
+            js: {
+                src: [
+                    "models/models.js",
+                    "controls/controls.js"
+                ],
+                dest: "dup.js"
+            }            
         },
         less: {
             controls: {
@@ -38,6 +52,6 @@ module.exports = function(grunt) {
     });
 
     // Default task.
-    grunt.registerTask( "default", "coffee less" );
+    grunt.registerTask( "default", "coffee concat less" );
     
 };
