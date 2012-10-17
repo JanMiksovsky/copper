@@ -897,13 +897,25 @@ Wrap access to Facebook.
           ref: "suspectList",
           itemClass: "SuspectTile",
           mapFunction: "suspect"
+        }, {
+          html: "p",
+          content: [
+            "If you do not recognize any of the individuals shown, you may request to ", {
+              control: Link,
+              ref: "linkReload",
+              content: "view more photos"
+            }, "."
+          ]
         }
       ],
       title: "Citizen Watch Program"
     };
 
-    ReferralPage.prototype.createLineup = function(friends) {
-      var friend, friendIndex, shuffled, suspects;
+    ReferralPage.prototype.createLineup = function() {
+      var friend, friendIndex, friends, shuffled, suspects,
+        _this = this;
+      this.$suspectList().css("visibility", "hidden");
+      friends = this.friends();
       suspects = Suspects.select(3, friends);
       friendIndex = Math.floor(Math.random() * friends.length);
       friend = friends[friendIndex];
@@ -912,15 +924,24 @@ Wrap access to Facebook.
         picture: Facebook.pictureUrlForUser(friend)
       });
       shuffled = Utilities.shuffle(suspects);
-      return this.$suspectList().items(shuffled);
+      this.$suspectList().items(shuffled);
+      return setTimeout((function() {
+        return _this.$suspectList().css("visibility", "inherit");
+      }), 1000);
     };
+
+    ReferralPage.prototype.friends = Control.property();
 
     ReferralPage.prototype.initialize = function() {
       var _this = this;
-      return Facebook.currentUser(function(data) {
-        return Facebook.currentUserFriends(function(data) {
-          return _this.createLineup(data);
+      Facebook.currentUser(function(data) {
+        return Facebook.currentUserFriends(function(friends) {
+          _this.friends(friends);
+          return _this.createLineup();
         });
+      });
+      return this.$linkReload().click(function() {
+        return _this.createLineup();
       });
     };
 
