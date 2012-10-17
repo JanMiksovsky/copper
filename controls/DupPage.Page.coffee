@@ -10,6 +10,12 @@ class window.DupPage extends Page
       { html: "div", ref: "DupPage_content" }
     ]
 
+  accessToken: ->
+    Page.urlParameters().access_token
+
+  applicationId: ->
+    Page.urlParameters().applicationId
+
   content: Control.chain "$DupPage_content", "content"
   header: Control.chain "$DupPage_header", "content"
 

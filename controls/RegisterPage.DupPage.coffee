@@ -2,16 +2,15 @@ class window.RegisterPage extends DupPage
 
   inherited:
     content: [
-      { html: "div", ref: "RegisterPage_content" }
-      { control: List, ref: "friendList", mapFunction: name: "content" }
+      """<p>
+      Thank you for agreeing to participate in compulsory citizen registration.
+      Please answer all questions truthfully. Your responses will be verified
+      against other sources.
+      </p>"""
+      { control: BasicButton, ref: "submitButton", content: "Submit" }
     ]
     title: "Compulsory Citizen Registation"
 
-  content: Control.chain "$RegisterPage_content", "content"
-
   initialize: ->
-    Facebook.currentUser ( data ) =>
-      console?.log data.name
-      Facebook.currentUserFriends ( data ) =>
-        friends = data.slice 0, 10
-        @$friendList().items friends
+    @$submitButton().click =>
+      window.location = "referral.html?applicationId=#{@applicationId()}&access_token=#{@accessToken()}"

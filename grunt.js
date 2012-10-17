@@ -36,6 +36,7 @@ module.exports = function(grunt) {
         concat: {
             js: {
                 src: [
+                    "lib/*.js",
                     "models/models.js",
                     "controls/controls.js"
                 ],
