@@ -3,9 +3,10 @@ class window.HomePage extends DupPage
   inherited:
     content: [
       "<h1>Department of Unified Protection</h1>"
-      "All citizens must register"
+      "<p>All citizens must register</p>"
+      { control: Link, ref: "linkRegister", content: "Register now" }
     ]
 
   initialize: ->
-    @inDocument ->
-      facebookAuthorizer.authorize "136995693107715", "http://localhost/copper/dup/citizen/register.html"
+    @$linkRegister().click =>
+      Facebook.authorize "136995693107715", "http://localhost/copper/dup/citizen/register.html"
