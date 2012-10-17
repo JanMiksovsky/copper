@@ -1106,13 +1106,13 @@ Wrap access to Facebook.
     SuspectTile.prototype.inherited = {
       content: [
         {
-          html: "img",
-          ref: "picture"
-        }, {
           html: "div",
-          ref: "data",
+          ref: "container",
           content: [
             {
+              html: "img",
+              ref: "picture"
+            }, {
               html: "div",
               ref: "identifier"
             }, {
@@ -1127,14 +1127,21 @@ Wrap access to Facebook.
     SuspectTile.prototype.identifier = Control.chain("$identifier", "content");
 
     SuspectTile.prototype.initialize = function() {
-      var date, daysAgo, identifier;
+      var d, date, h, identifier, m, s, timestamp, y;
       identifier = Math.random() * 100000000000;
       identifier = identifier.toString().replace(".", "-");
       this.identifier(identifier);
       date = new Date();
-      daysAgo = Math.random() * 365;
-      date.setDate(date.getDate() - daysAgo);
-      return this.timestamp(date.toString());
+      date.setDate(date.getDate() - Math.random() * 365);
+      date.setMinutes(date.getMinutes() - Math.random() * 24 * 60);
+      y = date.getFullYear();
+      m = this._padZero(date.getMonth() + 1);
+      d = this._padZero(date.getDate());
+      h = this._padZero(date.getHours());
+      m = this._padZero(date.getMinutes());
+      s = this._padZero(date.getSeconds());
+      timestamp = "" + y + "-" + m + "-" + d + " " + h + ":" + m + ":" + s;
+      return this.timestamp(timestamp);
     };
 
     SuspectTile.prototype.picture = Control.chain("$picture", "prop/src");
@@ -1144,6 +1151,10 @@ Wrap access to Facebook.
     });
 
     SuspectTile.prototype.timestamp = Control.chain("$timestamp", "content");
+
+    SuspectTile.prototype._padZero = function(n) {
+      return ("0" + n).substr(-2, 2);
+    };
 
     return SuspectTile;
 
