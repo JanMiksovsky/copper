@@ -27,7 +27,6 @@ class window.ReferralPage extends DupPage
     @$suspectList().items shuffled
 
   initialize: ->
-    Math.seedrandom()
     Facebook.currentUser ( data ) =>
       Facebook.currentUserFriends ( data ) =>
         @createLineup data

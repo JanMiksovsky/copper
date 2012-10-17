@@ -2,12 +2,18 @@
   
   box-sizing: border-box;
   border: 20px solid white;
-  // color: white;
   font-family: "Courier New", monospace;
-  font-size: 18px;
   font-weight: bold;
+  position: relative;
 
-  /* Make map grayscale */
+  .data {
+    bottom: 0;
+    color: white;
+    margin: 0.5em;
+    position: absolute;
+  }
+
+  /* Make image grayscale */
   img {
     filter: grayscale( 100% ); /* Current draft standard */
     -webkit-filter: grayscale( 100% ); /* New WebKit */

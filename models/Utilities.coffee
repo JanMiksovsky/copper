@@ -10,3 +10,8 @@ class window.Utilities
       copy[i] = copy[j]
       copy[j] = temp
     copy
+
+
+# After loading a page, seed the random number generator.
+$ ->
+  Math.seedrandom()

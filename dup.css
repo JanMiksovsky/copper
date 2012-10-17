@@ -127,10 +127,16 @@
   box-sizing: border-box;
   border: 20px solid white;
   font-family: "Courier New", monospace;
-  font-size: 18px;
   font-weight: bold;
-  /* Make map grayscale */
+  position: relative;
+  /* Make image grayscale */
 
+}
+.SuspectTile .data {
+  bottom: 0;
+  color: white;
+  margin: 0.5em;
+  position: absolute;
 }
 .SuspectTile img {
   filter: grayscale(100%);

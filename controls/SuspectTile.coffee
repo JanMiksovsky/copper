@@ -3,12 +3,18 @@ class window.SuspectTile extends Control
   inherited:
     content: [
       { html: "img", ref: "picture" }
-      { html: "div", ref: "name" }
+      { html: "div", ref: "data", content: [
+        { html: "div", ref: "identifier" }
+        { html: "div", ref: "timestamp" }
+      ]}
     ]
 
-  name: Control.chain "$name", "content"
+  initialize: ->
+    # Choose a random identifier.
+    identifier = Math.floor Math.random() * 1000000000000000
+    @$identifier().content identifier
+
   picture: Control.chain "$picture", "prop/src"
 
   suspect: Control.property ( suspect ) ->
-    @name suspect.name
     @picture suspect.picture
