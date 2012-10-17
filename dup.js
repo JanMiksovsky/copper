@@ -115,6 +115,28 @@ Wrap access to Facebook's OAuth authorization page.
 
   })(Control);
 
+  window.HomePage = (function(_super) {
+
+    __extends(HomePage, _super);
+
+    function HomePage() {
+      return HomePage.__super__.constructor.apply(this, arguments);
+    }
+
+    HomePage.prototype.inherited = {
+      content: ["<h1>Department of Unified Protection</h1>", "All citizens must register"]
+    };
+
+    HomePage.prototype.initialize = function() {
+      return this.inDocument(function() {
+        return facebookAuthorizer.authorize("136995693107715", "http://localhost/copper/dup/citizen/register.html");
+      });
+    };
+
+    return HomePage;
+
+  })(DupPage);
+
   window.RegisterPage = (function(_super) {
 
     __extends(RegisterPage, _super);
@@ -124,36 +146,8 @@ Wrap access to Facebook's OAuth authorization page.
     }
 
     RegisterPage.prototype.inherited = {
-      content: "Register here"
+      content: ["Success!"]
     };
-
-    RegisterPage.prototype.initialize = function() {
-      return facebookAuthorizer.authorize("136995693107715", "http://localhost/copper/dup/citizen/register.html");
-    };
-
-    /*
-      initialize: ->
-        console?.log "loading Facebook script..."
-        if $( "script#facebook-jssdk" ).length > 0
-          return
-        js = $( "script" )[0]
-        js.async = true
-        js.src = "//connect.facebook.net/en_US/all.js"
-        $( "script" ).before js
-    
-    window.fbAsyncInit = ->
-      console?.log "fbAsyncInit"
-      FB.init
-        appId: "136995693107715"
-        channelUrl: "//localhost/copper/dup/channel.html" # Channel File
-        status: true # check login status
-        cookie: true # enable cookies to allow the server to access the session
-        xfbml: true # parse XFBML
-      FB.login =>
-        FB.api "/me", ( data ) =>
-          console?.log "Your name is " + data.name
-    */
-
 
     return RegisterPage;
 
