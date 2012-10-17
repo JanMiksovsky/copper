@@ -32,28 +32,30 @@ class window.ReferralPage extends DupPage
     friend = friends[ friendIndex ]
     suspects = @randomSuspects 3, friends
     suspects.push friend.name
-    suspects
-
-  randomSuspect: ( pool, friends ) ->
-    available = false
-    until available
-      index = Math.floor Math.random() * pool.length
-      name = pool[ index ]
-      friend = @friendWithName name, friends
-      available = friend is null
-    { index, name }
+    @shuffle suspects
 
   # Return the given number of random suspects, taking care to avoid names
   # that are also names in the list of friends.
-  # TODO: Handle pathological cases.
   randomSuspects: ( count, friends ) ->
     suspects = []
-    pool = ReferralPage._suspects.slice() # Copy
-    for i in [ 0 .. count - 1 ]
-      { index, name } = @randomSuspect pool, friends
+    names = @shuffle ReferralPage._suspects
+    for name in names
+      friendHasName = ( @friendWithName name, friends )?
       suspects.push name
-      pool.splice index, 1 # Remove the suspect from the pool
+      if suspects.length >= count
+        return suspects # Have enough
     suspects
+
+  # Return a copied of the given array shuffled with Fisher-Yates algorithm.
+  # http://sedition.com/perl/javascript-fy.html
+  shuffle: ( array ) ->
+    copy = array.slice()
+    for i in [ copy.length - 1 .. 1 ]
+      j = Math.floor Math.random() * ( i + 1 )
+      temp = copy[i]
+      copy[i] = copy[j]
+      copy[j] = temp
+    copy
 
   # Collection of random generated names used for the other suspects.
   @_suspects: [

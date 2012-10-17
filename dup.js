@@ -558,34 +558,34 @@ Wrap access to Facebook.
       friend = friends[friendIndex];
       suspects = this.randomSuspects(3, friends);
       suspects.push(friend.name);
-      return suspects;
-    };
-
-    ReferralPage.prototype.randomSuspect = function(pool, friends) {
-      var available, friend, index, name;
-      available = false;
-      while (!available) {
-        index = Math.floor(Math.random() * pool.length);
-        name = pool[index];
-        friend = this.friendWithName(name, friends);
-        available = friend === null;
-      }
-      return {
-        index: index,
-        name: name
-      };
+      return this.shuffle(suspects);
     };
 
     ReferralPage.prototype.randomSuspects = function(count, friends) {
-      var i, index, name, pool, suspects, _i, _ref, _ref1;
+      var friendHasName, name, names, suspects, _i, _len;
       suspects = [];
-      pool = ReferralPage._suspects.slice();
-      for (i = _i = 0, _ref = count - 1; 0 <= _ref ? _i <= _ref : _i >= _ref; i = 0 <= _ref ? ++_i : --_i) {
-        _ref1 = this.randomSuspect(pool, friends), index = _ref1.index, name = _ref1.name;
+      names = this.shuffle(ReferralPage._suspects);
+      for (_i = 0, _len = names.length; _i < _len; _i++) {
+        name = names[_i];
+        friendHasName = (this.friendWithName(name, friends)) != null;
         suspects.push(name);
-        pool.splice(index, 1);
+        if (suspects.length >= count) {
+          return suspects;
+        }
       }
       return suspects;
+    };
+
+    ReferralPage.prototype.shuffle = function(array) {
+      var copy, i, j, temp, _i, _ref;
+      copy = array.slice();
+      for (i = _i = _ref = copy.length - 1; _ref <= 1 ? _i <= 1 : _i >= 1; i = _ref <= 1 ? ++_i : --_i) {
+        j = Math.floor(Math.random() * (i + 1));
+        temp = copy[i];
+        copy[i] = copy[j];
+        copy[j] = temp;
+      }
+      return copy;
     };
 
     ReferralPage._suspects = ["Adolphus Lueilwitz", "Alene O'Keefe", "Allan Labadie", "Alvena D'Amore", "Antonette Klein", "Ara Stracke", "Arlene Altenwerth", "Bethel Weimann", "Brendon Hoppe", "Brenna Schulist", "Brent Mueller", "Brigitte Hudson", "Casey Mayer", "Cassandre Langosh", "Clara Cruickshank", "Claudine Mraz", "Cleora Carter", "Connie Padberg", "Connie Schamberger", "Cornelius Beer", "Dalton Klocko", "Daren Nicolas", "Dedrick Hammes", "Dejon Kilback", "Della McCullough", "Delmer Prosacco", "Derrick Wiza", "Deshaun Smitham", "Desmond Hermiston", "Donnell Robel", "Dorian Kautzer", "Eden Effertz", "Eleazar Huels", "Eloisa Dicki", "Elton Reinger", "Emanuel Prosacco", "Emilie Parisian", "Ephraim Bosco", "Faye Vandervort", "Felipe Borer", "Fermin Daniel", "Floy Block", "Freda Breitenberg", "Garnett Green", "Gaylord Littel", "Grant Kessler", "Guadalupe Borer", "Hailee Stiedemann", "Haylie Hammes", "Isac Bayer", "Ivah Hermiston", "Jakayla Koepp", "Jaquelin Volkman", "Jarrett Schneider", "Johanna Harris", "Keith Hickle", "Koby Morissette", "Kurt Hahn", "Lacey Shields", "Lacy Ernser", "Landen Padberg", "Layne Ferry", "Lou Kilback", "Lurline Hudson", "Luz Funk", "Madison Welch", "Maria Rath", "Marianne Bahringer", "Maudie Gerlach", "Mavis Adams", "Maybell Mraz", "Megane Reichel", "Milford Emard", "Mona D'Amore", "Monte Stark", "Nicklaus Stark", "Nicole Hagenes", "Noble Simonis", "Norbert Padberg", "Norene Harber", "Octavia Yundt", "Onie Altenwerth", "Oscar Stroman", "Prince Hermiston", "Retha Schuster", "Sally Swaniawski", "Santina Carroll", "Sarah Ratke", "Shania Grant", "Simone Volkman", "Sydney Dickens", "Tia Stehr", "Tina Schneider", "Trevion Fisher", "Velva Rempel", "Waino Halvorson", "Willard Ritchie", "Yvette Zulauf", "Zachariah Johns", "Zita Dach"];
