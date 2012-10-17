@@ -19,6 +19,10 @@ class window.Facebook
   @currentUser: ( callback ) ->
     @_call "me", null, callback
 
+  @currentUserFriends: ( callback ) ->
+    @_call "me/friends", null, ( result ) =>
+      callback result.data
+
   # Main Facebook call entry point.
   @_call: ( path, params, callback ) ->
     @_getAccessToken()
@@ -27,12 +31,12 @@ class window.Facebook
       "callback=?" # Required for $.getJSON to work.
     ]
     if params
-      callParams = callParams.concat(params)
+      callParams = callParams.concat params
     callParamList = callParams.join "&"
     url = "#{@_baseUrl}#{path}?#{callParamList}"
-    $.getJSON url, ( results ) ->
-      unless results.error?
-        callback results
+    $.getJSON url, ( result ) ->
+      unless result.error?
+        callback result
 
   @_getAccessToken: ->
     if not @accessToken?

@@ -27,6 +27,13 @@ Wrap access to Facebook.
       return this._call("me", null, callback);
     };
 
+    Facebook.currentUserFriends = function(callback) {
+      var _this = this;
+      return this._call("me/friends", null, function(result) {
+        return callback(result.data);
+      });
+    };
+
     Facebook._call = function(path, params, callback) {
       var callParamList, callParams, url;
       this._getAccessToken();
@@ -36,9 +43,9 @@ Wrap access to Facebook.
       }
       callParamList = callParams.join("&");
       url = "" + this._baseUrl + path + "?" + callParamList;
-      return $.getJSON(url, function(results) {
-        if (results.error == null) {
-          return callback(results);
+      return $.getJSON(url, function(result) {
+        if (result.error == null) {
+          return callback(result);
         }
       });
     };
@@ -191,6 +198,12 @@ Wrap access to Facebook.
         "<h1>Register</h1>", {
           html: "div",
           ref: "RegisterPage_content"
+        }, {
+          control: List,
+          ref: "friendList",
+          mapFunction: {
+            name: "content"
+          }
         }
       ]
     };
@@ -200,7 +213,14 @@ Wrap access to Facebook.
     RegisterPage.prototype.initialize = function() {
       var _this = this;
       return Facebook.currentUser(function(data) {
-        return _this.content(JSON.stringify(data));
+        if (typeof console !== "undefined" && console !== null) {
+          console.log(data.name);
+        }
+        return Facebook.currentUserFriends(function(data) {
+          var friends;
+          friends = data.slice(0, 10);
+          return _this.$friendList().items(friends);
+        });
       });
     };
 
