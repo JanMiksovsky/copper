@@ -307,7 +307,7 @@ Wrap access to Facebook.
 
     Facebook.pictureUrlForUser = function(user) {
       this._getAccessToken();
-      return "" + this._baseUrl + user.id + "/picture?access_token=" + this.accessToken;
+      return "" + this._baseUrl + user.id + "/picture?access_token=" + this.accessToken + "&height=160&width=160";
     };
 
     Facebook._baseUrl = "https://graph.facebook.com/";
@@ -516,7 +516,8 @@ Wrap access to Facebook.
         "<p>\nIdentify one of the following:\n</p>", {
           control: List,
           ref: "suspectList",
-          itemClass: "SuspectTile"
+          itemClass: "SuspectTile",
+          mapFunction: "user"
         }
       ],
       title: "Citizen Watch Program"
@@ -525,7 +526,7 @@ Wrap access to Facebook.
     ReferralPage.prototype.createLineup = function(friends) {
       var suspects;
       suspects = this.pickSuspects(friends);
-      return this.$suspectList().items(suspects);
+      return this.$suspectList().items(friends);
     };
 
     ReferralPage.prototype.friendWithName = function(name, friends) {
@@ -768,6 +769,19 @@ Wrap access to Facebook.
     function SuspectTile() {
       return SuspectTile.__super__.constructor.apply(this, arguments);
     }
+
+    SuspectTile.prototype.inherited = {
+      content: {
+        html: "img",
+        ref: "picture"
+      }
+    };
+
+    SuspectTile.prototype.picture = Control.chain("$picture", "prop/src");
+
+    SuspectTile.prototype.user = Control.property(function(user) {
+      return this.picture(Facebook.pictureUrlForUser(user));
+    });
 
     return SuspectTile;
 

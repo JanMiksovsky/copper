@@ -23,7 +23,7 @@ class window.Facebook
 
   @pictureUrlForUser: ( user ) ->
     @_getAccessToken()
-    "#{@_baseUrl}#{user.id}/picture?access_token=#{@accessToken}"
+    "#{@_baseUrl}#{user.id}/picture?access_token=#{@accessToken}&height=160&width=160"
 
   @_baseUrl: "https://graph.facebook.com/"
 

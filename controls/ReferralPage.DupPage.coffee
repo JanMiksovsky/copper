@@ -5,14 +5,14 @@ class window.ReferralPage extends DupPage
       """<p>
       Identify one of the following:
       </p>"""
-      { control: List, ref: "suspectList", itemClass: "SuspectTile" }
+      { control: List, ref: "suspectList", itemClass: "SuspectTile", mapFunction: "user" }
     ]
     title: "Citizen Watch Program"
 
   # Create a lineup using a randomly selected friend plus some random suspects.
   createLineup: ( friends ) ->
     suspects = @pickSuspects friends
-    @$suspectList().items suspects
+    @$suspectList().items friends # suspects
 
   friendWithName: ( name, friends ) ->
     for friend in friends
