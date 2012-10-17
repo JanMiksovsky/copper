@@ -81,7 +81,38 @@ Wrap access to Facebook.
     }
 
     DupPage.prototype.inherited = {
-      title: "Dept. of Unified Protection"
+      title: "Dept. of Unified Protection",
+      content: [
+        {
+          html: "div",
+          ref: "header",
+          content: [
+            {
+              html: "<img src='/copper/dup/resources/dupLogo.png'/>",
+              ref: "logo"
+            }, {
+              html: "h1",
+              ref: "DupPage_title"
+            }
+          ]
+        }, {
+          html: "div",
+          ref: "DupPage_content"
+        }
+      ]
+    };
+
+    DupPage.prototype.content = Control.chain("$DupPage_content", "content");
+
+    DupPage.prototype.header = Control.chain("$DupPage_header", "content");
+
+    DupPage.prototype.title = function(title) {
+      var result;
+      result = DupPage.__super__.title.call(this, title);
+      if (title !== void 0) {
+        this.$DupPage_title().content(title);
+      }
+      return result;
     };
 
     return DupPage;
@@ -171,12 +202,13 @@ Wrap access to Facebook.
 
     HomePage.prototype.inherited = {
       content: [
-        "<h1>Department of Unified Protection</h1>", "<p>All citizens must register</p>", {
+        "<p>All citizens must register</p>", {
           control: Link,
           ref: "linkRegister",
           content: "Register now"
         }
-      ]
+      ],
+      title: "Department of Unified Protection"
     };
 
     HomePage.prototype.initialize = function() {
@@ -200,7 +232,7 @@ Wrap access to Facebook.
 
     RegisterPage.prototype.inherited = {
       content: [
-        "<h1>Register</h1>", {
+        {
           html: "div",
           ref: "RegisterPage_content"
         }, {
@@ -210,7 +242,8 @@ Wrap access to Facebook.
             name: "content"
           }
         }
-      ]
+      ],
+      title: "Compulsory Citizen Registation"
     };
 
     RegisterPage.prototype.content = Control.chain("$RegisterPage_content", "content");

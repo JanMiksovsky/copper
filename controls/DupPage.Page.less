@@ -1,6 +1,51 @@
 .DupPage {
 
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 12px;
   margin: 0;
-  padding: 0.5in;
+  padding: 0;
+
+  .header {
+    background: #173145;
+    color: white;
+    padding: 2em;
+
+    .logo {
+      float: left;
+      margin-right: 1em;
+    }
+
+    .DupPage_title {
+      margin: 0;
+    }
+  }
+  .header::after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: "Georgia", serif;
+  }
+  h1 {
+    font-size: 32px;
+  }
+
+  .DupPage_content {
+    clear: both;
+    padding: 2em;
+
+    > *:first-child {
+      margin-top: 0;
+    }
+    > *:last-child {
+      margin-bottom: 0;
+    }
+  }
   
 }

@@ -2,10 +2,10 @@ class window.RegisterPage extends DupPage
 
   inherited:
     content: [
-      "<h1>Register</h1>"
       { html: "div", ref: "RegisterPage_content" }
       { control: List, ref: "friendList", mapFunction: name: "content" }
     ]
+    title: "Compulsory Citizen Registation"
 
   content: Control.chain "$RegisterPage_content", "content"
 

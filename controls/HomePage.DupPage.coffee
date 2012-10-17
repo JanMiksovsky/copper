@@ -2,10 +2,10 @@ class window.HomePage extends DupPage
 
   inherited:
     content: [
-      "<h1>Department of Unified Protection</h1>"
       "<p>All citizens must register</p>"
       { control: Link, ref: "linkRegister", content: "Register now" }
     ]
+    title: "Department of Unified Protection"
 
   initialize: ->
     @$linkRegister().click =>

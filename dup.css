@@ -1,6 +1,45 @@
 .DupPage {
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 12px;
   margin: 0;
-  padding: 0.5in;
+  padding: 0;
+}
+.DupPage .header {
+  background: #173145;
+  color: white;
+  padding: 2em;
+}
+.DupPage .header .logo {
+  float: left;
+  margin-right: 1em;
+}
+.DupPage .header .DupPage_title {
+  margin: 0;
+}
+.DupPage .header::after {
+  content: ".";
+  display: block;
+  height: 0;
+  clear: both;
+  visibility: hidden;
+}
+.DupPage h1,
+.DupPage h2,
+.DupPage h3 {
+  font-family: "Georgia", serif;
+}
+.DupPage h1 {
+  font-size: 32px;
+}
+.DupPage .DupPage_content {
+  clear: both;
+  padding: 2em;
+}
+.DupPage .DupPage_content > *:first-child {
+  margin-top: 0;
+}
+.DupPage .DupPage_content > *:last-child {
+  margin-bottom: 0;
 }
 
 .GoogleMap {
