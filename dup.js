@@ -338,6 +338,381 @@ Wrap access to Facebook.
 
   })();
 
+  /*
+  Deals with selecting random "suspects".
+  */
+
+
+  window.Suspects = (function() {
+
+    function Suspects() {}
+
+    Suspects.select = function(count, friends) {
+      var friendHasName, picture, picturesFemale, picturesMale, selected, suspect, suspects, _i, _len;
+      selected = [];
+      suspects = Utilities.shuffle(Suspects._suspects);
+      picturesFemale = Utilities.shuffle(Suspects._picturesFemale);
+      picturesMale = Utilities.shuffle(Suspects._picturesMale);
+      for (_i = 0, _len = suspects.length; _i < _len; _i++) {
+        suspect = suspects[_i];
+        friendHasName = (Suspects._friendWithName(suspect.name, friends)) != null;
+        if (!friendHasName) {
+          picture = suspect.gender === "male" ? picturesMale.shift() : picturesFemale.shift();
+          selected.push({
+            name: suspect.name,
+            picture: picture
+          });
+          if (selected.length >= count) {
+            return selected;
+          }
+        }
+      }
+      return selected;
+    };
+
+    Suspects._friendWithName = function(name, friends) {
+      var friend, _i, _len;
+      for (_i = 0, _len = friends.length; _i < _len; _i++) {
+        friend = friends[_i];
+        if (friend.name === name) {
+          return friend;
+        }
+      }
+      return null;
+    };
+
+    Suspects._picturesFemale = ["/copper/dup/resources/pictures/female1.jpg", "/copper/dup/resources/pictures/female2.jpg", "/copper/dup/resources/pictures/female3.jpg", "/copper/dup/resources/pictures/female4.jpg", "/copper/dup/resources/pictures/female5.jpg", "/copper/dup/resources/pictures/female6.jpg", "/copper/dup/resources/pictures/female7.jpg", "/copper/dup/resources/pictures/female8.jpg", "/copper/dup/resources/pictures/female9.jpg", "/copper/dup/resources/pictures/female10.jpg"];
+
+    Suspects._picturesMale = ["/copper/dup/resources/pictures/male1.jpg", "/copper/dup/resources/pictures/male2.jpg", "/copper/dup/resources/pictures/male3.jpg", "/copper/dup/resources/pictures/male4.jpg", "/copper/dup/resources/pictures/male5.jpg", "/copper/dup/resources/pictures/male6.jpg", "/copper/dup/resources/pictures/male7.jpg", "/copper/dup/resources/pictures/male8.jpg", "/copper/dup/resources/pictures/male9.jpg", "/copper/dup/resources/pictures/male10.jpg"];
+
+    Suspects._suspects = [
+      {
+        name: "Adolphus Lueilwitz",
+        gender: "male"
+      }, {
+        name: "Alene O'Keefe",
+        gender: "female"
+      }, {
+        name: "Allan Labadie",
+        gender: "male"
+      }, {
+        name: "Alvena D'Amore",
+        gender: "female"
+      }, {
+        name: "Antonette Klein",
+        gender: "female"
+      }, {
+        name: "Ara Stracke",
+        gender: "female"
+      }, {
+        name: "Arlene Altenwerth",
+        gender: "female"
+      }, {
+        name: "Bethel Weimann",
+        gender: "female"
+      }, {
+        name: "Brendon Hoppe",
+        gender: "male"
+      }, {
+        name: "Brenna Schulist",
+        gender: "female"
+      }, {
+        name: "Brent Mueller",
+        gender: "male"
+      }, {
+        name: "Brigitte Hudson",
+        gender: "female"
+      }, {
+        name: "Casey Mayer",
+        gender: "female"
+      }, {
+        name: "Cassandre Langosh",
+        gender: "female"
+      }, {
+        name: "Clara Cruickshank",
+        gender: "female"
+      }, {
+        name: "Claudine Mraz",
+        gender: "female"
+      }, {
+        name: "Cleora Carter",
+        gender: "female"
+      }, {
+        name: "Connie Padberg",
+        gender: "female"
+      }, {
+        name: "Connie Schamberger",
+        gender: "female"
+      }, {
+        name: "Cornelius Beer",
+        gender: "male"
+      }, {
+        name: "Dalton Klocko",
+        gender: "male"
+      }, {
+        name: "Daren Nicolas",
+        gender: "male"
+      }, {
+        name: "Dedrick Hammes",
+        gender: "male"
+      }, {
+        name: "Dejon Kilback",
+        gender: "male"
+      }, {
+        name: "Della McCullough",
+        gender: "female"
+      }, {
+        name: "Delmer Prosacco",
+        gender: "male"
+      }, {
+        name: "Derrick Wiza",
+        gender: "male"
+      }, {
+        name: "Deshaun Smitham",
+        gender: "male"
+      }, {
+        name: "Desmond Hermiston",
+        gender: "male"
+      }, {
+        name: "Donnell Robel",
+        gender: "male"
+      }, {
+        name: "Dorian Kautzer",
+        gender: "female"
+      }, {
+        name: "Eden Effertz",
+        gender: "female"
+      }, {
+        name: "Eleazar Huels",
+        gender: "female"
+      }, {
+        name: "Eloisa Dicki",
+        gender: "female"
+      }, {
+        name: "Elton Reinger",
+        gender: "male"
+      }, {
+        name: "Emanuel Prosacco",
+        gender: "male"
+      }, {
+        name: "Emilie Parisian",
+        gender: "female"
+      }, {
+        name: "Ephraim Bosco",
+        gender: "male"
+      }, {
+        name: "Faye Vandervort",
+        gender: "female"
+      }, {
+        name: "Felipe Borer",
+        gender: "male"
+      }, {
+        name: "Fermin Daniel",
+        gender: "male"
+      }, {
+        name: "Floy Block",
+        gender: "male"
+      }, {
+        name: "Freda Breitenberg",
+        gender: "female"
+      }, {
+        name: "Garnett Green",
+        gender: "male"
+      }, {
+        name: "Gaylord Littel",
+        gender: "male"
+      }, {
+        name: "Grant Kessler",
+        gender: "male"
+      }, {
+        name: "Guadalupe Borer",
+        gender: "male"
+      }, {
+        name: "Hailee Stiedemann",
+        gender: "female"
+      }, {
+        name: "Haylie Hammes",
+        gender: "female"
+      }, {
+        name: "Isac Bayer",
+        gender: "male"
+      }, {
+        name: "Ivah Hermiston",
+        gender: "female"
+      }, {
+        name: "Jakayla Koepp",
+        gender: "female"
+      }, {
+        name: "Jaquelin Volkman",
+        gender: "female"
+      }, {
+        name: "Jarrett Schneider",
+        gender: "male"
+      }, {
+        name: "Johanna Harris",
+        gender: "female"
+      }, {
+        name: "Keith Hickle",
+        gender: "male"
+      }, {
+        name: "Koby Morissette",
+        gender: "male"
+      }, {
+        name: "Kurt Hahn",
+        gender: "male"
+      }, {
+        name: "Lacey Shields",
+        gender: "female"
+      }, {
+        name: "Lacy Ernser",
+        gender: "female"
+      }, {
+        name: "Landen Padberg",
+        gender: "male"
+      }, {
+        name: "Layne Ferry",
+        gender: "male"
+      }, {
+        name: "Lou Kilback",
+        gender: "male"
+      }, {
+        name: "Lurline Hudson",
+        gender: "female"
+      }, {
+        name: "Luz Funk",
+        gender: "female"
+      }, {
+        name: "Madison Welch",
+        gender: "female"
+      }, {
+        name: "Maria Rath",
+        gender: "female"
+      }, {
+        name: "Marianne Bahringer",
+        gender: "female"
+      }, {
+        name: "Maudie Gerlach",
+        gender: "female"
+      }, {
+        name: "Mavis Adams",
+        gender: "female"
+      }, {
+        name: "Maybell Mraz",
+        gender: "female"
+      }, {
+        name: "Megane Reichel",
+        gender: "female"
+      }, {
+        name: "Milford Emard",
+        gender: "male"
+      }, {
+        name: "Mona D'Amore",
+        gender: "female"
+      }, {
+        name: "Monte Stark",
+        gender: "male"
+      }, {
+        name: "Nicklaus Stark",
+        gender: "male"
+      }, {
+        name: "Nicole Hagenes",
+        gender: "female"
+      }, {
+        name: "Noble Simonis",
+        gender: "female"
+      }, {
+        name: "Norbert Padberg",
+        gender: "male"
+      }, {
+        name: "Norene Harber",
+        gender: "female"
+      }, {
+        name: "Octavia Yundt",
+        gender: "female"
+      }, {
+        name: "Onie Altenwerth",
+        gender: "male"
+      }, {
+        name: "Oscar Stroman",
+        gender: "male"
+      }, {
+        name: "Prince Hermiston",
+        gender: "male"
+      }, {
+        name: "Retha Schuster",
+        gender: "female"
+      }, {
+        name: "Sally Swaniawski",
+        gender: "female"
+      }, {
+        name: "Santina Carroll",
+        gender: "female"
+      }, {
+        name: "Sarah Ratke",
+        gender: "female"
+      }, {
+        name: "Shania Grant",
+        gender: "female"
+      }, {
+        name: "Simone Volkman",
+        gender: "female"
+      }, {
+        name: "Sydney Dickens",
+        gender: "male"
+      }, {
+        name: "Tia Stehr",
+        gender: "female"
+      }, {
+        name: "Tina Schneider",
+        gender: "female"
+      }, {
+        name: "Trevion Fisher",
+        gender: "male"
+      }, {
+        name: "Velva Rempel",
+        gender: "female"
+      }, {
+        name: "Waino Halvorson",
+        gender: "male"
+      }, {
+        name: "Willard Ritchie",
+        gender: "male"
+      }, {
+        name: "Yvette Zulauf",
+        gender: "female"
+      }, {
+        name: "Zachariah Johns",
+        gender: "male"
+      }, {
+        name: "Zita Dach",
+        gender: "female"
+      }
+    ];
+
+    return Suspects;
+
+  })();
+
+  window.Utilities = (function() {
+
+    function Utilities() {}
+
+    Utilities.shuffle = function(array) {
+      var copy, i, j, temp, _i, _ref;
+      copy = array.slice();
+      for (i = _i = _ref = copy.length - 1; _ref <= 1 ? _i <= 1 : _i >= 1; i = _ref <= 1 ? ++_i : --_i) {
+        j = Math.floor(Math.random() * (i + 1));
+        temp = copy[i];
+        copy[i] = copy[j];
+        copy[j] = temp;
+      }
+      return copy;
+    };
+
+    return Utilities;
+
+  })();
+
 }).call(this);
 
 // Generated by CoffeeScript 1.3.3
@@ -517,79 +892,34 @@ Wrap access to Facebook.
           control: List,
           ref: "suspectList",
           itemClass: "SuspectTile",
-          mapFunction: "user"
+          mapFunction: "suspect"
         }
       ],
       title: "Citizen Watch Program"
     };
 
     ReferralPage.prototype.createLineup = function(friends) {
-      var suspects;
-      suspects = this.pickSuspects(friends);
-      return this.$suspectList().items(friends);
-    };
-
-    ReferralPage.prototype.friendWithName = function(name, friends) {
-      var friend, _i, _len;
-      for (_i = 0, _len = friends.length; _i < _len; _i++) {
-        friend = friends[_i];
-        if (friend.name === name) {
-          return friend;
-        }
-      }
-      return null;
+      var friend, friendIndex, shuffled, suspects;
+      suspects = Suspects.select(3, friends);
+      friendIndex = Math.floor(Math.random() * friends.length);
+      friend = friends[friendIndex];
+      suspects.push({
+        name: friend.name,
+        picture: Facebook.pictureUrlForUser(friend)
+      });
+      shuffled = Utilities.shuffle(suspects);
+      return this.$suspectList().items(shuffled);
     };
 
     ReferralPage.prototype.initialize = function() {
       var _this = this;
       Math.seedrandom();
       return Facebook.currentUser(function(data) {
-        if (typeof console !== "undefined" && console !== null) {
-          console.log(data.name);
-        }
         return Facebook.currentUserFriends(function(data) {
           return _this.createLineup(data);
         });
       });
     };
-
-    ReferralPage.prototype.pickSuspects = function(friends) {
-      var friend, friendIndex, suspects;
-      friendIndex = Math.floor(Math.random() * friends.length);
-      friend = friends[friendIndex];
-      suspects = this.randomSuspects(3, friends);
-      suspects.push(friend.name);
-      return this.shuffle(suspects);
-    };
-
-    ReferralPage.prototype.randomSuspects = function(count, friends) {
-      var friendHasName, name, names, suspects, _i, _len;
-      suspects = [];
-      names = this.shuffle(ReferralPage._suspects);
-      for (_i = 0, _len = names.length; _i < _len; _i++) {
-        name = names[_i];
-        friendHasName = (this.friendWithName(name, friends)) != null;
-        suspects.push(name);
-        if (suspects.length >= count) {
-          return suspects;
-        }
-      }
-      return suspects;
-    };
-
-    ReferralPage.prototype.shuffle = function(array) {
-      var copy, i, j, temp, _i, _ref;
-      copy = array.slice();
-      for (i = _i = _ref = copy.length - 1; _ref <= 1 ? _i <= 1 : _i >= 1; i = _ref <= 1 ? ++_i : --_i) {
-        j = Math.floor(Math.random() * (i + 1));
-        temp = copy[i];
-        copy[i] = copy[j];
-        copy[j] = temp;
-      }
-      return copy;
-    };
-
-    ReferralPage._suspects = ["Adolphus Lueilwitz", "Alene O'Keefe", "Allan Labadie", "Alvena D'Amore", "Antonette Klein", "Ara Stracke", "Arlene Altenwerth", "Bethel Weimann", "Brendon Hoppe", "Brenna Schulist", "Brent Mueller", "Brigitte Hudson", "Casey Mayer", "Cassandre Langosh", "Clara Cruickshank", "Claudine Mraz", "Cleora Carter", "Connie Padberg", "Connie Schamberger", "Cornelius Beer", "Dalton Klocko", "Daren Nicolas", "Dedrick Hammes", "Dejon Kilback", "Della McCullough", "Delmer Prosacco", "Derrick Wiza", "Deshaun Smitham", "Desmond Hermiston", "Donnell Robel", "Dorian Kautzer", "Eden Effertz", "Eleazar Huels", "Eloisa Dicki", "Elton Reinger", "Emanuel Prosacco", "Emilie Parisian", "Ephraim Bosco", "Faye Vandervort", "Felipe Borer", "Fermin Daniel", "Floy Block", "Freda Breitenberg", "Garnett Green", "Gaylord Littel", "Grant Kessler", "Guadalupe Borer", "Hailee Stiedemann", "Haylie Hammes", "Isac Bayer", "Ivah Hermiston", "Jakayla Koepp", "Jaquelin Volkman", "Jarrett Schneider", "Johanna Harris", "Keith Hickle", "Koby Morissette", "Kurt Hahn", "Lacey Shields", "Lacy Ernser", "Landen Padberg", "Layne Ferry", "Lou Kilback", "Lurline Hudson", "Luz Funk", "Madison Welch", "Maria Rath", "Marianne Bahringer", "Maudie Gerlach", "Mavis Adams", "Maybell Mraz", "Megane Reichel", "Milford Emard", "Mona D'Amore", "Monte Stark", "Nicklaus Stark", "Nicole Hagenes", "Noble Simonis", "Norbert Padberg", "Norene Harber", "Octavia Yundt", "Onie Altenwerth", "Oscar Stroman", "Prince Hermiston", "Retha Schuster", "Sally Swaniawski", "Santina Carroll", "Sarah Ratke", "Shania Grant", "Simone Volkman", "Sydney Dickens", "Tia Stehr", "Tina Schneider", "Trevion Fisher", "Velva Rempel", "Waino Halvorson", "Willard Ritchie", "Yvette Zulauf", "Zachariah Johns", "Zita Dach"];
 
     return ReferralPage;
 
@@ -771,16 +1101,24 @@ Wrap access to Facebook.
     }
 
     SuspectTile.prototype.inherited = {
-      content: {
-        html: "img",
-        ref: "picture"
-      }
+      content: [
+        {
+          html: "img",
+          ref: "picture"
+        }, {
+          html: "div",
+          ref: "name"
+        }
+      ]
     };
+
+    SuspectTile.prototype.name = Control.chain("$name", "content");
 
     SuspectTile.prototype.picture = Control.chain("$picture", "prop/src");
 
-    SuspectTile.prototype.user = Control.property(function(user) {
-      return this.picture(Facebook.pictureUrlForUser(user));
+    SuspectTile.prototype.suspect = Control.property(function(suspect) {
+      this.name(suspect.name);
+      return this.picture(suspect.picture);
     });
 
     return SuspectTile;

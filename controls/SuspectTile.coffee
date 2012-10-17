@@ -1,10 +1,14 @@
 class window.SuspectTile extends Control
 
   inherited:
-    content:
+    content: [
       { html: "img", ref: "picture" }
+      { html: "div", ref: "name" }
+    ]
 
+  name: Control.chain "$name", "content"
   picture: Control.chain "$picture", "prop/src"
 
-  user: Control.property ( user ) ->
-    @picture Facebook.pictureUrlForUser user
+  suspect: Control.property ( suspect ) ->
+    @name suspect.name
+    @picture suspect.picture

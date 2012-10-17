@@ -53,6 +53,10 @@
   width: 100%;
 }
 
+.ReferralPage .suspectList .SuspectTile {
+  display: inline-block;
+}
+
 .SatellitePage {
   background: black;
   margin: 0;
@@ -104,6 +108,31 @@
 
 }
 .SatellitePhoto .map img {
+  filter: grayscale(100%);
+  /* Current draft standard */
+
+  -webkit-filter: grayscale(100%);
+  /* New WebKit */
+
+  -moz-filter: grayscale(100%);
+  -ms-filter: grayscale(100%);
+  -o-filter: grayscale(100%);
+  /* Not yet supported in Gecko, Opera or IE */
+  filter: gray;
+  /* IE */
+
+}
+
+.SuspectTile {
+  box-sizing: border-box;
+  border: 20px solid white;
+  font-family: "Courier New", monospace;
+  font-size: 18px;
+  font-weight: bold;
+  /* Make map grayscale */
+
+}
+.SuspectTile img {
   filter: grayscale(100%);
   /* Current draft standard */
 
