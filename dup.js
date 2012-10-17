@@ -21,8 +21,6 @@ Wrap access to Facebook.
       return window.location = url;
     };
 
-    Facebook._baseUrl = "https://graph.facebook.com/";
-
     Facebook.currentUser = function(callback) {
       return this._call("me", null, callback);
     };
@@ -33,6 +31,13 @@ Wrap access to Facebook.
         return callback(result.data);
       });
     };
+
+    Facebook.pictureUrlForUser = function(user) {
+      this._getAccessToken();
+      return "" + this._baseUrl + user.id + "/picture?access_token=" + this.accessToken;
+    };
+
+    Facebook._baseUrl = "https://graph.facebook.com/";
 
     Facebook._call = function(path, params, callback) {
       var callParamList, callParams, url;

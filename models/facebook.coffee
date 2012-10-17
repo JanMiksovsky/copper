@@ -14,14 +14,18 @@ class window.Facebook
     url += "?" + escape params.join "&"
     window.location = url
 
-  @_baseUrl: "https://graph.facebook.com/"
-
   @currentUser: ( callback ) ->
     @_call "me", null, callback
 
   @currentUserFriends: ( callback ) ->
     @_call "me/friends", null, ( result ) =>
       callback result.data
+
+  @pictureUrlForUser: ( user ) ->
+    @_getAccessToken()
+    "#{@_baseUrl}#{user.id}/picture?access_token=#{@accessToken}"
+
+  @_baseUrl: "https://graph.facebook.com/"
 
   # Main Facebook call entry point.
   @_call: ( path, params, callback ) ->
