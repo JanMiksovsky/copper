@@ -1124,10 +1124,17 @@ Wrap access to Facebook.
       ]
     };
 
+    SuspectTile.prototype.identifier = Control.chain("$identifier", "content");
+
     SuspectTile.prototype.initialize = function() {
-      var identifier;
-      identifier = Math.floor(Math.random() * 1000000000000000);
-      return this.$identifier().content(identifier);
+      var date, daysAgo, identifier;
+      identifier = Math.random() * 100000000000;
+      identifier = identifier.toString().replace(".", "-");
+      this.identifier(identifier);
+      date = new Date();
+      daysAgo = Math.random() * 365;
+      date.setDate(date.getDate() - daysAgo);
+      return this.timestamp(date.toString());
     };
 
     SuspectTile.prototype.picture = Control.chain("$picture", "prop/src");
@@ -1135,6 +1142,8 @@ Wrap access to Facebook.
     SuspectTile.prototype.suspect = Control.property(function(suspect) {
       return this.picture(suspect.picture);
     });
+
+    SuspectTile.prototype.timestamp = Control.chain("$timestamp", "content");
 
     return SuspectTile;
 
