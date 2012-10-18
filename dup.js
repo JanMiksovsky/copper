@@ -900,6 +900,18 @@ Wrap access to Facebook.
 
   })(DupPage);
 
+  window.Notice = (function(_super) {
+
+    __extends(Notice, _super);
+
+    function Notice() {
+      return Notice.__super__.constructor.apply(this, arguments);
+    }
+
+    return Notice;
+
+  })(Control);
+
   window.ReferralPage = (function(_super) {
 
     __extends(ReferralPage, _super);
@@ -970,9 +982,13 @@ Wrap access to Facebook.
           ]
         }, {
           html: "div",
-          ref: "detailsForm",
           content: [
             "<div class='label'>Date of birth</div>", {
+              control: "Notice",
+              ref: "birthdayNotice",
+              content: "This date does not match our records.",
+              toggle: false
+            }, {
               control: DateComboBox,
               ref: "birthday"
             }
@@ -998,10 +1014,12 @@ Wrap access to Facebook.
           content: [
             "<div class='label'>Do you believe you have paranormal abilities?</div>", {
               control: RadioButton,
-              content: "Yes"
+              content: "Yes",
+              name: "haveParanormal"
             }, {
               control: RadioButton,
-              content: "No"
+              content: "No",
+              name: "haveParanormal"
             }
           ]
         }, {
@@ -1009,10 +1027,12 @@ Wrap access to Facebook.
           content: [
             "<div class='label'>Have you witnessed individuals with paranormal abilities?</div>", {
               control: RadioButton,
-              content: "Yes"
+              content: "Yes",
+              name: "witnessedParanormal"
             }, {
               control: RadioButton,
-              content: "No"
+              content: "No",
+              name: "witnessedParanormal"
             }
           ]
         }, {
@@ -1030,21 +1050,60 @@ Wrap access to Facebook.
       title: "Compulsory Citizen Registation"
     };
 
+    RegisterPage.prototype.birthday = Control.chain("$birthday", "date");
+
     RegisterPage.prototype.currentUser = Control.property(function() {
       return this.$submitButton().disabled(false);
     });
 
+    RegisterPage.prototype.haveParanormal = function() {
+      return this._yesNoGroupValue("haveParanormal");
+    };
+
     RegisterPage.prototype.initialize = function() {
       var _this = this;
+      this.birthday(null);
       Facebook.currentUser(function(user) {
         return _this.currentUser(user);
       });
       return this.$submitButton().click(function() {
-        return _this.navigateWithAccessToken("referral.html");
+        if (_this.valid()) {
+          return _this.navigateWithAccessToken("referral.html");
+        }
       });
     };
 
-    RegisterPage.prototype.validate = function() {};
+    RegisterPage.prototype.valid = function() {
+      var birthday, birthdaysMatch, fbBirthday;
+      birthday = this.birthday();
+      if (!birthday) {
+        return;
+      }
+      fbBirthday = new Date(Date.parse(this.currentUser().birthday));
+      birthdaysMatch = birthday.getFullYear() === fbBirthday.getFullYear() && birthday.getMonth() === fbBirthday.getMonth() && birthday.getDate() === fbBirthday.getDate();
+      this.$birthdayNotice().toggle(!birthdaysMatch);
+      return birthdaysMatch;
+    };
+
+    RegisterPage.prototype._radioGroupValue = function(groupName) {
+      var checked, _ref, _ref1;
+      checked = $("input[name=" + groupName + "]:checked");
+      if (checked.length === 0) {
+        return null;
+      }
+      return (_ref = checked.parent()) != null ? (_ref1 = _ref.control()) != null ? _ref1.content() : void 0 : void 0;
+    };
+
+    RegisterPage.prototype._yesNoGroupValue = function(groupName) {
+      switch (this._radioGroupValue(groupName)) {
+        case "Yes":
+          return true;
+        case "No":
+          return false;
+        default:
+          return null;
+      }
+    };
 
     return RegisterPage;
 

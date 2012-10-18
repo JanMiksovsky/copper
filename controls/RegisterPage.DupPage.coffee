@@ -20,6 +20,11 @@ class window.RegisterPage extends DupPage
       html: "div", content: [
         "<div class='label'>Date of birth</div>"
       ,
+        control: "Notice"
+        ref: "birthdayNotice"
+        content: "This date does not match our records."
+        toggle: false
+      ,
         control: DateComboBox, ref: "birthday"
       ]
     ,
@@ -37,16 +42,18 @@ class window.RegisterPage extends DupPage
     ,
       html: "div", content: [
         "<div class='label'>Do you believe you have paranormal abilities?</div>"
-        { control: RadioButton, content: "Yes" }
-        { control: RadioButton, content: "No" }
+      ,
+        control: RadioButton, content: "Yes", name: "haveParanormal"
+      ,
+        control: RadioButton, content: "No", name: "haveParanormal"
       ]
     ,
       html: "div", content: [
         "<div class='label'>Have you witnessed individuals with paranormal abilities?</div>"
       ,
-        control: RadioButton, content: "Yes"
+        control: RadioButton, content: "Yes", name: "witnessedParanormal"
       ,
-        control: RadioButton, content: "No"
+        control: RadioButton, content: "No", name: "witnessedParanormal"
       ]
     ,
       html: "p", content: [
@@ -60,9 +67,38 @@ class window.RegisterPage extends DupPage
   currentUser: Control.property ->
     @$submitButton().disabled false
 
-  initialize: ->
-    Facebook.currentUser ( user ) => @currentUser user
-    @$submitButton().click => @navigateWithAccessToken "referral.html"
+  haveParanormal: ->
+    @_yesNoGroupValue "haveParanormal"
 
-  validate: ->
+  initialize: ->
+    @birthday null
+    Facebook.currentUser ( user ) => @currentUser user
+    @$submitButton().click =>
+      if @valid()
+        @navigateWithAccessToken "referral.html"
+
+  valid: ->
+    birthday = @birthday()
+    unless birthday
+      return
     fbBirthday = new Date Date.parse @currentUser().birthday
+    birthdaysMatch = birthday.getFullYear() == fbBirthday.getFullYear() \
+      and birthday.getMonth() == fbBirthday.getMonth() \
+      and birthday.getDate() == fbBirthday.getDate()
+    @$birthdayNotice().toggle !birthdaysMatch
+    return birthdaysMatch
+
+  _radioGroupValue: ( groupName ) ->
+    checked = $ "input[name=#{groupName}]:checked"
+    if checked.length == 0
+      return null
+    return checked.parent()?.control()?.content()
+
+  _yesNoGroupValue: ( groupName ) ->
+    switch @_radioGroupValue groupName
+      when "Yes"
+        true
+      when "No"
+        false
+      else
+        null
