@@ -58,6 +58,16 @@
   margin-bottom: 0;
 }
 
+.FieldWithNotice > * {
+  display: inline-block;
+}
+.FieldWithNotice .FieldWithNotice_notice {
+  margin: 0;
+}
+.FieldWithNotice.generic .FieldWithNotice_notice {
+  margin-left: 1em;
+}
+
 .GoogleMap {
   position: relative;
 }
@@ -71,7 +81,6 @@
 
 .Notice {
   color: red;
-  padding: 1em;
 }
 
 .RegisterPage .label {
@@ -84,9 +93,6 @@
 .RegisterPage .address,
 .RegisterPage .email {
   width: 400px;
-}
-.RegisterPage .labelRequired {
-  color: red;
 }
 
 .SatellitePage {

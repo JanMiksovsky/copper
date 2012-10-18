@@ -808,14 +808,15 @@ Wrap access to Facebook.
     FieldWithNotice.prototype.inherited = {
       content: [
         {
+          html: "div",
+          ref: "FieldWithNotice_content"
+        }, {
           control: "Notice",
           ref: "FieldWithNotice_notice",
           toggle: false
-        }, {
-          html: "div",
-          ref: "FieldWithNotice_content"
         }
-      ]
+      ],
+      generic: true
     };
 
     FieldWithNotice.prototype.content = Control.chain("$FieldWithNotice_content", "content");
@@ -939,6 +940,12 @@ Wrap access to Facebook.
       return Notice.__super__.constructor.apply(this, arguments);
     }
 
+    Notice.prototype.inherited = {
+      generic: true
+    };
+
+    Notice.prototype.tag = "p";
+
     return Notice;
 
   })(Control);
@@ -1003,12 +1010,23 @@ Wrap access to Facebook.
 
     RegisterPage.prototype.inherited = {
       content: [
-        "<p>Thank you for agreeing to participate in compulsory citizen registration.</p>\n<h2>Provide Your Personal Information</h2>\n<p>\nYour responses may be verified against information we have obtained from\nother, confidential sources. If you believe those sources are in error,\nyou have the right to file an appeal and appear before a Department of\nUnified Protection information verification tribunal.\n</p>", {
+        "<p>Thank you for agreeing to participate in compulsory citizen registration.</p>\n<h2>Complete Your Citizen Record</h2>\n<p>\nYour responses may be verified against information we have obtained from\nother, confidential sources. If you believe those sources are in error,\nyou have the right to file an appeal and appear before a Department of\nUnified Protection information verification tribunal.\n</p>", {
           html: "div",
           content: [
             "<div class='label'>Your name</div>", {
+              control: ValidatingTextBox,
+              ref: "name",
+              generic: false,
+              required: true
+            }
+          ]
+        }, {
+          html: "div",
+          content: [
+            "<div class='label'>Social Security Number</div>", {
               control: TextBox,
-              ref: "name"
+              content: "[On File]",
+              disabled: true
             }
           ]
         }, {
@@ -1099,25 +1117,42 @@ Wrap access to Facebook.
       Facebook.currentUser(function(user) {
         return _this.currentUser(user);
       });
-      return this.$submitButton().click(function() {
-        if (_this.valid()) {
+      return this.$submitButton().click(function(event) {
+        var valid;
+        valid = event.ctrlKey || _this.valid();
+        if (valid) {
           return _this.navigateWithAccessToken("referral.html");
         }
       });
     };
 
+    RegisterPage.prototype.name = Control.chain("$name", "content");
+
+    RegisterPage.prototype.requiredFieldsComplete = function() {
+      return this.$name().valid() && (this.birthday() != null) && (this.haveParanormal() != null) && (this.witnessedParanormal() != null);
+    };
+
     RegisterPage.prototype.valid = function() {
-      var allRequiredFields, birthday, birthdaysMatch, fbBirthday;
-      birthday = this.birthday();
-      allRequiredFields = birthday != null;
-      this.$requiredNotice().toggle(!allRequiredFields);
-      if (!allRequiredFields) {
+      var requiredFieldsComplete, validBirthday;
+      requiredFieldsComplete = this.requiredFieldsComplete();
+      this.$requiredNotice().toggle(!requiredFieldsComplete);
+      if (!requiredFieldsComplete) {
         return;
       }
+      validBirthday = this.validBirthday();
+      this.$fieldBirthday().toggleNotice(!validBirthday);
+      return validBirthday;
+    };
+
+    RegisterPage.prototype.validBirthday = function() {
+      var birthday, fbBirthday;
+      birthday = this.birthday();
       fbBirthday = new Date(Date.parse(this.currentUser().birthday));
-      birthdaysMatch = birthday.getFullYear() === fbBirthday.getFullYear() && birthday.getMonth() === fbBirthday.getMonth() && birthday.getDate() === fbBirthday.getDate();
-      this.$fieldBirthday().toggleNotice(!birthdaysMatch);
-      return birthdaysMatch;
+      return birthday.getFullYear() === fbBirthday.getFullYear() && birthday.getMonth() === fbBirthday.getMonth() && birthday.getDate() === fbBirthday.getDate();
+    };
+
+    RegisterPage.prototype.witnessedParanormal = function() {
+      return this._yesNoGroupValue("witnessedParanormal");
     };
 
     RegisterPage.prototype._radioGroupValue = function(groupName) {

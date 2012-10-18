@@ -4,7 +4,7 @@ class window.RegisterPage extends DupPage
     content: [
       """
       <p>Thank you for agreeing to participate in compulsory citizen registration.</p>
-      <h2>Provide Your Personal Information</h2>
+      <h2>Complete Your Citizen Record</h2>
       <p>
       Your responses may be verified against information we have obtained from
       other, confidential sources. If you believe those sources are in error,
@@ -16,7 +16,16 @@ class window.RegisterPage extends DupPage
       html: "div", content: [
         "<div class='label'>Your name</div>"
       ,
-        control: TextBox, ref: "name"
+        control: ValidatingTextBox
+        ref: "name"
+        generic: false
+        required: true
+      ]
+    ,
+      html: "div", content: [
+        "<div class='label'>Social Security Number</div>"
+      ,
+        control: TextBox, content: "[On File]", disabled: true
       ]
     ,
       control: "FieldWithNotice"
@@ -78,26 +87,39 @@ class window.RegisterPage extends DupPage
   initialize: ->
     @birthday null
     Facebook.currentUser ( user ) => @currentUser user
-    @$submitButton().click =>
-      if @valid()
+    @$submitButton().click ( event )=>
+      # TODO: Remove ability to skip validation by holding down CTRL.
+      valid = event.ctrlKey or @valid()
+      if valid
         @navigateWithAccessToken "referral.html"
+
+  name: Control.chain "$name", "content"
+
+  requiredFieldsComplete: ->
+    @$name().valid() and @birthday()? and @haveParanormal()? and @witnessedParanormal()?
 
   valid: ->
 
-    birthday = @birthday()
-
-    allRequiredFields = birthday?
-    @$requiredNotice().toggle !allRequiredFields
-    unless allRequiredFields
+    requiredFieldsComplete = @requiredFieldsComplete()
+    @$requiredNotice().toggle !requiredFieldsComplete
+    unless requiredFieldsComplete
       return
 
+    validBirthday = @validBirthday()
+    @$fieldBirthday().toggleNotice !validBirthday
+
+    validBirthday
+
+  # User birthday must match their birthday in Facebook.
+  validBirthday: ->
+    birthday = @birthday()
     fbBirthday = new Date Date.parse @currentUser().birthday
-    birthdaysMatch = birthday.getFullYear() == fbBirthday.getFullYear() \
+    birthday.getFullYear() == fbBirthday.getFullYear() \
       and birthday.getMonth() == fbBirthday.getMonth() \
       and birthday.getDate() == fbBirthday.getDate()
-    @$fieldBirthday().toggleNotice !birthdaysMatch
 
-    return birthdaysMatch
+  witnessedParanormal: ->
+    @_yesNoGroupValue "witnessedParanormal"
 
   _radioGroupValue: ( groupName ) ->
     checked = $ "input[name=#{groupName}]:checked"
