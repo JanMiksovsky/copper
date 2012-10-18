@@ -102,6 +102,8 @@ class window.RegisterPage extends DupPage
       # TODO: Remove ability to skip validation by holding down CTRL.
       valid = event.ctrlKey or @valid()
       if valid
+        # TODO: Send address and preferred email to service
+        Cookie.set "address", @address()
         @navigateWithAccessToken "referral.html"
 
   name: Control.chain "$name", "content"

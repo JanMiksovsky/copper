@@ -1170,6 +1170,7 @@ Cookie utility functions
         var valid;
         valid = event.ctrlKey || _this.valid();
         if (valid) {
+          Cookie.set("address", _this.address());
           return _this.navigateWithAccessToken("referral.html");
         }
       });
