@@ -1,9 +1,13 @@
 .DupPage {
   background: #173145;
-  font-family: Helvetica, Arial, sans-serif;
-  font-size: 12px;
   margin: 0;
   padding: 0;
+}
+.DupPage,
+.DupPage input,
+.DupPage textarea {
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 12px;
 }
 .DupPage .header {
   color: white;
@@ -67,6 +71,14 @@
 
 .RegisterPage .label {
   margin-top: 1em;
+}
+.RegisterPage textarea {
+  resize: none;
+}
+.RegisterPage .name,
+.RegisterPage .address,
+.RegisterPage .email {
+  width: 400px;
 }
 
 .SatellitePage {

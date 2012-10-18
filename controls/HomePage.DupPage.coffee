@@ -9,4 +9,4 @@ class window.HomePage extends DupPage
 
   initialize: ->
     @$linkRegister().click =>
-      Facebook.authorize "136995693107715", "http://localhost/copper/dup/citizen/register.html"
+      Facebook.authorize "136995693107715", "http://localhost/copper/dup/citizen/register.html", [ "email", "user_birthday" ]

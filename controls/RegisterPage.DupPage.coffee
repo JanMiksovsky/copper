@@ -8,7 +8,7 @@ class window.RegisterPage extends DupPage
       Your responses may be verified against information we have obtained from
       other, confidential sources. If you believe those sources are in error,
       you have the right to file an appeal and appear before a Department of
-      Unified Protection information tribunal.
+      Unified Protection information verification tribunal.
       </p>"""
     ,
       html: "div", content: [
@@ -17,22 +17,22 @@ class window.RegisterPage extends DupPage
         control: TextBox, ref: "name"
       ]
     ,
-      html: "div", ref: "detailsForm", content: [
+      html: "div", content: [
         "<div class='label'>Date of birth</div>"
       ,
         control: DateComboBox, ref: "birthday"
       ]
     ,
       html: "div", content: [
-        "<div class='label'>Primary residence address</div>"
+        "<div class='label'>Primary residence address where we can find you</div>"
       ,
         html: "<textarea>", ref: "address"
       ]
     ,
       html: "div", content: [
-        "<div class='label'>Primary email address</div>"
+        "<div class='label'>Preferred email address if we have questions</div>"
       ,
-        control: TextBox, ref: "emailAddress"
+        control: TextBox, ref: "email"
       ]
     ,
       html: "div", content: [
@@ -50,11 +50,19 @@ class window.RegisterPage extends DupPage
       ]
     ,
       html: "p", content: [
-        control: BasicButton, ref: "submitButton", content: "Submit"
+        control: BasicButton, ref: "submitButton", content: "Submit", disabled: true
       ]
     ]
     title: "Compulsory Citizen Registation"
 
+  birthday: Control.chain "$birthday", "date"
+
+  currentUser: Control.property ->
+    @$submitButton().disabled false
+
   initialize: ->
-    @$submitButton().click =>
-      window.location = "referral.html?applicationId=#{@applicationId()}&access_token=#{@accessToken()}"
+    Facebook.currentUser ( user ) => @currentUser user
+    @$submitButton().click => @navigateWithAccessToken "referral.html"
+
+  validate: ->
+    fbBirthday = new Date Date.parse @currentUser().birthday

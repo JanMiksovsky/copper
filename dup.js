@@ -780,6 +780,10 @@ Wrap access to Facebook.
 
     DupPage.prototype.header = Control.chain("$DupPage_header", "content");
 
+    DupPage.prototype.navigateWithAccessToken = function(url) {
+      return window.location = "" + url + "?access_token=" + (this.accessToken());
+    };
+
     DupPage.prototype.title = function(title) {
       var result;
       result = DupPage.__super__.title.call(this, title);
@@ -888,7 +892,7 @@ Wrap access to Facebook.
     HomePage.prototype.initialize = function() {
       var _this = this;
       return this.$linkRegister().click(function() {
-        return Facebook.authorize("136995693107715", "http://localhost/copper/dup/citizen/register.html");
+        return Facebook.authorize("136995693107715", "http://localhost/copper/dup/citizen/register.html", ["email", "user_birthday"]);
       });
     };
 
@@ -956,10 +960,10 @@ Wrap access to Facebook.
 
     RegisterPage.prototype.inherited = {
       content: [
-        "<p>Thank you for agreeing to participate in compulsory citizen registration.</p>", "<h2>Provide Your Personal Information</h2>", "<p>\nYour responses will be verified against information we have obtained from\nother, confidential sources. If you believe those sources are in error,\nyou have the right to file an appeal and appear before a Department of\nUnified Protection information tribunal.\n</p>", {
+        "<p>Thank you for agreeing to participate in compulsory citizen registration.</p>", "<h2>Provide Your Personal Information</h2>", "<p>\nYour responses may be verified against information we have obtained from\nother, confidential sources. If you believe those sources are in error,\nyou have the right to file an appeal and appear before a Department of\nUnified Protection information verification tribunal.\n</p>", {
           html: "div",
           content: [
-            "<div class='label'>Name</div>", {
+            "<div class='label'>Your name</div>", {
               control: TextBox,
               ref: "name"
             }
@@ -976,7 +980,7 @@ Wrap access to Facebook.
         }, {
           html: "div",
           content: [
-            "<div class='label'>Primary residence address</div>", {
+            "<div class='label'>Primary residence address where we can find you</div>", {
               html: "<textarea>",
               ref: "address"
             }
@@ -984,9 +988,9 @@ Wrap access to Facebook.
         }, {
           html: "div",
           content: [
-            "<div class='label'>Primary email address</div>", {
+            "<div class='label'>Preferred email address if we have questions</div>", {
               control: TextBox,
-              ref: "emailAddress"
+              ref: "email"
             }
           ]
         }, {
@@ -1017,7 +1021,8 @@ Wrap access to Facebook.
             {
               control: BasicButton,
               ref: "submitButton",
-              content: "Submit"
+              content: "Submit",
+              disabled: true
             }
           ]
         }
@@ -1025,12 +1030,21 @@ Wrap access to Facebook.
       title: "Compulsory Citizen Registation"
     };
 
+    RegisterPage.prototype.currentUser = Control.property(function() {
+      return this.$submitButton().disabled(false);
+    });
+
     RegisterPage.prototype.initialize = function() {
       var _this = this;
+      Facebook.currentUser(function(user) {
+        return _this.currentUser(user);
+      });
       return this.$submitButton().click(function() {
-        return window.location = "referral.html?applicationId=" + (_this.applicationId()) + "&access_token=" + (_this.accessToken());
+        return _this.navigateWithAccessToken("referral.html");
       });
     };
+
+    RegisterPage.prototype.validate = function() {};
 
     return RegisterPage;
 

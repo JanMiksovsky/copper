@@ -21,7 +21,11 @@ class window.DupPage extends Page
     Page.urlParameters().applicationId
 
   content: Control.chain "$DupPage_content", "content"
+
   header: Control.chain "$DupPage_header", "content"
+
+  navigateWithAccessToken: ( url ) ->
+    window.location = "#{url}?access_token=#{@accessToken()}"
 
   title: ( title ) ->
     result = super title
