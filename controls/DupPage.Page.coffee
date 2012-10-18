@@ -4,10 +4,14 @@ class window.DupPage extends Page
     title: "Dept. of Unified Protection"
     content: [
       { html: "div", ref: "header", content: [
-        { html: "<img src='/copper/dup/resources/dupLogo.png'/>", ref: "logo" }
-        { html: "h1", ref: "DupPage_title" }
+        { html: "div", ref: "titleElements", class: "container", content: [
+          { html: "<img src='/copper/dup/resources/dupLogo.png'/>", ref: "logo" }
+          { html: "h1", ref: "DupPage_title" }
+        ]}
       ]}
-      { html: "div", ref: "DupPage_content" }
+      { html: "div", ref: "contentContainer", class: "container", content: [
+        { html: "div", ref: "DupPage_content" }
+      ]}
     ]
 
   accessToken: ->

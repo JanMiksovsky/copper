@@ -740,16 +740,30 @@ Wrap access to Facebook.
           ref: "header",
           content: [
             {
-              html: "<img src='/copper/dup/resources/dupLogo.png'/>",
-              ref: "logo"
-            }, {
-              html: "h1",
-              ref: "DupPage_title"
+              html: "div",
+              ref: "titleElements",
+              "class": "container",
+              content: [
+                {
+                  html: "<img src='/copper/dup/resources/dupLogo.png'/>",
+                  ref: "logo"
+                }, {
+                  html: "h1",
+                  ref: "DupPage_title"
+                }
+              ]
             }
           ]
         }, {
           html: "div",
-          ref: "DupPage_content"
+          ref: "contentContainer",
+          "class": "container",
+          content: [
+            {
+              html: "div",
+              ref: "DupPage_content"
+            }
+          ]
         }
       ]
     };
@@ -892,7 +906,7 @@ Wrap access to Facebook.
 
     ReferralPage.prototype.inherited = {
       content: [
-        "<p>\nThe nationwide Citizen Watch Program assists the Department of Unified\nProtection in identifying citizens of interest to security investigations.\nAll citizens are periodically required to review photographs of suspicious\nindividuals and indicate any associations with them.\n</p>", "<h2>Your Security Begins with Cooperation</h2>", "<p>\nPlease identify one of the following:\n</p>", {
+        "<p>\nThe nationwide Citizen Watch Program assists the Department of Unified\nProtection in identifying citizens of interest to security investigations.\nAll citizens are periodically required to review photographs of suspicious\nindividuals and indicate any associations with individuals they know.\n</p>", "<h2>Your Security Begins with Cooperation</h2>", "<p>\nPlease identify one of the following:\n</p>", {
           control: "SuspectList",
           ref: "suspectList"
         }, {

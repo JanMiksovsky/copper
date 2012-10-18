@@ -6,7 +6,7 @@ class window.ReferralPage extends DupPage
       The nationwide Citizen Watch Program assists the Department of Unified
       Protection in identifying citizens of interest to security investigations.
       All citizens are periodically required to review photographs of suspicious
-      individuals and indicate any associations with them.
+      individuals and indicate any associations with individuals they know.
       </p>"""
       "<h2>Your Security Begins with Cooperation</h2>"
       """<p>
