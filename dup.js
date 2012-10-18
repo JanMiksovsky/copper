@@ -892,11 +892,9 @@ Wrap access to Facebook.
 
     ReferralPage.prototype.inherited = {
       content: [
-        "<p>\nIdentify one of the following:\n</p>", {
-          control: List,
-          ref: "suspectList",
-          itemClass: "SuspectTile",
-          mapFunction: "suspect"
+        "<p>\nPlease identify one of the following:\n</p>", {
+          control: "SuspectList",
+          ref: "suspectList"
         }, {
           html: "p",
           content: [
@@ -906,42 +904,24 @@ Wrap access to Facebook.
               content: "view more photos"
             }, "."
           ]
+        }, {
+          html: "p",
+          content: [
+            "It is imperative that you identify at least one individual you know so\nthat we may carry out our mission to keep our nation secure. If you\nabstain from making a selection, your failure to comply  comply may\nsubject you, your family, and your associates to investigation. ", {
+              control: Link,
+              ref: "linkAbstain",
+              content: "Abstain"
+            }
+          ]
         }
       ],
       title: "Citizen Watch Program"
     };
 
-    ReferralPage.prototype.createLineup = function() {
-      var friend, friendIndex, friends, shuffled, suspects,
-        _this = this;
-      this.$suspectList().css("visibility", "hidden");
-      friends = this.friends();
-      suspects = Suspects.select(3, friends);
-      friendIndex = Math.floor(Math.random() * friends.length);
-      friend = friends[friendIndex];
-      suspects.push({
-        name: friend.name,
-        picture: Facebook.pictureUrlForUser(friend)
-      });
-      shuffled = Utilities.shuffle(suspects);
-      this.$suspectList().items(shuffled);
-      return setTimeout((function() {
-        return _this.$suspectList().css("visibility", "inherit");
-      }), 1000);
-    };
-
-    ReferralPage.prototype.friends = Control.property();
-
     ReferralPage.prototype.initialize = function() {
       var _this = this;
-      Facebook.currentUser(function(data) {
-        return Facebook.currentUserFriends(function(friends) {
-          _this.friends(friends);
-          return _this.createLineup();
-        });
-      });
       return this.$linkReload().click(function() {
-        return _this.createLineup();
+        return _this.$suspectList().reload();
       });
     };
 
@@ -1113,6 +1093,68 @@ Wrap access to Facebook.
     SatellitePhoto.prototype.map = Control.chain("$map", "map");
 
     return SatellitePhoto;
+
+  })(Control);
+
+  window.SuspectList = (function(_super) {
+
+    __extends(SuspectList, _super);
+
+    function SuspectList() {
+      return SuspectList.__super__.constructor.apply(this, arguments);
+    }
+
+    SuspectList.prototype.inherited = {
+      content: [
+        {
+          html: "<img src='/copper/dup/resources/progressIndicator.gif'/>",
+          ref: "progressIndicator"
+        }, {
+          control: List,
+          ref: "list",
+          itemClass: "SuspectTile",
+          mapFunction: "suspect"
+        }
+      ]
+    };
+
+    SuspectList.prototype.friends = Control.property();
+
+    SuspectList.prototype.initialize = function() {
+      var _this = this;
+      return Facebook.currentUser(function(data) {
+        return Facebook.currentUserFriends(function(friends) {
+          _this.friends(friends);
+          return _this.reload();
+        });
+      });
+    };
+
+    SuspectList.prototype.reload = function() {
+      var friend, friendIndex, friends, shuffled, suspects,
+        _this = this;
+      this._loaded(false);
+      friends = this.friends();
+      suspects = Suspects.select(3, friends);
+      friendIndex = Math.floor(Math.random() * friends.length);
+      friend = friends[friendIndex];
+      suspects.push({
+        name: friend.name,
+        picture: Facebook.pictureUrlForUser(friend)
+      });
+      shuffled = Utilities.shuffle(suspects);
+      this.$list().items(shuffled);
+      return setTimeout((function() {
+        return _this._loaded(true);
+      }), 1000);
+    };
+
+    SuspectList.prototype._loaded = Control.property(function(loaded) {
+      this.$progressIndicator().toggle(!loaded);
+      return this.$list().css("visibility", loaded ? "inherit" : "hidden");
+    });
+
+    return SuspectList;
 
   })(Control);
 

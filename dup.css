@@ -31,6 +31,9 @@
 .DupPage h1 {
   font-size: 32px;
 }
+.DupPage p {
+  max-width: 800px;
+}
 .DupPage .DupPage_content {
   clear: both;
   padding: 2em;
@@ -51,13 +54,6 @@
 .GoogleMap .canvas {
   height: 100%;
   width: 100%;
-}
-
-.ReferralPage .suspectList .SuspectTile {
-  display: inline-block;
-}
-.ReferralPage .suspectList .SuspectTile:not(:last-child) {
-  margin-right: 10px;
 }
 
 .SatellitePage {
@@ -124,6 +120,20 @@
   filter: gray;
   /* IE */
 
+}
+
+.SuspectList {
+  position: relative;
+}
+.SuspectList .progressIndicator {
+  position: absolute;
+  top: 0;
+}
+.SuspectList .SuspectTile {
+  display: inline-block;
+}
+.SuspectList .SuspectTile:not(:last-child) {
+  margin-right: 10px;
 }
 
 .SuspectTile {
