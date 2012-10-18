@@ -797,6 +797,37 @@ Wrap access to Facebook.
 
   })(Page);
 
+  window.FieldWithNotice = (function(_super) {
+
+    __extends(FieldWithNotice, _super);
+
+    function FieldWithNotice() {
+      return FieldWithNotice.__super__.constructor.apply(this, arguments);
+    }
+
+    FieldWithNotice.prototype.inherited = {
+      content: [
+        {
+          control: "Notice",
+          ref: "FieldWithNotice_notice",
+          toggle: false
+        }, {
+          html: "div",
+          ref: "FieldWithNotice_content"
+        }
+      ]
+    };
+
+    FieldWithNotice.prototype.content = Control.chain("$FieldWithNotice_content", "content");
+
+    FieldWithNotice.prototype.notice = Control.chain("$FieldWithNotice_notice", "content");
+
+    FieldWithNotice.prototype.toggleNotice = Control.chain("$FieldWithNotice_notice", "toggle");
+
+    return FieldWithNotice;
+
+  })(Control);
+
   /*
   A Google map.
   */
@@ -972,7 +1003,7 @@ Wrap access to Facebook.
 
     RegisterPage.prototype.inherited = {
       content: [
-        "<p>Thank you for agreeing to participate in compulsory citizen registration.</p>", "<h2>Provide Your Personal Information</h2>", "<p>\nYour responses may be verified against information we have obtained from\nother, confidential sources. If you believe those sources are in error,\nyou have the right to file an appeal and appear before a Department of\nUnified Protection information verification tribunal.\n</p>", {
+        "<p>Thank you for agreeing to participate in compulsory citizen registration.</p>\n<h2>Provide Your Personal Information</h2>\n<p>\nYour responses may be verified against information we have obtained from\nother, confidential sources. If you believe those sources are in error,\nyou have the right to file an appeal and appear before a Department of\nUnified Protection information verification tribunal.\n</p>", {
           html: "div",
           content: [
             "<div class='label'>Your name</div>", {
@@ -981,14 +1012,11 @@ Wrap access to Facebook.
             }
           ]
         }, {
-          html: "div",
+          control: "FieldWithNotice",
+          ref: "fieldBirthday",
+          notice: "This date does not match our records.",
           content: [
             "<div class='label'>Date of birth</div>", {
-              control: "Notice",
-              ref: "birthdayNotice",
-              content: "This date does not match our records.",
-              toggle: false
-            }, {
               control: DateComboBox,
               ref: "birthday"
             }
@@ -1036,6 +1064,11 @@ Wrap access to Facebook.
             }
           ]
         }, {
+          control: "Notice",
+          content: "All fields are required.",
+          ref: "requiredNotice",
+          toggle: false
+        }, {
           html: "p",
           content: [
             {
@@ -1074,14 +1107,16 @@ Wrap access to Facebook.
     };
 
     RegisterPage.prototype.valid = function() {
-      var birthday, birthdaysMatch, fbBirthday;
+      var allRequiredFields, birthday, birthdaysMatch, fbBirthday;
       birthday = this.birthday();
-      if (!birthday) {
+      allRequiredFields = birthday != null;
+      this.$requiredNotice().toggle(!allRequiredFields);
+      if (!allRequiredFields) {
         return;
       }
       fbBirthday = new Date(Date.parse(this.currentUser().birthday));
       birthdaysMatch = birthday.getFullYear() === fbBirthday.getFullYear() && birthday.getMonth() === fbBirthday.getMonth() && birthday.getDate() === fbBirthday.getDate();
-      this.$birthdayNotice().toggle(!birthdaysMatch);
+      this.$fieldBirthday().toggleNotice(!birthdaysMatch);
       return birthdaysMatch;
     };
 

@@ -70,8 +70,7 @@
 }
 
 .Notice {
-  background: pink;
-  border: 1px solid red;
+  color: red;
   padding: 1em;
 }
 
@@ -85,6 +84,9 @@
 .RegisterPage .address,
 .RegisterPage .email {
   width: 400px;
+}
+.RegisterPage .labelRequired {
+  color: red;
 }
 
 .SatellitePage {
