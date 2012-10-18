@@ -927,7 +927,7 @@ Wrap access to Facebook.
               content: "Abstain"
             }
           ]
-        }
+        }, "<h2>Report Suspicious Activity to Local Law Enforcement</h2>", "<p>In Case of Emergency always Call 9-1-1.</p>"
       ],
       title: "Citizen Watch Program"
     };
@@ -1208,8 +1208,27 @@ Wrap access to Facebook.
     SuspectTile.prototype.identifier = Control.chain("$identifier", "content");
 
     SuspectTile.prototype.initialize = function() {
-      var d, date, h, identifier, m, s, timestamp, y,
-        _this = this;
+      var _this = this;
+      return this.click(function() {
+        if (_this.suspect().isFriend) {
+          return alert("You lose karma because you implicated a friend.");
+        } else {
+          return alert("You lose karma because you implicated an innocent stranger.");
+        }
+      });
+    };
+
+    SuspectTile.prototype.picture = Control.chain("$picture", "prop/src");
+
+    SuspectTile.prototype.suspect = Control.property(function(suspect) {
+      this._populateRandomFields();
+      return this.picture(suspect.picture);
+    });
+
+    SuspectTile.prototype.timestamp = Control.chain("$timestamp", "content");
+
+    SuspectTile.prototype._populateRandomFields = function() {
+      var d, date, h, identifier, m, s, timestamp, y;
       identifier = Math.random() * 100000000000;
       identifier = identifier.toString().replace(".", "-");
       this.identifier(identifier);
@@ -1223,23 +1242,8 @@ Wrap access to Facebook.
       m = this._padZero(date.getMinutes());
       s = this._padZero(date.getSeconds());
       timestamp = "" + y + "-" + m + "-" + d + " " + h + ":" + m + ":" + s;
-      this.timestamp(timestamp);
-      return this.click(function() {
-        if (_this.suspect().isFriend) {
-          return alert("You lose karma because you implicated a friend.");
-        } else {
-          return alert("You lose karma because you implicated an innocent stranger.");
-        }
-      });
+      return this.timestamp(timestamp);
     };
-
-    SuspectTile.prototype.picture = Control.chain("$picture", "prop/src");
-
-    SuspectTile.prototype.suspect = Control.property(function(suspect) {
-      return this.picture(suspect.picture);
-    });
-
-    SuspectTile.prototype.timestamp = Control.chain("$timestamp", "content");
 
     SuspectTile.prototype._padZero = function(n) {
       return ("0" + n).substr(-2, 2);

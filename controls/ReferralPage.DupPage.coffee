@@ -27,6 +27,8 @@ class window.ReferralPage extends DupPage
         """
         { control: Link, ref: "linkAbstain", content: "Abstain" }
       ]}
+      "<h2>Report Suspicious Activity to Local Law Enforcement</h2>"
+      "<p>In Case of Emergency always Call 9-1-1.</p>"
     ]
     title: "Citizen Watch Program"
 

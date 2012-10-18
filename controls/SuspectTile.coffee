@@ -12,6 +12,21 @@ class window.SuspectTile extends Control
   identifier: Control.chain "$identifier", "content"
 
   initialize: ->
+    @click =>
+      if @suspect().isFriend
+        alert "You lose karma because you implicated a friend."
+      else
+        alert "You lose karma because you implicated an innocent stranger."
+
+  picture: Control.chain "$picture", "prop/src"
+
+  suspect: Control.property ( suspect ) ->
+    @_populateRandomFields()
+    @picture suspect.picture
+
+  timestamp: Control.chain "$timestamp", "content"
+
+  _populateRandomFields: ->
 
     # Choose a random identifier.
     identifier = Math.random() * 100000000000
@@ -30,19 +45,6 @@ class window.SuspectTile extends Control
     s = @_padZero date.getSeconds()
     timestamp = "#{y}-#{m}-#{d} #{h}:#{m}:#{s}"
     @timestamp timestamp
-
-    @click =>
-      if @suspect().isFriend
-        alert "You lose karma because you implicated a friend."
-      else
-        alert "You lose karma because you implicated an innocent stranger."
-
-  picture: Control.chain "$picture", "prop/src"
-
-  suspect: Control.property ( suspect ) ->
-    @picture suspect.picture
-
-  timestamp: Control.chain "$timestamp", "content"
 
   _padZero: ( n ) ->
     ( "0" + n ).substr -2, 2
