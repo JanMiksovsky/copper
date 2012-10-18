@@ -1010,10 +1010,12 @@ Wrap access to Facebook.
 
     RegisterPage.prototype.inherited = {
       content: [
-        "<p>Thank you for agreeing to participate in compulsory citizen registration.</p>\n<h2>Complete Your Citizen Record</h2>\n<p>\nYour responses may be verified against information we have obtained from\nother, confidential sources. If you believe those sources are in error,\nyou have the right to file an appeal and appear before a Department of\nUnified Protection information verification tribunal.\n</p>", {
-          html: "div",
+        "<p>Thank you for agreeing to participate in compulsory citizen registration.</p>\n<h2>Complete Your Citizen Registration Profile</h2>\n<p>\nYour responses may be verified against information we have obtained from\nother, confidential sources. If you believe those sources are in error,\nyou have the right to file an appeal and appear before a Department of\nUnified Protection information verification tribunal.\n</p>", "<div class='label'>Your name:</div>", {
+          control: "FieldWithNotice",
+          ref: "fieldName",
+          notice: "This name does not match our records.",
           content: [
-            "<div class='label'>Your name</div>", {
+            {
               control: ValidatingTextBox,
               ref: "name",
               generic: false,
@@ -1023,26 +1025,30 @@ Wrap access to Facebook.
         }, {
           html: "div",
           content: [
-            "<div class='label'>Social Security Number</div>", {
+            "<div class='label'>Social Security Number:</div>", {
               control: TextBox,
               content: "[On File]",
               disabled: true
             }
           ]
-        }, {
+        }, "<div class='label'>Date of birth:</div>", {
           control: "FieldWithNotice",
           ref: "fieldBirthday",
           notice: "This date does not match our records.",
           content: [
-            "<div class='label'>Date of birth</div>", {
-              control: DateComboBox,
-              ref: "birthday"
+            {
+              html: "div",
+              ref: "dateContainer",
+              content: {
+                control: DateComboBox,
+                ref: "birthday"
+              }
             }
           ]
         }, {
           html: "div",
           content: [
-            "<div class='label'>Primary residence address where we can find you</div>", {
+            "<div class='label'>Primary residence address where we can find you:</div>", {
               html: "<textarea>",
               ref: "address"
             }
@@ -1050,9 +1056,11 @@ Wrap access to Facebook.
         }, {
           html: "div",
           content: [
-            "<div class='label'>Preferred email address if we have questions</div>", {
-              control: TextBox,
-              ref: "email"
+            "<div class='label'>Preferred email address if we have questions:</div>", {
+              control: ValidatingTextBox,
+              ref: "email",
+              generic: false,
+              required: true
             }
           ]
         }, {
@@ -1101,11 +1109,15 @@ Wrap access to Facebook.
       title: "Compulsory Citizen Registation"
     };
 
+    RegisterPage.prototype.address = Control.chain("$address", "content");
+
     RegisterPage.prototype.birthday = Control.chain("$birthday", "date");
 
     RegisterPage.prototype.currentUser = Control.property(function() {
       return this.$submitButton().disabled(false);
     });
+
+    RegisterPage.prototype.email = Control.chain("$email", "content");
 
     RegisterPage.prototype.haveParanormal = function() {
       return this._yesNoGroupValue("haveParanormal");
@@ -1129,19 +1141,21 @@ Wrap access to Facebook.
     RegisterPage.prototype.name = Control.chain("$name", "content");
 
     RegisterPage.prototype.requiredFieldsComplete = function() {
-      return this.$name().valid() && (this.birthday() != null) && (this.haveParanormal() != null) && (this.witnessedParanormal() != null);
+      return this.$name().valid() && (this.birthday() != null) && this.address().length > 0 && this.$email().valid() && (this.haveParanormal() != null) && (this.witnessedParanormal() != null);
     };
 
     RegisterPage.prototype.valid = function() {
-      var requiredFieldsComplete, validBirthday;
+      var requiredFieldsComplete, validBirthday, validName;
       requiredFieldsComplete = this.requiredFieldsComplete();
       this.$requiredNotice().toggle(!requiredFieldsComplete);
       if (!requiredFieldsComplete) {
         return;
       }
+      validName = this.validName();
+      this.$fieldName().toggleNotice(!validName);
       validBirthday = this.validBirthday();
       this.$fieldBirthday().toggleNotice(!validBirthday);
-      return validBirthday;
+      return validName && validBirthday;
     };
 
     RegisterPage.prototype.validBirthday = function() {
@@ -1149,6 +1163,10 @@ Wrap access to Facebook.
       birthday = this.birthday();
       fbBirthday = new Date(Date.parse(this.currentUser().birthday));
       return birthday.getFullYear() === fbBirthday.getFullYear() && birthday.getMonth() === fbBirthday.getMonth() && birthday.getDate() === fbBirthday.getDate();
+    };
+
+    RegisterPage.prototype.validName = function() {
+      return this.name() === this.currentUser().name;
     };
 
     RegisterPage.prototype.witnessedParanormal = function() {

@@ -90,9 +90,10 @@
   resize: none;
 }
 .RegisterPage .name,
+.RegisterPage .dateContainer,
 .RegisterPage .address,
 .RegisterPage .email {
-  width: 400px;
+  width: 250px;
 }
 
 .SatellitePage {

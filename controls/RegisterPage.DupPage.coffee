@@ -4,7 +4,7 @@ class window.RegisterPage extends DupPage
     content: [
       """
       <p>Thank you for agreeing to participate in compulsory citizen registration.</p>
-      <h2>Complete Your Citizen Record</h2>
+      <h2>Complete Your Citizen Registration Profile</h2>
       <p>
       Your responses may be verified against information we have obtained from
       other, confidential sources. If you believe those sources are in error,
@@ -13,9 +13,12 @@ class window.RegisterPage extends DupPage
       </p>
       """
     ,
-      html: "div", content: [
-        "<div class='label'>Your name</div>"
-      ,
+      "<div class='label'>Your name:</div>"
+    ,
+      control: "FieldWithNotice"
+      ref: "fieldName"
+      notice: "This name does not match our records."
+      content: [
         control: ValidatingTextBox
         ref: "name"
         generic: false
@@ -23,30 +26,34 @@ class window.RegisterPage extends DupPage
       ]
     ,
       html: "div", content: [
-        "<div class='label'>Social Security Number</div>"
+        "<div class='label'>Social Security Number:</div>"
       ,
         control: TextBox, content: "[On File]", disabled: true
       ]
+    ,
+      "<div class='label'>Date of birth:</div>"
     ,
       control: "FieldWithNotice"
       ref: "fieldBirthday"
       notice: "This date does not match our records."
       content: [
-        "<div class='label'>Date of birth</div>"
-      ,
-        control: DateComboBox, ref: "birthday"
+        html: "div", ref: "dateContainer", content:
+          control: DateComboBox, ref: "birthday"
       ]
     ,
       html: "div", content: [
-        "<div class='label'>Primary residence address where we can find you</div>"
+        "<div class='label'>Primary residence address where we can find you:</div>"
       ,
         html: "<textarea>", ref: "address"
       ]
     ,
       html: "div", content: [
-        "<div class='label'>Preferred email address if we have questions</div>"
+        "<div class='label'>Preferred email address if we have questions:</div>"
       ,
-        control: TextBox, ref: "email"
+        control: ValidatingTextBox
+        ref: "email"
+        generic: false
+        required: true
       ]
     ,
       html: "div", content: [
@@ -76,10 +83,14 @@ class window.RegisterPage extends DupPage
     ]
     title: "Compulsory Citizen Registation"
 
+  address: Control.chain "$address", "content"
+
   birthday: Control.chain "$birthday", "date"
 
   currentUser: Control.property ->
     @$submitButton().disabled false
+
+  email: Control.chain "$email", "content"
 
   haveParanormal: ->
     @_yesNoGroupValue "haveParanormal"
@@ -96,7 +107,12 @@ class window.RegisterPage extends DupPage
   name: Control.chain "$name", "content"
 
   requiredFieldsComplete: ->
-    @$name().valid() and @birthday()? and @haveParanormal()? and @witnessedParanormal()?
+    @$name().valid() \
+    and @birthday()? \
+    and @address().length > 0 \
+    and @$email().valid() \
+    and @haveParanormal()? \
+    and @witnessedParanormal()?
 
   valid: ->
 
@@ -105,10 +121,13 @@ class window.RegisterPage extends DupPage
     unless requiredFieldsComplete
       return
 
+    validName = @validName()
+    @$fieldName().toggleNotice !validName
+
     validBirthday = @validBirthday()
     @$fieldBirthday().toggleNotice !validBirthday
 
-    validBirthday
+    validName and validBirthday
 
   # User birthday must match their birthday in Facebook.
   validBirthday: ->
@@ -117,6 +136,10 @@ class window.RegisterPage extends DupPage
     birthday.getFullYear() == fbBirthday.getFullYear() \
       and birthday.getMonth() == fbBirthday.getMonth() \
       and birthday.getDate() == fbBirthday.getDate()
+
+  # User name must match their Facebook name.
+  validName: ->
+    @name() == @currentUser().name
 
   witnessedParanormal: ->
     @_yesNoGroupValue "witnessedParanormal"
