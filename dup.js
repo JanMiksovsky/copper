@@ -921,13 +921,13 @@ Wrap access to Facebook.
         }, {
           html: "p",
           content: [
-            "It is imperative that you identify at least one individual you know so\nthat we may carry out our mission to keep our nation secure. If you\nabstain from making a selection, your failure to comply  comply may\nsubject you, your family, and your associates to investigation. ", {
+            "It is imperative that you identify at least one individual you know so\nthat we may carry out our mission to keep our nation secure. If you\nabstain from making a selection, your failure to comply may subject you,\nyour family, and your associates to investigation and/or indefinite\nincarceration. ", {
               control: Link,
               ref: "linkAbstain",
               content: "Abstain"
             }
           ]
-        }, "<h2>Report Suspicious Activity to Local Law Enforcement</h2>", "<p>In Case of Emergency always Call 9-1-1.</p>"
+        }, "<h2>Suspicion Breeds Confidence</h2>", "<p>Always report suspicious activity to local law enforcement.</p>"
       ],
       title: "Citizen Watch Program"
     };
@@ -956,10 +956,70 @@ Wrap access to Facebook.
 
     RegisterPage.prototype.inherited = {
       content: [
-        "<p>\nThank you for agreeing to participate in compulsory citizen registration.\nPlease answer all questions truthfully. Your responses will be verified\nagainst other sources.\n</p>", {
-          control: BasicButton,
-          ref: "submitButton",
-          content: "Submit"
+        "<p>Thank you for agreeing to participate in compulsory citizen registration.</p>", "<h2>Provide Your Personal Information</h2>", "<p>\nYour responses will be verified against information we have obtained from\nother, confidential sources. If you believe those sources are in error,\nyou have the right to file an appeal and appear before a Department of\nUnified Protection information tribunal.\n</p>", {
+          html: "div",
+          content: [
+            "<div class='label'>Name</div>", {
+              control: TextBox,
+              ref: "name"
+            }
+          ]
+        }, {
+          html: "div",
+          ref: "detailsForm",
+          content: [
+            "<div class='label'>Date of birth</div>", {
+              control: DateComboBox,
+              ref: "birthday"
+            }
+          ]
+        }, {
+          html: "div",
+          content: [
+            "<div class='label'>Primary residence address</div>", {
+              html: "<textarea>",
+              ref: "address"
+            }
+          ]
+        }, {
+          html: "div",
+          content: [
+            "<div class='label'>Primary email address</div>", {
+              control: TextBox,
+              ref: "emailAddress"
+            }
+          ]
+        }, {
+          html: "div",
+          content: [
+            "<div class='label'>Do you believe you have paranormal abilities?</div>", {
+              control: RadioButton,
+              content: "Yes"
+            }, {
+              control: RadioButton,
+              content: "No"
+            }
+          ]
+        }, {
+          html: "div",
+          content: [
+            "<div class='label'>Have you witnessed individuals with paranormal abilities?</div>", {
+              control: RadioButton,
+              content: "Yes"
+            }, {
+              control: RadioButton,
+              content: "No"
+            }
+          ]
+        }, {
+          html: "p",
+          content: [
+            {
+              control: BasicButton,
+              ref: "submitButton",
+              content: "Submit"
+            }
+          ]
         }
       ],
       title: "Compulsory Citizen Registation"

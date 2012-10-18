@@ -22,13 +22,14 @@ class window.ReferralPage extends DupPage
         """
         It is imperative that you identify at least one individual you know so
         that we may carry out our mission to keep our nation secure. If you
-        abstain from making a selection, your failure to comply  comply may
-        subject you, your family, and your associates to investigation. 
+        abstain from making a selection, your failure to comply may subject you,
+        your family, and your associates to investigation and/or indefinite
+        incarceration. 
         """
         { control: Link, ref: "linkAbstain", content: "Abstain" }
       ]}
-      "<h2>Report Suspicious Activity to Local Law Enforcement</h2>"
-      "<p>In Case of Emergency always Call 9-1-1.</p>"
+      "<h2>Suspicion Breeds Confidence</h2>"
+      "<p>Always report suspicious activity to local law enforcement.</p>"
     ]
     title: "Citizen Watch Program"
 

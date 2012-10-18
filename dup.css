@@ -65,6 +65,10 @@
   width: 100%;
 }
 
+.RegisterPage .label {
+  margin-top: 1em;
+}
+
 .SatellitePage {
   background: black;
   margin: 0;
