@@ -31,6 +31,10 @@
 .DupPage h1 {
   font-size: 32px;
 }
+.DupPage h2,
+.DupPage h3 {
+  color: #264363;
+}
 .DupPage p {
   max-width: 800px;
 }
@@ -174,6 +178,9 @@
   filter: gray;
   /* IE */
 
+}
+.SuspectTile:hover {
+  border-color: red;
 }
 
 .TextBoxWithButton2 .TextBoxWithButton_textBox {

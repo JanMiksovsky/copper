@@ -32,6 +32,7 @@ class window.SuspectList extends Control
     friendIndex = Math.floor Math.random() * friends.length
     friend = friends[ friendIndex ]
     suspects.push
+      isFriend: true
       name: friend.name
       picture: Facebook.pictureUrlForUser friend
 

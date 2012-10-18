@@ -892,7 +892,7 @@ Wrap access to Facebook.
 
     ReferralPage.prototype.inherited = {
       content: [
-        "<p>\nPlease identify one of the following:\n</p>", {
+        "<p>\nThe nationwide Citizen Watch Program assists the Department of Unified\nProtection in identifying citizens of interest to security investigations.\nAll citizens are periodically required to review photographs of suspicious\nindividuals and indicate any associations with them.\n</p>", "<h2>Your Security Begins with Cooperation</h2>", "<p>\nPlease identify one of the following:\n</p>", {
           control: "SuspectList",
           ref: "suspectList"
         }, {
@@ -920,8 +920,11 @@ Wrap access to Facebook.
 
     ReferralPage.prototype.initialize = function() {
       var _this = this;
-      return this.$linkReload().click(function() {
+      this.$linkReload().click(function() {
         return _this.$suspectList().reload();
+      });
+      return this.$linkAbstain().click(function() {
+        return alert("You gain karma by not cooperating.");
       });
     };
 
@@ -1139,6 +1142,7 @@ Wrap access to Facebook.
       friendIndex = Math.floor(Math.random() * friends.length);
       friend = friends[friendIndex];
       suspects.push({
+        isFriend: true,
         name: friend.name,
         picture: Facebook.pictureUrlForUser(friend)
       });
@@ -1190,7 +1194,8 @@ Wrap access to Facebook.
     SuspectTile.prototype.identifier = Control.chain("$identifier", "content");
 
     SuspectTile.prototype.initialize = function() {
-      var d, date, h, identifier, m, s, timestamp, y;
+      var d, date, h, identifier, m, s, timestamp, y,
+        _this = this;
       identifier = Math.random() * 100000000000;
       identifier = identifier.toString().replace(".", "-");
       this.identifier(identifier);
@@ -1204,7 +1209,14 @@ Wrap access to Facebook.
       m = this._padZero(date.getMinutes());
       s = this._padZero(date.getSeconds());
       timestamp = "" + y + "-" + m + "-" + d + " " + h + ":" + m + ":" + s;
-      return this.timestamp(timestamp);
+      this.timestamp(timestamp);
+      return this.click(function() {
+        if (_this.suspect().isFriend) {
+          return alert("You lose karma because you implicated a friend.");
+        } else {
+          return alert("You lose karma because you implicated an innocent stranger.");
+        }
+      });
     };
 
     SuspectTile.prototype.picture = Control.chain("$picture", "prop/src");

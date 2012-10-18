@@ -3,6 +3,13 @@ class window.ReferralPage extends DupPage
   inherited:
     content: [
       """<p>
+      The nationwide Citizen Watch Program assists the Department of Unified
+      Protection in identifying citizens of interest to security investigations.
+      All citizens are periodically required to review photographs of suspicious
+      individuals and indicate any associations with them.
+      </p>"""
+      "<h2>Your Security Begins with Cooperation</h2>"
+      """<p>
       Please identify one of the following:
       </p>"""
       { control: "SuspectList", ref: "suspectList" }
@@ -25,3 +32,5 @@ class window.ReferralPage extends DupPage
 
   initialize: ->
     @$linkReload().click => @$suspectList().reload()
+    @$linkAbstain().click =>
+      alert "You gain karma by not cooperating."
