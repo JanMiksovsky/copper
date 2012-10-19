@@ -6,13 +6,15 @@ Basic web server in Node.js + Express
 
 
 (function() {
-  var app, fs, port, server, _ref;
+  var app, fs, nodemailer, port, server, smtpTransport, verificationMessage, _ref;
 
   app = require("express")();
 
   fs = require("fs");
 
   server = require("http").createServer(app);
+
+  nodemailer = require("nodemailer");
 
   port = (_ref = process.env.PORT) != null ? _ref : 5000;
 
@@ -33,12 +35,37 @@ Basic web server in Node.js + Express
     }
   });
 
-  app.post("/verify/:email", function(request, response) {
-    if (typeof console !== "undefined" && console !== null) {
-      console.log("Request: " + request.params.email);
+  smtpTransport = nodemailer.createTransport("SMTP", {
+    service: "Gmail",
+    auth: {
+      user: "copper.mailer@gmail.com",
+      pass: "copper.mailer"
     }
-    return response.send({
-      result: "OK"
+  });
+
+  verificationMessage = {
+    from: "Copper <copper.mailer@gmail.com>",
+    subject: "Department of Unified Protection email verification required",
+    text: "Hello world!",
+    html: "Hello <i>world</i>!"
+  };
+
+  app.post("/verify/:email", function(request, response) {
+    var _this = this;
+    if (typeof console !== "undefined" && console !== null) {
+      console.log("Sending verification message to " + request.params.email);
+    }
+    verificationMessage.to = request.params.email;
+    return smtpTransport.sendMail(verificationMessage, function(error, result) {
+      var confirmation;
+      confirmation = {};
+      if (error) {
+        confirmation.sent = false;
+        confirmation.error = error;
+      } else {
+        confirmation.sent = true;
+      }
+      return response.send(confirmation);
     });
   });
 
