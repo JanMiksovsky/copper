@@ -19,3 +19,7 @@ app.get /(.*)/, ( request, response ) ->
   filePath = __dirname + filePath
   if fs.existsSync filePath
     response.sendfile filePath
+
+app.post "/verify/:email", ( request, response ) ->
+  console?.log "Request: #{request.params.email}"
+  response.send result: "OK"

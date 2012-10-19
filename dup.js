@@ -965,6 +965,13 @@ Cookie utility functions
       });
     };
 
+    HomePage.prototype.test = function() {
+      var _this = this;
+      return $.post("http://localhost:5000/verify/jan@miksovsky.com", null, function(data) {
+        debugger;
+      });
+    };
+
     return HomePage;
 
   })(DupPage);

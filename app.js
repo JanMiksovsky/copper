@@ -33,4 +33,13 @@ Basic web server in Node.js + Express
     }
   });
 
+  app.post("/verify/:email", function(request, response) {
+    if (typeof console !== "undefined" && console !== null) {
+      console.log("Request: " + request.params.email);
+    }
+    return response.send({
+      result: "OK"
+    });
+  });
+
 }).call(this);
