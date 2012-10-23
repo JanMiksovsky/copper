@@ -55,15 +55,13 @@ class window.TimelinePage extends FacebookPage
                           ]
                         ,
                           html: "div", ref: "fbProfileBylineFragment", content: [
-                            html: "span", ref: "cityIcon", class: "birthdayIcon"
+                            html: "span", ref: "birthdayIcon", class: "facebookIcon"
                           ,
                             "Born on "
                           ,
-                            html: "span", ref: "Timeline_birthday"
+                            html: "span", ref: "TimelinePage_birthday"
                           ]
                         ]
-      ,
-        html: "div", ref: "TimelinePage_birthday"
       ]
 
   birthday: Control.chain "$TimelinePage_birthday", "content"

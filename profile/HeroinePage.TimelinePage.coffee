@@ -1,7 +1,7 @@
 class window.HeroinePage extends TimelinePage
 
   inherited:
-    birthday: "November 12, 1964"
+    birthday: "November 12"
     coverPhoto: "../resources/coverPhoto.jpg"
     name: "Ann Williams"
     profilePhoto: "../resources/profilePhoto.jpg"

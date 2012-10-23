@@ -152,6 +152,19 @@
                                     ref: "TimelinePage_city"
                                   }
                                 ]
+                              }, {
+                                html: "div",
+                                ref: "fbProfileBylineFragment",
+                                content: [
+                                  {
+                                    html: "span",
+                                    ref: "birthdayIcon",
+                                    "class": "facebookIcon"
+                                  }, "Born on ", {
+                                    html: "span",
+                                    ref: "TimelinePage_birthday"
+                                  }
+                                ]
                               }
                             ]
                           }
@@ -162,9 +175,6 @@
                 }
               }
             }
-          }, {
-            html: "div",
-            ref: "TimelinePage_birthday"
           }
         ]
       }
@@ -207,7 +217,7 @@
     }
 
     HeroinePage.prototype.inherited = {
-      birthday: "November 12, 1964",
+      birthday: "November 12",
       coverPhoto: "../resources/coverPhoto.jpg",
       name: "Ann Williams",
       profilePhoto: "../resources/profilePhoto.jpg",
