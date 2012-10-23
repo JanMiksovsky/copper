@@ -152,6 +152,19 @@
                                     ref: "TimelinePage_city"
                                   }
                                 ]
+                              }, {
+                                html: "div",
+                                ref: "fbProfileBylineFragment",
+                                content: [
+                                  {
+                                    html: "span",
+                                    ref: "cityIcon",
+                                    "class": "birthdayIcon"
+                                  }, "Born on ", {
+                                    html: "span",
+                                    ref: "Timeline_birthday"
+                                  }
+                                ]
                               }
                             ]
                           }
