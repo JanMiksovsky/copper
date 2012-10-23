@@ -21,6 +21,74 @@
   text-decoration: underline;
 }
 
+.TimelineAboutTile {
+  display: block;
+  float: left;
+  height: 108px;
+  margin: 0;
+  position: relative;
+  width: 328px;
+}
+.TimelineAboutTile .detail {
+  background-color: #F1F3F8;
+  border: 1px solid white;
+  border-bottom-left-radius: 0;
+  border-left: 0;
+  -webkit-border-radius: 3px;
+  border-top-left-radius: 0;
+  height: 74px;
+  margin-left: 0;
+  overflow: hidden;
+  padding-left: 0;
+}
+.TimelineAboutTile .detail .mat {
+  border: 1px solid #E5E7EB;
+  border-bottom-left-radius: 0;
+  border-left: 0;
+  -webkit-border-radius: 2px;
+  border-top-left-radius: 0;
+  height: 70px;
+  margin-left: 0;
+  padding: 1px;
+  padding-left: 0;
+}
+.TimelineAboutTile .detail .mat .fbTimelineSummarySection {
+  padding: 3px 0 0 26px;
+}
+.TimelineAboutTile .detail .mat .fbTimelineSummarySection .fbProfileBylineFragment {
+  line-height: 16px;
+  margin-right: 8px;
+  overflow: hidden;
+  padding-left: 16px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.TimelineAboutTile .detail .mat .fbTimelineSummarySection .facebookIcon {
+  left: 26px;
+  margin: 1px 5px 1px 0;
+  position: absolute;
+}
+.TimelineAboutTile .detail .mat .fbTimelineSummarySection .workIcon {
+  background-position: -225px -89px;
+  height: 13px;
+  width: 9px;
+}
+.TimelineAboutTile .detail .mat .fbTimelineSummarySection .collegeIcon {
+  background-position: -163px -89px;
+  height: 13px;
+  width: 11px;
+}
+.TimelineAboutTile .detail .mat .fbTimelineSummarySection .cityIcon {
+  background-position: -235px -89px;
+  width: 8px;
+  height: 13px;
+}
+.TimelineAboutTile .detail .mat .fbTimelineSummarySection .birthdayIcon {
+  background-position: -175px -89px;
+  height: 13px;
+  width: 9px;
+}
+
 .TimelinePage {
   background: #e7ebf2;
 }
@@ -85,73 +153,6 @@
 }
 .TimelinePage .fbTimelineNavigationPagelet .fbTimelineNavigation .fbTimelineTopRow {
   margin-top: 12px;
-}
-.TimelinePage .fbTimelineNavigationPagelet .fbTimelineNavigation .fbTimelineTopRow .aboutTile {
-  display: block;
-  float: left;
-  height: 108px;
-  margin: 0;
-  position: relative;
-  width: 328px;
-}
-.TimelinePage .fbTimelineNavigationPagelet .fbTimelineNavigation .fbTimelineTopRow .detail {
-  background-color: #F1F3F8;
-  border: 1px solid white;
-  border-bottom-left-radius: 0;
-  border-left: 0;
-  -webkit-border-radius: 3px;
-  border-top-left-radius: 0;
-  height: 74px;
-  margin-left: 0;
-  overflow: hidden;
-  padding-left: 0;
-}
-.TimelinePage .fbTimelineNavigationPagelet .fbTimelineNavigation .fbTimelineTopRow .detail .mat {
-  border: 1px solid #E5E7EB;
-  border-bottom-left-radius: 0;
-  border-left: 0;
-  -webkit-border-radius: 2px;
-  border-top-left-radius: 0;
-  height: 70px;
-  margin-left: 0;
-  padding: 1px;
-  padding-left: 0;
-}
-.TimelinePage .fbTimelineNavigationPagelet .fbTimelineNavigation .fbTimelineTopRow .detail .mat .fbTimelineSummarySection {
-  padding: 3px 0 0 26px;
-}
-.TimelinePage .fbTimelineNavigationPagelet .fbTimelineNavigation .fbTimelineTopRow .detail .mat .fbTimelineSummarySection .fbProfileBylineFragment {
-  line-height: 16px;
-  margin-right: 8px;
-  overflow: hidden;
-  padding-left: 16px;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-.TimelinePage .fbTimelineNavigationPagelet .fbTimelineNavigation .fbTimelineTopRow .detail .mat .fbTimelineSummarySection .facebookIcon {
-  left: 26px;
-  margin: 1px 5px 1px 0;
-  position: absolute;
-}
-.TimelinePage .fbTimelineNavigationPagelet .fbTimelineNavigation .fbTimelineTopRow .detail .mat .fbTimelineSummarySection .workIcon {
-  background-position: -225px -89px;
-  height: 13px;
-  width: 9px;
-}
-.TimelinePage .fbTimelineNavigationPagelet .fbTimelineNavigation .fbTimelineTopRow .detail .mat .fbTimelineSummarySection .collegeIcon {
-  background-position: -163px -89px;
-  height: 13px;
-  width: 11px;
-}
-.TimelinePage .fbTimelineNavigationPagelet .fbTimelineNavigation .fbTimelineTopRow .detail .mat .fbTimelineSummarySection .cityIcon {
-  background-position: -235px -89px;
-  width: 8px;
-  height: 13px;
-}
-.TimelinePage .fbTimelineNavigationPagelet .fbTimelineNavigation .fbTimelineTopRow .detail .mat .fbTimelineSummarySection .birthdayIcon {
-  background-position: -175px -89px;
-  height: 13px;
-  width: 9px;
 }
 .TimelinePage .facebookIcon {
   background-image: url("../resources/facebookIcons.png");

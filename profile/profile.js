@@ -39,6 +39,122 @@
 
   })(Page);
 
+  /*
+  The small box with key personal information shown on an FB timeline page,
+  right below the profile photo.
+  */
+
+
+  window.TimelineAboutTile = (function(_super) {
+
+    __extends(TimelineAboutTile, _super);
+
+    function TimelineAboutTile() {
+      return TimelineAboutTile.__super__.constructor.apply(this, arguments);
+    }
+
+    TimelineAboutTile.prototype.inherited = {
+      content: {
+        html: "div",
+        ref: "fbTimelineSummarySectionWrapper",
+        content: {
+          html: "div",
+          ref: "detail",
+          content: {
+            html: "div",
+            ref: "mat",
+            content: {
+              html: "div",
+              ref: "fbTimelineSummarySection",
+              content: [
+                {
+                  html: "div",
+                  ref: "fbProfileBylineFragment",
+                  content: [
+                    {
+                      html: "span",
+                      ref: "workIcon",
+                      "class": "facebookIcon"
+                    }, {
+                      html: "span",
+                      ref: "TimelinePage_position"
+                    }, " at ", {
+                      control: "Link",
+                      ref: "TimelinePage_employer"
+                    }
+                  ]
+                }, {
+                  html: "div",
+                  ref: "fbProfileBylineFragment",
+                  content: [
+                    {
+                      html: "span",
+                      ref: "collegeIcon",
+                      "class": "facebookIcon"
+                    }, "Studied ", {
+                      html: "span",
+                      ref: "TimelinePage_major"
+                    }, " at ", {
+                      control: "Link",
+                      ref: "TimelinePage_college"
+                    }
+                  ]
+                }, {
+                  html: "div",
+                  ref: "fbProfileBylineFragment",
+                  content: [
+                    {
+                      html: "span",
+                      ref: "cityIcon",
+                      "class": "facebookIcon"
+                    }, "Lives in ", {
+                      control: "Link",
+                      ref: "TimelinePage_city"
+                    }
+                  ]
+                }, {
+                  html: "div",
+                  ref: "fbProfileBylineFragment",
+                  content: [
+                    {
+                      html: "span",
+                      ref: "birthdayIcon",
+                      "class": "facebookIcon"
+                    }, "Born on ", {
+                      html: "span",
+                      ref: "TimelinePage_birthday"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      }
+    };
+
+    TimelineAboutTile.prototype.birthday = Control.chain("$TimelinePage_birthday", "content");
+
+    TimelineAboutTile.prototype.city = Control.chain("$TimelinePage_city", "content");
+
+    TimelineAboutTile.prototype.cityPage = Control.chain("$TimelinePage_city", "href");
+
+    TimelineAboutTile.prototype.college = Control.chain("$TimelinePage_college", "content");
+
+    TimelineAboutTile.prototype.collegePage = Control.chain("$TimelinePage_college", "href");
+
+    TimelineAboutTile.prototype.employer = Control.chain("$TimelinePage_employer", "content");
+
+    TimelineAboutTile.prototype.employerPage = Control.chain("$TimelinePage_employer", "href");
+
+    TimelineAboutTile.prototype.major = Control.chain("$TimelinePage_major", "content");
+
+    TimelineAboutTile.prototype.position = Control.chain("$TimelinePage_position", "content");
+
+    return TimelineAboutTile;
+
+  })(Control);
+
   window.TimelinePage = (function(_super) {
 
     __extends(TimelinePage, _super);
@@ -92,85 +208,8 @@
                   html: "div",
                   ref: "fbTimelineTopRow",
                   content: {
-                    html: "div",
-                    ref: "aboutTile",
-                    content: {
-                      html: "div",
-                      ref: "fbTimelineSummarySectionWrapper",
-                      content: {
-                        html: "div",
-                        ref: "detail",
-                        content: {
-                          html: "div",
-                          ref: "mat",
-                          content: {
-                            html: "div",
-                            ref: "fbTimelineSummarySection",
-                            content: [
-                              {
-                                html: "div",
-                                ref: "fbProfileBylineFragment",
-                                content: [
-                                  {
-                                    html: "span",
-                                    ref: "workIcon",
-                                    "class": "facebookIcon"
-                                  }, {
-                                    html: "span",
-                                    ref: "TimelinePage_position"
-                                  }, " at ", {
-                                    control: "Link",
-                                    ref: "TimelinePage_employer"
-                                  }
-                                ]
-                              }, {
-                                html: "div",
-                                ref: "fbProfileBylineFragment",
-                                content: [
-                                  {
-                                    html: "span",
-                                    ref: "collegeIcon",
-                                    "class": "facebookIcon"
-                                  }, "Studied ", {
-                                    html: "span",
-                                    ref: "TimelinePage_major"
-                                  }, " at ", {
-                                    control: "Link",
-                                    ref: "TimelinePage_college"
-                                  }
-                                ]
-                              }, {
-                                html: "div",
-                                ref: "fbProfileBylineFragment",
-                                content: [
-                                  {
-                                    html: "span",
-                                    ref: "cityIcon",
-                                    "class": "facebookIcon"
-                                  }, "Lives in ", {
-                                    control: "Link",
-                                    ref: "TimelinePage_city"
-                                  }
-                                ]
-                              }, {
-                                html: "div",
-                                ref: "fbProfileBylineFragment",
-                                content: [
-                                  {
-                                    html: "span",
-                                    ref: "birthdayIcon",
-                                    "class": "facebookIcon"
-                                  }, "Born on ", {
-                                    html: "span",
-                                    ref: "TimelinePage_birthday"
-                                  }
-                                ]
-                              }
-                            ]
-                          }
-                        }
-                      }
-                    }
+                    control: "TimelineAboutTile",
+                    ref: "aboutTile"
                   }
                 }
               }
@@ -180,27 +219,27 @@
       }
     };
 
-    TimelinePage.prototype.birthday = Control.chain("$TimelinePage_birthday", "content");
+    TimelinePage.prototype.birthday = Control.chain("$aboutTile", "birthday");
 
-    TimelinePage.prototype.city = Control.chain("$TimelinePage_city", "content");
+    TimelinePage.prototype.city = Control.chain("$aboutTile", "city");
 
-    TimelinePage.prototype.cityPage = Control.chain("$TimelinePage_city", "href");
+    TimelinePage.prototype.cityPage = Control.chain("$aboutTile", "cityPage");
 
-    TimelinePage.prototype.college = Control.chain("$TimelinePage_college", "content");
+    TimelinePage.prototype.college = Control.chain("$aboutTile", "college");
 
-    TimelinePage.prototype.collegePage = Control.chain("$TimelinePage_college", "href");
+    TimelinePage.prototype.collegePage = Control.chain("$aboutTile", "collegePage");
 
     TimelinePage.prototype.coverPhoto = Control.chain("$TimelinePage_coverPhoto", "prop/src");
 
-    TimelinePage.prototype.employer = Control.chain("$TimelinePage_employer", "content");
+    TimelinePage.prototype.employer = Control.chain("$aboutTile", "employer");
 
-    TimelinePage.prototype.employerPage = Control.chain("$TimelinePage_employer", "href");
+    TimelinePage.prototype.employerPage = Control.chain("$aboutTile", "employerPage");
 
-    TimelinePage.prototype.major = Control.chain("$TimelinePage_major", "content");
+    TimelinePage.prototype.major = Control.chain("$aboutTile", "major");
 
     TimelinePage.prototype.name = Control.chain("$TimelinePage_name", "content");
 
-    TimelinePage.prototype.position = Control.chain("$TimelinePage_position", "content");
+    TimelinePage.prototype.position = Control.chain("$aboutTile", "position");
 
     TimelinePage.prototype.profilePhoto = Control.chain("$TimelinePage_profilePhoto", "prop/src");
 

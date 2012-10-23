@@ -19,60 +19,18 @@ class window.TimelinePage extends FacebookPage
           html: "div", ref: "TimelineNavContent", content:
             html: "div", ref: "fbTimelineNavigation", content:
               html: "div", ref: "fbTimelineTopRow", content:
-                html: "div", ref: "aboutTile", content:
-                  html: "div", ref: "fbTimelineSummarySectionWrapper", content:
-                    html: "div", ref: "detail", content:
-                      html: "div", ref: "mat", content:
-                        html: "div", ref: "fbTimelineSummarySection", content: [
-                          html: "div", ref: "fbProfileBylineFragment", content: [
-                            html: "span", ref: "workIcon", class: "facebookIcon"
-                          ,
-                            html: "span", ref: "TimelinePage_position"
-                          ,
-                            " at "
-                          ,
-                            control: "Link", ref: "TimelinePage_employer"
-                          ]
-                        ,
-                          html: "div", ref: "fbProfileBylineFragment", content: [
-                            html: "span", ref: "collegeIcon", class: "facebookIcon"
-                          ,
-                            "Studied "
-                          ,
-                            html: "span", ref: "TimelinePage_major"
-                          ,
-                            " at "
-                          ,
-                            control: "Link", ref: "TimelinePage_college"
-                          ]
-                        ,
-                          html: "div", ref: "fbProfileBylineFragment", content: [
-                            html: "span", ref: "cityIcon", class: "facebookIcon"
-                          ,
-                            "Lives in "
-                          ,
-                            control: "Link", ref: "TimelinePage_city"
-                          ]
-                        ,
-                          html: "div", ref: "fbProfileBylineFragment", content: [
-                            html: "span", ref: "birthdayIcon", class: "facebookIcon"
-                          ,
-                            "Born on "
-                          ,
-                            html: "span", ref: "TimelinePage_birthday"
-                          ]
-                        ]
+                control: "TimelineAboutTile", ref: "aboutTile"
       ]
 
-  birthday: Control.chain "$TimelinePage_birthday", "content"
-  city: Control.chain "$TimelinePage_city", "content"
-  cityPage: Control.chain "$TimelinePage_city", "href"
-  college: Control.chain "$TimelinePage_college", "content"
-  collegePage: Control.chain "$TimelinePage_college", "href"
+  birthday: Control.chain "$aboutTile", "birthday"
+  city: Control.chain "$aboutTile", "city"
+  cityPage: Control.chain "$aboutTile", "cityPage"
+  college: Control.chain "$aboutTile", "college"
+  collegePage: Control.chain "$aboutTile", "collegePage"
   coverPhoto: Control.chain "$TimelinePage_coverPhoto", "prop/src"
-  employer: Control.chain "$TimelinePage_employer", "content"
-  employerPage: Control.chain "$TimelinePage_employer", "href"
-  major: Control.chain "$TimelinePage_major", "content"
+  employer: Control.chain "$aboutTile", "employer"
+  employerPage: Control.chain "$aboutTile", "employerPage"
+  major: Control.chain "$aboutTile", "major"
   name: Control.chain "$TimelinePage_name", "content"
-  position: Control.chain "$TimelinePage_position", "content"
+  position: Control.chain "$aboutTile", "position"
   profilePhoto: Control.chain "$TimelinePage_profilePhoto", "prop/src"
