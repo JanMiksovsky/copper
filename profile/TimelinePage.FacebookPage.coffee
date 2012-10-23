@@ -2,7 +2,7 @@ class window.TimelinePage extends FacebookPage
   
   inherited:
     # Many of the refs use Facebook's name to facilitate borrowing their styles.
-    content:
+    content: [
       html: "div", ref: "fbTimelineSection", content: [
         html: "img", ref: "TimelinePage_coverPhoto"
       ,
@@ -21,6 +21,9 @@ class window.TimelinePage extends FacebookPage
               html: "div", ref: "fbTimelineTopRow", content:
                 control: "TimelineAboutTile", ref: "aboutTile"
       ]
+    ,
+      control: "Timeline", ref: "timeline"
+    ]
 
   birthday: Control.chain "$aboutTile", "birthday"
   city: Control.chain "$aboutTile", "city"
@@ -31,6 +34,11 @@ class window.TimelinePage extends FacebookPage
   employer: Control.chain "$aboutTile", "employer"
   employerPage: Control.chain "$aboutTile", "employerPage"
   major: Control.chain "$aboutTile", "major"
-  name: Control.chain "$TimelinePage_name", "content"
+
+  name: Control.chain( "$TimelinePage_name", "content", ( name ) ->
+    @$timeline().author name
+  )
+
   position: Control.chain "$aboutTile", "position"
+  posts: Control.chain "$timeline", "items"
   profilePhoto: Control.chain "$TimelinePage_profilePhoto", "prop/src"

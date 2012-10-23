@@ -12,7 +12,7 @@ class window.TimelineAboutTile extends Control
           html: "div", ref: "mat", content:
             html: "div", ref: "fbTimelineSummarySection", content: [
               html: "div", ref: "fbProfileBylineFragment", content: [
-                html: "span", ref: "workIcon", class: "facebookIcon"
+                control: "FacebookIcon", ref: "workIcon"
               ,
                 html: "span", ref: "TimelinePage_position"
               ,
@@ -22,7 +22,7 @@ class window.TimelineAboutTile extends Control
               ]
             ,
               html: "div", ref: "fbProfileBylineFragment", content: [
-                html: "span", ref: "collegeIcon", class: "facebookIcon"
+                control: "FacebookIcon", ref: "collegeIcon"
               ,
                 "Studied "
               ,
@@ -34,7 +34,7 @@ class window.TimelineAboutTile extends Control
               ]
             ,
               html: "div", ref: "fbProfileBylineFragment", content: [
-                html: "span", ref: "cityIcon", class: "facebookIcon"
+                control: "FacebookIcon", ref: "cityIcon"
               ,
                 "Lives in "
               ,
@@ -42,7 +42,7 @@ class window.TimelineAboutTile extends Control
               ]
             ,
               html: "div", ref: "fbProfileBylineFragment", content: [
-                html: "span", ref: "birthdayIcon", class: "facebookIcon"
+                control: "FacebookIcon", ref: "birthdayIcon"
               ,
                 "Born on "
               ,

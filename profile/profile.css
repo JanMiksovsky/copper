@@ -1,16 +1,17 @@
+.FacebookIcon {
+  background-image: url("../resources/facebookIcons.png");
+  background-repeat: no-repeat;
+  background-size: auto;
+  display: inline-block;
+}
+
 .FacebookPage {
   font-size: 11px;
   font-family: 'lucida grande', tahoma, verdana, arial, sans-serif;
   color: #333;
-  margin: 0;
-  line-height: 1.28;
-}
-.FacebookPage .globalContainer {
   margin: 0 auto;
-  width: 981px;
-}
-.FacebookPage .globalContainer .contentArea {
-  width: 851px;
+  line-height: 1.28;
+  max-width: 851px;
 }
 .FacebookPage a {
   cursor: pointer;
@@ -19,6 +20,23 @@
 }
 .FacebookPage a:hover {
   text-decoration: underline;
+}
+.FacebookPage .clearfix::after {
+  clear: both;
+  content: ".";
+  display: block;
+  font-size: 0;
+  height: 0;
+  line-height: 0;
+  visibility: hidden;
+}
+
+.Timeline {
+  background: url(../resources/timelineAxis.png) repeat-y center top;
+  margin: 0;
+  padding: 15px 0;
+  position: relative;
+  list-style: none;
 }
 
 .TimelineAboutTile {
@@ -63,7 +81,7 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-.TimelineAboutTile .detail .mat .fbTimelineSummarySection .facebookIcon {
+.TimelineAboutTile .detail .mat .fbTimelineSummarySection .FacebookIcon {
   left: 26px;
   margin: 1px 5px 1px 0;
   position: absolute;
@@ -154,9 +172,44 @@
 .TimelinePage .fbTimelineNavigationPagelet .fbTimelineNavigation .fbTimelineTopRow {
   margin-top: 12px;
 }
-.TimelinePage .facebookIcon {
-  background-image: url("../resources/facebookIcons.png");
-  background-repeat: no-repeat;
-  background-size: auto;
-  display: inline-block;
+
+.TimelineUnit {
+  background: white;
+  border: 1px solid #C4CDE0;
+  border-bottom-width: 2px;
+  border-radius: 3px;
+  box-sizing: border-box;
+  -webkit-border-radius: 3px;
+  clear: left;
+  display: block;
+  float: left;
+  list-style: none;
+  margin-bottom: 15px;
+  padding: 13px 15px;
+  position: relative;
+  width: 411px;
+}
+
+.TimelinePost .byline {
+  border-bottom: 1px solid #E5E5E5;
+  margin-bottom: 5px;
+  padding-bottom: 5px;
+}
+.TimelinePost .byline .profilePhoto {
+  float: left;
+  height: 32px;
+  margin-right: 8px;
+  width: 32px;
+}
+.TimelinePost .byline .authorBlock {
+  display: table-cell;
+  vertical-align: top;
+  width: 10000px;
+}
+.TimelinePost .byline .authorBlock .TimelinePost_author {
+  font-weight: bold;
+}
+.TimelinePost .byline .authorBlock .TimelinePost_date {
+  color: gray;
+  line-height: 15px;
 }

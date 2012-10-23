@@ -3,6 +3,20 @@
   var __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
+  window.FacebookIcon = (function(_super) {
+
+    __extends(FacebookIcon, _super);
+
+    function FacebookIcon() {
+      return FacebookIcon.__super__.constructor.apply(this, arguments);
+    }
+
+    FacebookIcon.prototype.tag = "span";
+
+    return FacebookIcon;
+
+  })(Control);
+
   window.FacebookPage = (function(_super) {
 
     __extends(FacebookPage, _super);
@@ -39,6 +53,32 @@
 
   })(Page);
 
+  window.Timeline = (function(_super) {
+
+    __extends(Timeline, _super);
+
+    function Timeline() {
+      return Timeline.__super__.constructor.apply(this, arguments);
+    }
+
+    Timeline.prototype.inherited = {
+      "class": "clearfix",
+      itemClass: "TimelinePost"
+    };
+
+    Timeline.prototype.author = Control.property();
+
+    Timeline.prototype.tag = "ol";
+
+    Timeline.prototype._setupControl = function(control) {
+      control.author(this.author());
+      return control.authorPage(".");
+    };
+
+    return Timeline;
+
+  })(List);
+
   /*
   The small box with key personal information shown on an FB timeline page,
   right below the profile photo.
@@ -72,9 +112,8 @@
                   ref: "fbProfileBylineFragment",
                   content: [
                     {
-                      html: "span",
-                      ref: "workIcon",
-                      "class": "facebookIcon"
+                      control: "FacebookIcon",
+                      ref: "workIcon"
                     }, {
                       html: "span",
                       ref: "TimelinePage_position"
@@ -88,9 +127,8 @@
                   ref: "fbProfileBylineFragment",
                   content: [
                     {
-                      html: "span",
-                      ref: "collegeIcon",
-                      "class": "facebookIcon"
+                      control: "FacebookIcon",
+                      ref: "collegeIcon"
                     }, "Studied ", {
                       html: "span",
                       ref: "TimelinePage_major"
@@ -104,9 +142,8 @@
                   ref: "fbProfileBylineFragment",
                   content: [
                     {
-                      html: "span",
-                      ref: "cityIcon",
-                      "class": "facebookIcon"
+                      control: "FacebookIcon",
+                      ref: "cityIcon"
                     }, "Lives in ", {
                       control: "Link",
                       ref: "TimelinePage_city"
@@ -117,9 +154,8 @@
                   ref: "fbProfileBylineFragment",
                   content: [
                     {
-                      html: "span",
-                      ref: "birthdayIcon",
-                      "class": "facebookIcon"
+                      control: "FacebookIcon",
+                      ref: "birthdayIcon"
                     }, "Born on ", {
                       html: "span",
                       ref: "TimelinePage_birthday"
@@ -164,59 +200,64 @@
     }
 
     TimelinePage.prototype.inherited = {
-      content: {
-        html: "div",
-        ref: "fbTimelineSection",
-        content: [
-          {
-            html: "img",
-            ref: "TimelinePage_coverPhoto"
-          }, {
-            html: "div",
-            ref: "fbTimelineHeadline",
-            content: [
-              {
-                html: "div",
-                ref: "photoContainer",
-                content: {
+      content: [
+        {
+          html: "div",
+          ref: "fbTimelineSection",
+          content: [
+            {
+              html: "img",
+              ref: "TimelinePage_coverPhoto"
+            }, {
+              html: "div",
+              ref: "fbTimelineHeadline",
+              content: [
+                {
                   html: "div",
-                  ref: "profilePicThumb",
+                  ref: "photoContainer",
                   content: {
                     html: "div",
-                    ref: "uiScaledImageContainer",
+                    ref: "profilePicThumb",
                     content: {
-                      html: "img",
-                      ref: "TimelinePage_profilePhoto"
+                      html: "div",
+                      ref: "uiScaledImageContainer",
+                      content: {
+                        html: "img",
+                        ref: "TimelinePage_profilePhoto"
+                      }
                     }
                   }
+                }, {
+                  html: "h2",
+                  ref: "TimelinePage_name"
                 }
-              }, {
-                html: "h2",
-                ref: "TimelinePage_name"
-              }
-            ]
-          }, {
-            html: "div",
-            ref: "fbTimelineNavigationPagelet",
-            content: {
+              ]
+            }, {
               html: "div",
-              ref: "TimelineNavContent",
+              ref: "fbTimelineNavigationPagelet",
               content: {
                 html: "div",
-                ref: "fbTimelineNavigation",
+                ref: "TimelineNavContent",
                 content: {
                   html: "div",
-                  ref: "fbTimelineTopRow",
+                  ref: "fbTimelineNavigation",
                   content: {
-                    control: "TimelineAboutTile",
-                    ref: "aboutTile"
+                    html: "div",
+                    ref: "fbTimelineTopRow",
+                    content: {
+                      control: "TimelineAboutTile",
+                      ref: "aboutTile"
+                    }
                   }
                 }
               }
             }
-          }
-        ]
-      }
+          ]
+        }, {
+          control: "Timeline",
+          ref: "timeline"
+        }
+      ]
     };
 
     TimelinePage.prototype.birthday = Control.chain("$aboutTile", "birthday");
@@ -237,15 +278,33 @@
 
     TimelinePage.prototype.major = Control.chain("$aboutTile", "major");
 
-    TimelinePage.prototype.name = Control.chain("$TimelinePage_name", "content");
+    TimelinePage.prototype.name = Control.chain("$TimelinePage_name", "content", function(name) {
+      return this.$timeline().author(name);
+    });
 
     TimelinePage.prototype.position = Control.chain("$aboutTile", "position");
+
+    TimelinePage.prototype.posts = Control.chain("$timeline", "items");
 
     TimelinePage.prototype.profilePhoto = Control.chain("$TimelinePage_profilePhoto", "prop/src");
 
     return TimelinePage;
 
   })(FacebookPage);
+
+  window.TimelineUnit = (function(_super) {
+
+    __extends(TimelineUnit, _super);
+
+    function TimelineUnit() {
+      return TimelineUnit.__super__.constructor.apply(this, arguments);
+    }
+
+    TimelineUnit.prototype.tag = "li";
+
+    return TimelineUnit;
+
+  })(Control);
 
   window.HeroinePage = (function(_super) {
 
@@ -257,21 +316,78 @@
 
     HeroinePage.prototype.inherited = {
       birthday: "November 12",
-      coverPhoto: "../resources/coverPhoto.jpg",
-      name: "Ann Williams",
-      profilePhoto: "../resources/profilePhoto.jpg",
-      position: "Project Manager",
-      employer: "Microsoft Corporation",
-      employerPage: "http://www.facebook.com/Microsoft",
       city: "Bellevue, Washington",
       cityPage: "http://www.facebook.com/pages/Bellevue-Washington/111723635511834",
-      major: "English",
       college: "Harvey Mudd College",
-      collegePage: "http://www.facebook.com/pages/Harvey-Mudd-College/107892159239091"
+      collegePage: "http://www.facebook.com/pages/Harvey-Mudd-College/107892159239091",
+      coverPhoto: "../resources/coverPhoto.jpg",
+      employer: "Microsoft Corporation",
+      employerPage: "http://www.facebook.com/Microsoft",
+      major: "English",
+      name: "Ann Williams",
+      position: "Project Manager",
+      posts: [
+        {
+          content: "First!",
+          date: "October 19"
+        }
+      ],
+      profilePhoto: "../resources/profilePhoto.jpg"
     };
 
     return HeroinePage;
 
   })(TimelinePage);
+
+  window.TimelinePost = (function(_super) {
+
+    __extends(TimelinePost, _super);
+
+    function TimelinePost() {
+      return TimelinePost.__super__.constructor.apply(this, arguments);
+    }
+
+    TimelinePost.prototype.inherited = {
+      content: [
+        {
+          html: "div",
+          ref: "byline",
+          "class": "clearfix",
+          content: [
+            {
+              html: "<img src='../resources/profilePhoto.jpg'/>",
+              ref: "profilePhoto"
+            }, {
+              html: "div",
+              ref: "authorBlock",
+              content: [
+                {
+                  control: Link,
+                  ref: "TimelinePost_author"
+                }, {
+                  html: "div",
+                  ref: "TimelinePost_date"
+                }
+              ]
+            }
+          ]
+        }, {
+          html: "div",
+          ref: "TimelinePost_content"
+        }
+      ]
+    };
+
+    TimelinePost.prototype.author = Control.chain("$TimelinePost_author", "content");
+
+    TimelinePost.prototype.authorPage = Control.chain("$TimelinePost_author", "href");
+
+    TimelinePost.prototype.content = Control.chain("$TimelinePost_content", "content");
+
+    TimelinePost.prototype.date = Control.chain("$TimelinePost_date", "content");
+
+    return TimelinePost;
+
+  })(TimelineUnit);
 
 }).call(this);
