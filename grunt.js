@@ -27,6 +27,11 @@ module.exports = function(grunt) {
                 dest: "models/models.js",
                 options: { bare: false }
             },
+            profile: {
+                src: sortDependencies.sortClassFiles( "profile/*.coffee" ),
+                dest: "profile/profile.js",
+                options: { bare: false }
+            },
             app: {
                 src: "app.coffee",
                 dest: "app.js",
@@ -47,6 +52,11 @@ module.exports = function(grunt) {
             controls: {
                 files: {
                     "dup.css": sortDependencies.sortClassFiles( "controls/*.less" )
+                }
+            },
+            controls: {
+                files: {
+                    "profile/profile.css": sortDependencies.sortClassFiles( "profile/*.less" )
                 }
             }
         }
