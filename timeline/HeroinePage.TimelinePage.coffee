@@ -16,7 +16,7 @@ class window.HeroinePage extends TimelinePage
 
   initialize: ->
     @on "click", ".satelliteSample", =>
-      window.location = "../agent/satellite.html"
+      Dialog.showDialog SatelliteDialog
     # TODO: Come up with better way to turn JSON for posts into live controls.
     posts = for post in @_posts
       { date, content } = post

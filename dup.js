@@ -583,6 +583,13 @@ Wrap access to Facebook.
       return FacebookOverlay.__super__.constructor.apply(this, arguments);
     }
 
+    FacebookOverlay.prototype.initialize = function() {
+      var _this = this;
+      return this.on("DOMMouseScroll mousewheel", function(event) {
+        return event.preventDefault();
+      });
+    };
+
     return FacebookOverlay;
 
   })(Overlay);
@@ -631,22 +638,963 @@ Wrap access to Facebook.
   var __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-  window.SatellitePage = (function(_super) {
+  window.DupPage = (function(_super) {
 
-    __extends(SatellitePage, _super);
+    __extends(DupPage, _super);
 
-    function SatellitePage() {
-      return SatellitePage.__super__.constructor.apply(this, arguments);
+    function DupPage() {
+      return DupPage.__super__.constructor.apply(this, arguments);
     }
 
-    SatellitePage.prototype.inherited = {
+    DupPage.prototype.inherited = {
+      title: "Dept. of Unified Protection",
+      content: [
+        {
+          html: "div",
+          ref: "header",
+          content: [
+            {
+              html: "div",
+              ref: "titleElements",
+              "class": "container",
+              content: [
+                {
+                  html: "<img src='/copper/dup/resources/dupLogo.png'/>",
+                  ref: "logo"
+                }, {
+                  html: "h1",
+                  ref: "DupPage_title"
+                }
+              ]
+            }
+          ]
+        }, {
+          html: "div",
+          ref: "contentContainer",
+          "class": "container",
+          content: [
+            {
+              html: "div",
+              ref: "DupPage_content"
+            }
+          ]
+        }
+      ]
+    };
+
+    DupPage.prototype.accessToken = function() {
+      return Page.urlParameters().access_token;
+    };
+
+    DupPage.prototype.applicationId = function() {
+      return Page.urlParameters().applicationId;
+    };
+
+    DupPage.prototype.content = Control.chain("$DupPage_content", "content");
+
+    DupPage.prototype.header = Control.chain("$DupPage_header", "content");
+
+    DupPage.prototype.navigateWithAccessToken = function(url) {
+      return window.location = "" + url + "?access_token=" + (this.accessToken());
+    };
+
+    DupPage.prototype.title = function(title) {
+      var result;
+      result = DupPage.__super__.title.call(this, title);
+      if (title !== void 0) {
+        this.$DupPage_title().content(title);
+      }
+      return result;
+    };
+
+    return DupPage;
+
+  })(Page);
+
+  window.FieldWithNotice = (function(_super) {
+
+    __extends(FieldWithNotice, _super);
+
+    function FieldWithNotice() {
+      return FieldWithNotice.__super__.constructor.apply(this, arguments);
+    }
+
+    FieldWithNotice.prototype.inherited = {
+      content: [
+        {
+          html: "div",
+          ref: "FieldWithNotice_content"
+        }, {
+          control: "Notice",
+          ref: "FieldWithNotice_notice",
+          toggle: false
+        }
+      ],
+      generic: true
+    };
+
+    FieldWithNotice.prototype.content = Control.chain("$FieldWithNotice_content", "content");
+
+    FieldWithNotice.prototype.notice = Control.chain("$FieldWithNotice_notice", "content");
+
+    FieldWithNotice.prototype.toggleNotice = Control.chain("$FieldWithNotice_notice", "toggle");
+
+    return FieldWithNotice;
+
+  })(Control);
+
+  window.HomePage = (function(_super) {
+
+    __extends(HomePage, _super);
+
+    function HomePage() {
+      return HomePage.__super__.constructor.apply(this, arguments);
+    }
+
+    HomePage.prototype.inherited = {
+      content: [
+        "<p>All citizens must register</p>", {
+          control: Link,
+          ref: "linkRegister",
+          content: "Register now"
+        }
+      ],
+      title: "Department of Unified Protection"
+    };
+
+    HomePage.prototype.initialize = function() {
+      var _this = this;
+      return this.$linkRegister().click(function() {
+        return Facebook.authorize("136995693107715", "http://localhost/copper/dup/citizen/register.html", ["email", "user_birthday"]);
+      });
+    };
+
+    HomePage.prototype.test = function() {
+      var _this = this;
+      return $.post("http://localhost:5000/verify/jan@miksovsky.com", null, function(data) {
+        debugger;
+      });
+    };
+
+    return HomePage;
+
+  })(DupPage);
+
+  window.Notice = (function(_super) {
+
+    __extends(Notice, _super);
+
+    function Notice() {
+      return Notice.__super__.constructor.apply(this, arguments);
+    }
+
+    Notice.prototype.inherited = {
+      generic: true
+    };
+
+    Notice.prototype.tag = "p";
+
+    return Notice;
+
+  })(Control);
+
+  window.ReferralPage = (function(_super) {
+
+    __extends(ReferralPage, _super);
+
+    function ReferralPage() {
+      return ReferralPage.__super__.constructor.apply(this, arguments);
+    }
+
+    ReferralPage.prototype.inherited = {
+      content: [
+        "<p>\nThe nationwide Citizen Watch Program assists the Department of Unified\nProtection in identifying citizens of interest to security investigations.\nAll citizens are periodically required to review photographs of suspicious\nindividuals and indicate any associations with individuals they know.\n</p>", "<h2>Your Security Begins with Cooperation</h2>", "<p>\nPlease identify one of the following:\n</p>", {
+          control: "SuspectList",
+          ref: "suspectList"
+        }, {
+          html: "p",
+          content: [
+            "If you do not recognize any of the individuals shown, you may request to ", {
+              control: Link,
+              ref: "linkReload",
+              content: "view more photos"
+            }, "."
+          ]
+        }, {
+          html: "p",
+          content: [
+            "It is imperative that you identify at least one individual you know so\nthat we may carry out our mission to keep our nation secure. If you\nabstain from making a selection, your failure to comply may subject you,\nyour family, and your associates to investigation and/or indefinite\nincarceration. ", {
+              control: Link,
+              ref: "linkAbstain",
+              content: "Abstain"
+            }
+          ]
+        }, "<h2>Suspicion Breeds Confidence</h2>", "<p>Always report suspicious activity to local law enforcement.</p>"
+      ],
+      title: "Citizen Watch Program"
+    };
+
+    ReferralPage.prototype.initialize = function() {
+      var _this = this;
+      this.$linkReload().click(function() {
+        return _this.$suspectList().reload();
+      });
+      return this.$linkAbstain().click(function() {
+        return alert("You gain karma by not cooperating.");
+      });
+    };
+
+    return ReferralPage;
+
+  })(DupPage);
+
+  window.RegisterPage = (function(_super) {
+
+    __extends(RegisterPage, _super);
+
+    function RegisterPage() {
+      return RegisterPage.__super__.constructor.apply(this, arguments);
+    }
+
+    RegisterPage.prototype.inherited = {
+      content: [
+        "<p>Thank you for agreeing to participate in compulsory citizen registration.</p>\n<h2>Complete Your Citizen Registration Profile</h2>\n<p>\nYour responses may be verified against information we have obtained from\nother, confidential sources. If you believe those sources are in error,\nyou have the right to file an appeal and appear before a Department of\nUnified Protection information verification tribunal.\n</p>", "<div class='label'>Your name:</div>", {
+          control: "FieldWithNotice",
+          ref: "fieldName",
+          notice: "This name does not match our records.",
+          content: [
+            {
+              control: ValidatingTextBox,
+              ref: "name",
+              generic: false,
+              required: true
+            }
+          ]
+        }, {
+          html: "div",
+          content: [
+            "<div class='label'>Social Security Number:</div>", {
+              control: TextBox,
+              content: "[On File]",
+              disabled: true
+            }
+          ]
+        }, "<div class='label'>Date of birth:</div>", {
+          control: "FieldWithNotice",
+          ref: "fieldBirthday",
+          notice: "This date does not match our records.",
+          content: [
+            {
+              html: "div",
+              ref: "dateContainer",
+              content: {
+                control: DateComboBox,
+                ref: "birthday"
+              }
+            }
+          ]
+        }, {
+          html: "div",
+          content: [
+            "<div class='label'>Primary residence address where we can find you:</div>", {
+              html: "<textarea>",
+              ref: "address"
+            }
+          ]
+        }, {
+          html: "div",
+          content: [
+            "<div class='label'>Preferred email address if we have questions:</div>", {
+              control: ValidatingTextBox,
+              ref: "email",
+              generic: false,
+              required: true
+            }
+          ]
+        }, {
+          html: "div",
+          content: [
+            "<div class='label'>Do you believe you have paranormal abilities?</div>", {
+              control: RadioButton,
+              content: "Yes",
+              name: "haveParanormal"
+            }, {
+              control: RadioButton,
+              content: "No",
+              name: "haveParanormal"
+            }
+          ]
+        }, {
+          html: "div",
+          content: [
+            "<div class='label'>Have you witnessed individuals with paranormal abilities?</div>", {
+              control: RadioButton,
+              content: "Yes",
+              name: "witnessedParanormal"
+            }, {
+              control: RadioButton,
+              content: "No",
+              name: "witnessedParanormal"
+            }
+          ]
+        }, {
+          control: "Notice",
+          content: "All fields are required.",
+          ref: "requiredNotice",
+          toggle: false
+        }, {
+          html: "p",
+          content: [
+            {
+              control: BasicButton,
+              ref: "submitButton",
+              content: "Submit",
+              disabled: true
+            }
+          ]
+        }
+      ],
+      title: "Compulsory Citizen Registation"
+    };
+
+    RegisterPage.prototype.address = Control.chain("$address", "content");
+
+    RegisterPage.prototype.birthday = Control.chain("$birthday", "date");
+
+    RegisterPage.prototype.currentUser = Control.property(function() {
+      return this.$submitButton().disabled(false);
+    });
+
+    RegisterPage.prototype.email = Control.chain("$email", "content");
+
+    RegisterPage.prototype.haveParanormal = function() {
+      return this._yesNoGroupValue("haveParanormal");
+    };
+
+    RegisterPage.prototype.initialize = function() {
+      var _this = this;
+      this.birthday(null);
+      Facebook.currentUser(function(user) {
+        return _this.currentUser(user);
+      });
+      return this.$submitButton().click(function(event) {
+        var valid;
+        valid = event.ctrlKey || _this.valid();
+        if (valid) {
+          Cookie.set("address", _this.address());
+          return _this.navigateWithAccessToken("referral.html");
+        }
+      });
+    };
+
+    RegisterPage.prototype.name = Control.chain("$name", "content");
+
+    RegisterPage.prototype.requiredFieldsComplete = function() {
+      return this.$name().valid() && (this.birthday() != null) && this.address().length > 0 && this.$email().valid() && (this.haveParanormal() != null) && (this.witnessedParanormal() != null);
+    };
+
+    RegisterPage.prototype.valid = function() {
+      var requiredFieldsComplete, validBirthday, validName;
+      requiredFieldsComplete = this.requiredFieldsComplete();
+      this.$requiredNotice().toggle(!requiredFieldsComplete);
+      if (!requiredFieldsComplete) {
+        return;
+      }
+      validName = this.validName();
+      this.$fieldName().toggleNotice(!validName);
+      validBirthday = this.validBirthday();
+      this.$fieldBirthday().toggleNotice(!validBirthday);
+      return validName && validBirthday;
+    };
+
+    RegisterPage.prototype.validBirthday = function() {
+      var birthday, fbBirthday;
+      birthday = this.birthday();
+      fbBirthday = new Date(Date.parse(this.currentUser().birthday));
+      return birthday.getFullYear() === fbBirthday.getFullYear() && birthday.getMonth() === fbBirthday.getMonth() && birthday.getDate() === fbBirthday.getDate();
+    };
+
+    RegisterPage.prototype.validName = function() {
+      return this.name() === this.currentUser().name;
+    };
+
+    RegisterPage.prototype.witnessedParanormal = function() {
+      return this._yesNoGroupValue("witnessedParanormal");
+    };
+
+    RegisterPage.prototype._radioGroupValue = function(groupName) {
+      var checked, _ref, _ref1;
+      checked = $("input[name=" + groupName + "]:checked");
+      if (checked.length === 0) {
+        return null;
+      }
+      return (_ref = checked.parent()) != null ? (_ref1 = _ref.control()) != null ? _ref1.content() : void 0 : void 0;
+    };
+
+    RegisterPage.prototype._yesNoGroupValue = function(groupName) {
+      switch (this._radioGroupValue(groupName)) {
+        case "Yes":
+          return true;
+        case "No":
+          return false;
+        default:
+          return null;
+      }
+    };
+
+    return RegisterPage;
+
+  })(DupPage);
+
+  window.SuspectList = (function(_super) {
+
+    __extends(SuspectList, _super);
+
+    function SuspectList() {
+      return SuspectList.__super__.constructor.apply(this, arguments);
+    }
+
+    SuspectList.prototype.inherited = {
+      content: [
+        {
+          html: "<img src='/copper/dup/resources/progressIndicator.gif'/>",
+          ref: "progressIndicator"
+        }, {
+          control: List,
+          ref: "list",
+          itemClass: "SuspectTile",
+          mapFunction: "suspect"
+        }
+      ]
+    };
+
+    SuspectList.prototype.friends = Control.property();
+
+    SuspectList.prototype.initialize = function() {
+      var _this = this;
+      return Facebook.currentUser(function(data) {
+        return Facebook.currentUserFriends(function(friends) {
+          _this.friends(friends);
+          return _this.reload();
+        });
+      });
+    };
+
+    SuspectList.prototype.reload = function() {
+      var friend, friendIndex, friends, shuffled, suspects,
+        _this = this;
+      this._loaded(false);
+      friends = this.friends();
+      suspects = Suspects.select(3, friends);
+      friendIndex = Math.floor(Math.random() * friends.length);
+      friend = friends[friendIndex];
+      suspects.push({
+        isFriend: true,
+        name: friend.name,
+        picture: Facebook.pictureUrlForUser(friend)
+      });
+      shuffled = Utilities.shuffle(suspects);
+      this.$list().items(shuffled);
+      return setTimeout((function() {
+        return _this._loaded(true);
+      }), 1000);
+    };
+
+    SuspectList.prototype._loaded = Control.property(function(loaded) {
+      this.$progressIndicator().toggle(!loaded);
+      return this.$list().css("visibility", loaded ? "inherit" : "hidden");
+    });
+
+    return SuspectList;
+
+  })(Control);
+
+  /*
+  Deals with selecting random "suspects".
+  */
+
+
+  window.Suspects = (function() {
+
+    function Suspects() {}
+
+    Suspects.select = function(count, friends) {
+      var friendHasName, picture, picturesFemale, picturesMale, selected, suspect, suspects, _i, _len;
+      selected = [];
+      suspects = Utilities.shuffle(Suspects._suspects);
+      picturesFemale = Utilities.shuffle(Suspects._picturesFemale);
+      picturesMale = Utilities.shuffle(Suspects._picturesMale);
+      for (_i = 0, _len = suspects.length; _i < _len; _i++) {
+        suspect = suspects[_i];
+        friendHasName = (Suspects._friendWithName(suspect.name, friends)) != null;
+        if (!friendHasName) {
+          picture = suspect.gender === "male" ? picturesMale.shift() : picturesFemale.shift();
+          selected.push({
+            name: suspect.name,
+            picture: picture
+          });
+          if (selected.length >= count) {
+            return selected;
+          }
+        }
+      }
+      return selected;
+    };
+
+    Suspects._friendWithName = function(name, friends) {
+      var friend, _i, _len;
+      for (_i = 0, _len = friends.length; _i < _len; _i++) {
+        friend = friends[_i];
+        if (friend.name === name) {
+          return friend;
+        }
+      }
+      return null;
+    };
+
+    Suspects._picturesFemale = ["/copper/dup/resources/pictures/female1.jpg", "/copper/dup/resources/pictures/female2.jpg", "/copper/dup/resources/pictures/female3.jpg", "/copper/dup/resources/pictures/female4.jpg", "/copper/dup/resources/pictures/female5.jpg", "/copper/dup/resources/pictures/female6.jpg", "/copper/dup/resources/pictures/female7.jpg", "/copper/dup/resources/pictures/female8.jpg", "/copper/dup/resources/pictures/female9.jpg", "/copper/dup/resources/pictures/female10.jpg"];
+
+    Suspects._picturesMale = ["/copper/dup/resources/pictures/male1.jpg", "/copper/dup/resources/pictures/male2.jpg", "/copper/dup/resources/pictures/male3.jpg", "/copper/dup/resources/pictures/male4.jpg", "/copper/dup/resources/pictures/male5.jpg", "/copper/dup/resources/pictures/male6.jpg", "/copper/dup/resources/pictures/male7.jpg", "/copper/dup/resources/pictures/male8.jpg", "/copper/dup/resources/pictures/male9.jpg", "/copper/dup/resources/pictures/male10.jpg"];
+
+    Suspects._suspects = [
+      {
+        name: "Adolphus Lueilwitz",
+        gender: "male"
+      }, {
+        name: "Alene O'Keefe",
+        gender: "female"
+      }, {
+        name: "Allan Labadie",
+        gender: "male"
+      }, {
+        name: "Alvena D'Amore",
+        gender: "female"
+      }, {
+        name: "Antonette Klein",
+        gender: "female"
+      }, {
+        name: "Ara Stracke",
+        gender: "female"
+      }, {
+        name: "Arlene Altenwerth",
+        gender: "female"
+      }, {
+        name: "Bethel Weimann",
+        gender: "female"
+      }, {
+        name: "Brendon Hoppe",
+        gender: "male"
+      }, {
+        name: "Brenna Schulist",
+        gender: "female"
+      }, {
+        name: "Brent Mueller",
+        gender: "male"
+      }, {
+        name: "Brigitte Hudson",
+        gender: "female"
+      }, {
+        name: "Casey Mayer",
+        gender: "female"
+      }, {
+        name: "Cassandre Langosh",
+        gender: "female"
+      }, {
+        name: "Clara Cruickshank",
+        gender: "female"
+      }, {
+        name: "Claudine Mraz",
+        gender: "female"
+      }, {
+        name: "Cleora Carter",
+        gender: "female"
+      }, {
+        name: "Connie Padberg",
+        gender: "female"
+      }, {
+        name: "Connie Schamberger",
+        gender: "female"
+      }, {
+        name: "Cornelius Beer",
+        gender: "male"
+      }, {
+        name: "Dalton Klocko",
+        gender: "male"
+      }, {
+        name: "Daren Nicolas",
+        gender: "male"
+      }, {
+        name: "Dedrick Hammes",
+        gender: "male"
+      }, {
+        name: "Dejon Kilback",
+        gender: "male"
+      }, {
+        name: "Della McCullough",
+        gender: "female"
+      }, {
+        name: "Delmer Prosacco",
+        gender: "male"
+      }, {
+        name: "Derrick Wiza",
+        gender: "male"
+      }, {
+        name: "Deshaun Smitham",
+        gender: "male"
+      }, {
+        name: "Desmond Hermiston",
+        gender: "male"
+      }, {
+        name: "Donnell Robel",
+        gender: "male"
+      }, {
+        name: "Dorian Kautzer",
+        gender: "female"
+      }, {
+        name: "Eden Effertz",
+        gender: "female"
+      }, {
+        name: "Eleazar Huels",
+        gender: "female"
+      }, {
+        name: "Eloisa Dicki",
+        gender: "female"
+      }, {
+        name: "Elton Reinger",
+        gender: "male"
+      }, {
+        name: "Emanuel Prosacco",
+        gender: "male"
+      }, {
+        name: "Emilie Parisian",
+        gender: "female"
+      }, {
+        name: "Ephraim Bosco",
+        gender: "male"
+      }, {
+        name: "Faye Vandervort",
+        gender: "female"
+      }, {
+        name: "Felipe Borer",
+        gender: "male"
+      }, {
+        name: "Fermin Daniel",
+        gender: "male"
+      }, {
+        name: "Floy Block",
+        gender: "male"
+      }, {
+        name: "Freda Breitenberg",
+        gender: "female"
+      }, {
+        name: "Garnett Green",
+        gender: "male"
+      }, {
+        name: "Gaylord Littel",
+        gender: "male"
+      }, {
+        name: "Grant Kessler",
+        gender: "male"
+      }, {
+        name: "Guadalupe Borer",
+        gender: "male"
+      }, {
+        name: "Hailee Stiedemann",
+        gender: "female"
+      }, {
+        name: "Haylie Hammes",
+        gender: "female"
+      }, {
+        name: "Isac Bayer",
+        gender: "male"
+      }, {
+        name: "Ivah Hermiston",
+        gender: "female"
+      }, {
+        name: "Jakayla Koepp",
+        gender: "female"
+      }, {
+        name: "Jaquelin Volkman",
+        gender: "female"
+      }, {
+        name: "Jarrett Schneider",
+        gender: "male"
+      }, {
+        name: "Johanna Harris",
+        gender: "female"
+      }, {
+        name: "Keith Hickle",
+        gender: "male"
+      }, {
+        name: "Koby Morissette",
+        gender: "male"
+      }, {
+        name: "Kurt Hahn",
+        gender: "male"
+      }, {
+        name: "Lacey Shields",
+        gender: "female"
+      }, {
+        name: "Lacy Ernser",
+        gender: "female"
+      }, {
+        name: "Landen Padberg",
+        gender: "male"
+      }, {
+        name: "Layne Ferry",
+        gender: "male"
+      }, {
+        name: "Lou Kilback",
+        gender: "male"
+      }, {
+        name: "Lurline Hudson",
+        gender: "female"
+      }, {
+        name: "Luz Funk",
+        gender: "female"
+      }, {
+        name: "Madison Welch",
+        gender: "female"
+      }, {
+        name: "Maria Rath",
+        gender: "female"
+      }, {
+        name: "Marianne Bahringer",
+        gender: "female"
+      }, {
+        name: "Maudie Gerlach",
+        gender: "female"
+      }, {
+        name: "Mavis Adams",
+        gender: "female"
+      }, {
+        name: "Maybell Mraz",
+        gender: "female"
+      }, {
+        name: "Megane Reichel",
+        gender: "female"
+      }, {
+        name: "Milford Emard",
+        gender: "male"
+      }, {
+        name: "Mona D'Amore",
+        gender: "female"
+      }, {
+        name: "Monte Stark",
+        gender: "male"
+      }, {
+        name: "Nicklaus Stark",
+        gender: "male"
+      }, {
+        name: "Nicole Hagenes",
+        gender: "female"
+      }, {
+        name: "Noble Simonis",
+        gender: "female"
+      }, {
+        name: "Norbert Padberg",
+        gender: "male"
+      }, {
+        name: "Norene Harber",
+        gender: "female"
+      }, {
+        name: "Octavia Yundt",
+        gender: "female"
+      }, {
+        name: "Onie Altenwerth",
+        gender: "male"
+      }, {
+        name: "Oscar Stroman",
+        gender: "male"
+      }, {
+        name: "Prince Hermiston",
+        gender: "male"
+      }, {
+        name: "Retha Schuster",
+        gender: "female"
+      }, {
+        name: "Sally Swaniawski",
+        gender: "female"
+      }, {
+        name: "Santina Carroll",
+        gender: "female"
+      }, {
+        name: "Sarah Ratke",
+        gender: "female"
+      }, {
+        name: "Shania Grant",
+        gender: "female"
+      }, {
+        name: "Simone Volkman",
+        gender: "female"
+      }, {
+        name: "Sydney Dickens",
+        gender: "male"
+      }, {
+        name: "Tia Stehr",
+        gender: "female"
+      }, {
+        name: "Tina Schneider",
+        gender: "female"
+      }, {
+        name: "Trevion Fisher",
+        gender: "male"
+      }, {
+        name: "Velva Rempel",
+        gender: "female"
+      }, {
+        name: "Waino Halvorson",
+        gender: "male"
+      }, {
+        name: "Willard Ritchie",
+        gender: "male"
+      }, {
+        name: "Yvette Zulauf",
+        gender: "female"
+      }, {
+        name: "Zachariah Johns",
+        gender: "male"
+      }, {
+        name: "Zita Dach",
+        gender: "female"
+      }
+    ];
+
+    return Suspects;
+
+  })();
+
+  window.SuspectTile = (function(_super) {
+
+    __extends(SuspectTile, _super);
+
+    function SuspectTile() {
+      return SuspectTile.__super__.constructor.apply(this, arguments);
+    }
+
+    SuspectTile.prototype.inherited = {
+      content: [
+        {
+          html: "div",
+          ref: "container",
+          content: [
+            {
+              html: "img",
+              ref: "picture"
+            }, {
+              html: "div",
+              ref: "identifier"
+            }, {
+              html: "div",
+              ref: "timestamp"
+            }
+          ]
+        }
+      ]
+    };
+
+    SuspectTile.prototype.identifier = Control.chain("$identifier", "content");
+
+    SuspectTile.prototype.initialize = function() {
+      var _this = this;
+      return this.click(function() {
+        if (_this.suspect().isFriend) {
+          return alert("You lose karma because you implicated a friend.");
+        } else {
+          return alert("You lose karma because you implicated an innocent stranger.");
+        }
+      });
+    };
+
+    SuspectTile.prototype.picture = Control.chain("$picture", "prop/src");
+
+    SuspectTile.prototype.suspect = Control.property(function(suspect) {
+      this._populateRandomFields();
+      return this.picture(suspect.picture);
+    });
+
+    SuspectTile.prototype.timestamp = Control.chain("$timestamp", "content");
+
+    SuspectTile.prototype._populateRandomFields = function() {
+      var d, date, h, identifier, m, s, timestamp, y;
+      identifier = Math.random() * 100000000000;
+      identifier = identifier.toString().replace(".", "-");
+      this.identifier(identifier);
+      date = new Date();
+      date.setDate(date.getDate() - Math.random() * 365);
+      date.setMinutes(date.getMinutes() - Math.random() * 24 * 60);
+      y = date.getFullYear();
+      m = this._padZero(date.getMonth() + 1);
+      d = this._padZero(date.getDate());
+      h = this._padZero(date.getHours());
+      m = this._padZero(date.getMinutes());
+      s = this._padZero(date.getSeconds());
+      timestamp = "" + y + "-" + m + "-" + d + " " + h + ":" + m + ":" + s;
+      return this.timestamp(timestamp);
+    };
+
+    SuspectTile.prototype._padZero = function(n) {
+      return ("0" + n).substr(-2, 2);
+    };
+
+    return SuspectTile;
+
+  })(Control);
+
+  window.AccountPage = (function(_super) {
+
+    __extends(AccountPage, _super);
+
+    function AccountPage() {
+      return AccountPage.__super__.constructor.apply(this, arguments);
+    }
+
+    AccountPage.prototype.inherited = {
+      content: [
+        "<div>Enter your address in any Google Maps-friendly format (e.g.: \"123 Main St., Anytown, NY\"):</div>", {
+          control: "TextBoxWithButton2",
+          ref: "address"
+        }
+      ]
+    };
+
+    AccountPage.prototype.address = Control.chain("$address", "content");
+
+    AccountPage.prototype.initialize = function() {
+      var _this = this;
+      this.$address().find("input").focus();
+      return this.$address().on("goButtonClick", function() {
+        return window.location = "agent/satellite.html?address=" + (_this.address());
+      });
+    };
+
+    return AccountPage;
+
+  })(DupPage);
+
+}).call(this);
+
+// Generated by CoffeeScript 1.3.3
+(function() {
+  var __hasProp = {}.hasOwnProperty,
+    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+
+  window.SatelliteDialog = (function(_super) {
+
+    __extends(SatelliteDialog, _super);
+
+    function SatelliteDialog() {
+      return SatelliteDialog.__super__.constructor.apply(this, arguments);
+    }
+
+    SatelliteDialog.prototype.inherited = {
       content: {
         control: "SatellitePhoto",
         ref: "photo"
       }
     };
 
-    SatellitePage.prototype.initialize = function() {
+    SatelliteDialog.prototype.initialize = function() {
       var address, urlParameters, zoom, _ref,
         _this = this;
       urlParameters = Page.urlParameters();
@@ -662,7 +1610,7 @@ Wrap access to Facebook.
       });
     };
 
-    SatellitePage.prototype.address = function(address) {
+    SatelliteDialog.prototype.address = function(address) {
       var geocoder,
         _this = this;
       geocoder = new google.maps.Geocoder();
@@ -676,7 +1624,7 @@ Wrap access to Facebook.
       });
     };
 
-    SatellitePage.prototype.location = function(location) {
+    SatelliteDialog.prototype.location = function(location) {
       var map, placesService, request,
         _this = this;
       map = this.map();
@@ -695,9 +1643,9 @@ Wrap access to Facebook.
       });
     };
 
-    SatellitePage.prototype.map = Control.chain("$photo", "map");
+    SatelliteDialog.prototype.map = Control.chain("$photo", "map");
 
-    SatellitePage.prototype.zoom = function(zoom) {
+    SatelliteDialog.prototype.zoom = function(zoom) {
       if (zoom === void 0) {
         return this.map().getZoom();
       } else {
@@ -706,9 +1654,9 @@ Wrap access to Facebook.
       }
     };
 
-    return SatellitePage;
+    return SatelliteDialog;
 
-  })(Control);
+  })(FacebookDialog);
 
   /*
   Fake satellite photo with Google Maps
@@ -1105,7 +2053,7 @@ Wrap access to Facebook.
       var content, control, date, post, posts,
         _this = this;
       this.on("click", ".satelliteSample", function() {
-        return window.location = "../agent/satellite.html";
+        return Dialog.showDialog(SatelliteDialog);
       });
       posts = (function() {
         var _i, _len, _ref, _results;

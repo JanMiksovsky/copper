@@ -56,10 +56,13 @@ module.exports = function(grunt) {
         concat: {
             js: {
                 src: [
+                    /* These initial declarations should come before the rest. */
                     "lib/*.js",
                     "build/utilities.js",
                     "build/controls.js",
                     "build/facebook.js",
+                    /* Remaining declarations can come in any order. */
+                    "build/citizen.js",
                     "build/satellite.js",
                     "build/timeline.js"
                 ],

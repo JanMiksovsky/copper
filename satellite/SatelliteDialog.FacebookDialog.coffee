@@ -1,4 +1,4 @@
-class window.SatellitePage extends Control
+class window.SatelliteDialog extends FacebookDialog
 
   inherited:
     content:
