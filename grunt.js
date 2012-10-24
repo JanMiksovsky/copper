@@ -22,6 +22,11 @@ module.exports = function(grunt) {
                 dest: "controls/controls.js",
                 options: { bare: false }
             },
+            facebook: {
+                src: sortDependencies.sortClassFiles( "facebook/*.coffee" ),
+                dest: "facebook/facebook.js",
+                options: { bare: false }
+            },
             models: {
                 src: sortDependencies.sortClassFiles( "models/*.coffee" ),
                 dest: "models/models.js",
@@ -42,19 +47,32 @@ module.exports = function(grunt) {
             js: {
                 src: [
                     "lib/*.js",
+                    "facebook/facebook.js",
                     "models/models.js",
                     "controls/controls.js"
                 ],
                 dest: "dup.js"
-            }            
+            },
+            css: {
+                src: [
+                    "facebook/facebook.css",
+                    "controls/controls.css",
+                ],
+                dest: "dup.css"
+            }
         },
         less: {
             controls: {
                 files: {
-                    "dup.css": sortDependencies.sortClassFiles( "controls/*.less" )
+                    "controls/controls.css": sortDependencies.sortClassFiles( "controls/*.less" )
                 }
             },
-            controls: {
+            facebook: {
+                files: {
+                    "facebook/facebook.css": sortDependencies.sortClassFiles( "facebook/*.less" )
+                }
+            },
+            profile: {
                 files: {
                     "profile/profile.css": sortDependencies.sortClassFiles( "profile/*.less" )
                 }
@@ -63,6 +81,6 @@ module.exports = function(grunt) {
     });
 
     // Default task.
-    grunt.registerTask( "default", "coffee concat less" );
+    grunt.registerTask( "default", "coffee less concat" );
     
 };

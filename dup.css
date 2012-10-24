@@ -1,3 +1,22 @@
+.FacebookOverlay {
+  background-color: rgba(0, 0, 0, 0.9);
+}
+
+.FacebookSlideshow {
+  background: white;
+  min-width: 900px;
+}
+.FacebookSlideshow .photoContainer {
+  background: black;
+}
+.FacebookSlideshow .photoContainer .photo {
+  display: block;
+  margin: 0 auto;
+}
+.FacebookSlideshow .rightPane {
+  width: 340px;
+}
+
 .DupPage {
   background: #173145;
   margin: 0;
