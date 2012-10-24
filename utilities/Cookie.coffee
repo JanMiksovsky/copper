@@ -1,5 +1,7 @@
 ###
 Cookie utility functions
+
+These are for cookies shared across pages within a single domain.
 ###
 
 class window.Cookie
@@ -20,4 +22,4 @@ class window.Cookie
 
   @set: ( key, value ) ->
     escaped = escape value
-    document.cookie = "#{key}=#{escaped}"
+    document.cookie = "#{key}=#{escaped};path=/"

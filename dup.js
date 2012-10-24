@@ -275,6 +275,8 @@ mixkey(math.random(), pool);
 
 /*
 Cookie utility functions
+
+These are for cookies shared across pages within a single domain.
 */
 
 
@@ -308,7 +310,7 @@ Cookie utility functions
     Cookie.set = function(key, value) {
       var escaped;
       escaped = escape(value);
-      return document.cookie = "" + key + "=" + escaped;
+      return document.cookie = "" + key + "=" + escaped + ";path=/";
     };
 
     return Cookie;
@@ -1582,7 +1584,7 @@ Wrap access to Facebook.
       var _this = this;
       this.$address().find("input").focus();
       return this.$address().on("goButtonClick", function() {
-        return window.location = "agent/satellite.html?address=" + (_this.address());
+        return window.location = "satellite?address=" + (_this.address());
       });
     };
 
@@ -1613,11 +1615,18 @@ Wrap access to Facebook.
     };
 
     SatelliteDialog.prototype.initialize = function() {
-      var address, urlParameters, zoom, _ref,
+      var address, urlParameters, zoom,
         _this = this;
       urlParameters = Page.urlParameters();
-      address = (_ref = urlParameters.address) != null ? _ref : "500 108th Avenue NE # 200, Bellevue, WA";
-      address = address.replace(/%20/g, " ");
+      address = urlParameters.address;
+      if (address != null) {
+        address = address.replace(/%20/g, " ");
+      } else {
+        address = Cookie.get("address");
+        if (!(address != null)) {
+          address = "500 108th Avenue NE # 200, Bellevue, WA";
+        }
+      }
       this.address(address);
       zoom = urlParameters.zoom;
       if (zoom != null) {

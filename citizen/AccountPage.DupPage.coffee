@@ -11,4 +11,4 @@ class window.AccountPage extends DupPage
   initialize: ->
     @$address().find( "input" ).focus()
     @$address().on "goButtonClick", =>
-      window.location = "agent/satellite.html?address=#{@address()}"
+      window.location = "satellite?address=#{@address()}"

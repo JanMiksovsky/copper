@@ -7,8 +7,13 @@ class window.SatelliteDialog extends FacebookDialog
   initialize: ->
 
     urlParameters = Page.urlParameters()
-    address = urlParameters.address ? "500 108th Avenue NE # 200, Bellevue, WA"
-    address = address.replace /%20/g, " "
+    address = urlParameters.address
+    if address?
+      address = address.replace /%20/g, " "
+    else
+      address = Cookie.get "address"
+      if not address?
+        address = "500 108th Avenue NE # 200, Bellevue, WA"
     @address address
 
     zoom = urlParameters.zoom
