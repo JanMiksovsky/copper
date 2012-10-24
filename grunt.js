@@ -57,7 +57,8 @@ module.exports = function(grunt) {
                 src: [
                     "facebook/facebook.css",
                     "controls/controls.css",
-                ]
+                ],
+                dest: "dup.css"
             }
         },
         less: {
