@@ -285,15 +285,18 @@ Cookie utility functions
     function Cookie() {}
 
     Cookie.cookies = function() {
-      var assignment, cookies, key, parts, value, _i, _len, _ref;
+      var assignment, cookies, documentCookie, key, parts, value, _i, _len, _ref;
+      documentCookie = document.cookie;
       cookies = {};
-      _ref = document.cookie.split(";");
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        assignment = _ref[_i];
-        parts = assignment.split("=");
-        key = parts[0].trim();
-        value = unescape(parts[1].trim());
-        cookies[key] = value;
+      if ((documentCookie != null ? documentCookie.length : void 0) > 0) {
+        _ref = documentCookie.split(";");
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          assignment = _ref[_i];
+          parts = assignment.split("=");
+          key = parts[0].trim();
+          value = unescape(parts[1].trim());
+          cookies[key] = value;
+        }
       }
       return cookies;
     };
@@ -754,9 +757,16 @@ Wrap access to Facebook.
     HomePage.prototype.inherited = {
       content: [
         "<p>All citizens must register</p>", {
-          control: Link,
-          ref: "linkRegister",
+          control: BasicButton,
+          ref: "buttonRegister",
           content: "Register now"
+        }, {
+          html: "p",
+          content: {
+            control: Link,
+            ref: "linkAbout",
+            content: "What's this?"
+          }
         }
       ],
       title: "Department of Unified Protection"
@@ -764,8 +774,16 @@ Wrap access to Facebook.
 
     HomePage.prototype.initialize = function() {
       var _this = this;
-      return this.$linkRegister().click(function() {
+      this.$buttonRegister().click(function() {
         return Facebook.authorize("136995693107715", "http://localhost/copper/dup/citizen/register.html", ["email", "user_birthday"]);
+      });
+      return this.$linkAbout().click(function() {
+        return Dialog.showDialog(Dialog, {
+          cancelOnOutsideClick: true,
+          closeOnInsideClick: true,
+          content: "<h1>This is a game</h1>\n<p>\nThis game is produced by [SCEA?] and [more legalese here].\nAll characters appearing in this work are fictitious. Any resemblance\nto real persons, living or dead, is purely coincidental.\n</p>",
+          width: "500px"
+        });
       });
     };
 
