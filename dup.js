@@ -306,9 +306,10 @@ Cookie utility functions
     };
 
     Cookie.set = function(key, value) {
-      var escaped;
+      var domain, escaped;
+      domain = window.location.hostname;
       escaped = escape(value);
-      return document.cookie = "" + key + "=" + escaped;
+      return document.cookie = "" + key + "=" + escaped + ";domain=." + domain + ";path=/";
     };
 
     return Cookie;
@@ -1613,11 +1614,18 @@ Wrap access to Facebook.
     };
 
     SatelliteDialog.prototype.initialize = function() {
-      var address, urlParameters, zoom, _ref,
+      var address, urlParameters, zoom,
         _this = this;
       urlParameters = Page.urlParameters();
-      address = (_ref = urlParameters.address) != null ? _ref : "500 108th Avenue NE # 200, Bellevue, WA";
-      address = address.replace(/%20/g, " ");
+      address = urlParameters.address;
+      if (address != null) {
+        address = address.replace(/%20/g, " ");
+      } else {
+        address = Cookie.get("address");
+        if (!(address != null)) {
+          address = "500 108th Avenue NE # 200, Bellevue, WA";
+        }
+      }
       this.address(address);
       zoom = urlParameters.zoom;
       if (zoom != null) {

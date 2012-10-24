@@ -19,5 +19,6 @@ class window.Cookie
     Cookie.cookies()[ key ]
 
   @set: ( key, value ) ->
+    domain = window.location.hostname
     escaped = escape value
-    document.cookie = "#{key}=#{escaped}"
+    document.cookie = "#{key}=#{escaped};domain=.#{domain};path=/"
