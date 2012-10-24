@@ -328,8 +328,11 @@
       position: "Project Manager",
       posts: [
         {
-          content: "First!",
-          date: "October 19"
+          content: "I had tix for tonight's show at the Showbox, but there was\nsome sort of security checkpoint thing set up on I-5, and it took HOURS\nto get through it. We missed the opening act, and I only show half the\nshow. So. Pissed.",
+          date: "April 3"
+        }, {
+          content: "I'm going to give Facebook another try",
+          date: "March 19"
         }
       ],
       profilePhoto: "../resources/profilePhoto.jpg"
