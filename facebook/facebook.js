@@ -42,7 +42,31 @@
     }
 
     FacebookSlideshow.prototype.inherited = {
-      content: "Hello"
+      content: {
+        control: HorizontalPanels,
+        content: {
+          html: "div",
+          ref: "photoContainer",
+          content: {
+            control: FlickrInterestingPhoto,
+            ref: "photo",
+            photoSize: "z"
+          }
+        },
+        right: {
+          html: "div",
+          ref: "rightPane",
+          content: "Hello, world"
+        }
+      },
+      visibility: false
+    };
+
+    FacebookSlideshow.prototype.initialize = function() {
+      var _this = this;
+      return this.$photo().load(function() {
+        return _this.visibility(true);
+      });
     };
 
     return FacebookSlideshow;
