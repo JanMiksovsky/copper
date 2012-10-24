@@ -333,7 +333,7 @@
       var content, control, date, post, posts,
         _this = this;
       this.on("click", ".satelliteSample", function() {
-        return typeof console !== "undefined" && console !== null ? console.log("satellitePhotoClick") : void 0;
+        return window.location = "../agent/satellite.html";
       });
       posts = (function() {
         var _i, _len, _ref, _results;

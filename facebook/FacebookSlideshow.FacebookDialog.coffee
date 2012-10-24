@@ -4,12 +4,13 @@ class window.FacebookSlideshow extends FacebookDialog
     content:
       control: HorizontalPanels
       content:
-        html: "div", ref: "photoContainer", content:
-          control: FlickrInterestingPhoto, ref: "photo", photoSize: "z"
+        html: "div", ref: "FacebookSlideshow_content"
       right:
         html: "div", ref: "rightPane", content: "Hello, world"
     visibility: false
 
+  content: Control.chain "$FacebookSlideshow_content", "content"
+  
   initialize: ->
     @$photo().load =>
       @visibility true
