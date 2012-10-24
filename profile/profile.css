@@ -221,3 +221,7 @@
   color: gray;
   line-height: 15px;
 }
+.TimelinePost .TimelinePost_content > img {
+  margin: 1em 0;
+  width: 100%;
+}

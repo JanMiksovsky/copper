@@ -354,21 +354,43 @@
 
     HeroinePage.prototype._posts = [
       {
-        date: "April 3",
-        content: "I had tix for tonight's show at the Showbox, but there was\nsome sort of security checkpoint thing set up on I-5, and it took HOURS\nto get through it. We missed the opening act, and I only show half the\nshow. So. Pissed."
+        date: "July 10",
+        content: ["Apparently those government people are interested in the places, but\nwe don't know where they are. Can anyone help?"]
       }, {
-        date: "March 26",
+        date: "May 15",
+        content: {
+          control: FlickrInterestingPhoto
+        }
+      }, {
+        date: "April 8",
         content: [
-          "<p>Apparently those government people are interested in the places, but\nwe don't know where they are. Can anyone help?</p>", {
-            control: FlickrInterestingPhoto,
-            width: "100%"
+          {
+            control: LoremIpsum,
+            sentences: 1
+          }, {
+            control: FlickrInterestingPhoto
           }
         ]
       }, {
-        date: "March 21",
+        date: "April 3",
+        content: "I had tix for tonight's show at the Showbox, but there was\nsome sort of security checkpoint thing set up on I-5, and it took HOURS\nto get through it. We missed the opening act, and I only show half the\nshow. So. Pissed."
+      }, {
+        date: "March 29",
         content: {
           control: LoremIpsum
         }
+      }, {
+        date: "March 22",
+        content: {
+          control: LoremIpsum
+        }
+      }, {
+        date: "March 21",
+        content: [
+          "Love this", {
+            control: FlickrInterestingPhoto
+          }
+        ]
       }, {
         date: "March 19",
         content: "My friends keep bugging me to come back, so I'm going to give Facebook\nanother try."

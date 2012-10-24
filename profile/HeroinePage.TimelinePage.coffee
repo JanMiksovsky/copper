@@ -24,6 +24,21 @@ class window.HeroinePage extends TimelinePage
     @posts posts
 
   _posts: [
+    date: "July 10", content: [
+      """
+      Apparently those government people are interested in the places, but
+      we don't know where they are. Can anyone help?
+      """
+    ]
+  ,
+    date: "May 15", content: control: FlickrInterestingPhoto
+  ,
+    date: "April 8", content: [
+      control: LoremIpsum, sentences: 1
+    ,
+      control: FlickrInterestingPhoto
+    ]
+  ,
     date: "April 3",  content: """
       I had tix for tonight's show at the Showbox, but there was
       some sort of security checkpoint thing set up on I-5, and it took HOURS
@@ -31,16 +46,14 @@ class window.HeroinePage extends TimelinePage
       show. So. Pissed.
     """
   ,
-    date: "March 26", content: [
-      """
-      <p>Apparently those government people are interested in the places, but
-      we don't know where they are. Can anyone help?</p>
-      """
-    ,
-      control: FlickrInterestingPhoto, width: "100%"
-    ]
+    date: "March 29", content: control: LoremIpsum
   ,
-    date: "March 21", content: control: LoremIpsum
+    date: "March 22", content: control: LoremIpsum
+  ,
+    date: "March 21", content: [
+      "Love this"
+      control: FlickrInterestingPhoto
+    ]
   ,
     date: "March 19", content: """
       My friends keep bugging me to come back, so I'm going to give Facebook
