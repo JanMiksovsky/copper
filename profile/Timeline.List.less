@@ -4,4 +4,14 @@
   padding: 15px 0;
   position: relative;
   list-style: none;
+
+  > *:nth-child( odd ) {
+    clear: left;
+    float: left;
+  }
+
+  > *:nth-child( even ) {
+    clear: right;
+    float: right;
+  }
 }

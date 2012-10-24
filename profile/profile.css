@@ -38,6 +38,14 @@
   position: relative;
   list-style: none;
 }
+.Timeline > *:nth-child( odd ) {
+  clear: left;
+  float: left;
+}
+.Timeline > *:nth-child( even ) {
+  clear: right;
+  float: right;
+}
 
 .TimelineAboutTile {
   display: block;

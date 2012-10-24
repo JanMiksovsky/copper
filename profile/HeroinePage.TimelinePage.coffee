@@ -21,7 +21,13 @@ class window.HeroinePage extends TimelinePage
       """
       date: "April 3"
     ,
-      content: "I'm going to give Facebook another try"
+      content: "This post should go on the right."
+      date: "March 26"
+    ,
+      content: """
+      My friends keep bugging me to come back, so I'm going to give Facebook
+      another try.
+      """
       date: "March 19"
     ]
     profilePhoto: "../resources/profilePhoto.jpg"
