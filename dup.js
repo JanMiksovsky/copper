@@ -2053,7 +2053,7 @@ Wrap access to Facebook.
       var content, control, date, post, posts,
         _this = this;
       this.on("click", ".satelliteSample", function() {
-        return Dialog.showDialog(SatelliteDialog);
+        return window.location = "../satellite";
       });
       posts = (function() {
         var _i, _len, _ref, _results;

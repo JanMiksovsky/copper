@@ -23,8 +23,16 @@ html {
 }
 </style>
 
+<script>
+$( function() {
+    Dialog.showDialog( SatelliteDialog, {
+        cancelOnOutsideClick: false
+    });
+});
+</script>
+
 </head>
 
-<body data-create-controls="true" data-control="SatellitePage"/>
+<body data-create-controls="true"/>
 
 </html>
