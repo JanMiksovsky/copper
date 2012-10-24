@@ -326,20 +326,54 @@
       major: "English",
       name: "Ann Williams",
       position: "Project Manager",
-      posts: [
-        {
-          content: "I had tix for tonight's show at the Showbox, but there was\nsome sort of security checkpoint thing set up on I-5, and it took HOURS\nto get through it. We missed the opening act, and I only show half the\nshow. So. Pissed.",
-          date: "April 3"
-        }, {
-          content: "This post should go on the right.",
-          date: "March 26"
-        }, {
-          content: "My friends keep bugging me to come back, so I'm going to give Facebook\nanother try.",
-          date: "March 19"
-        }
-      ],
       profilePhoto: "../resources/profilePhoto.jpg"
     };
+
+    HeroinePage.prototype.initialize = function() {
+      var content, control, date, post, posts;
+      posts = (function() {
+        var _i, _len, _ref, _results;
+        _ref = this._posts;
+        _results = [];
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          post = _ref[_i];
+          date = post.date, content = post.content;
+          control = Control.create().json({
+            content: content
+          });
+          content = control.content();
+          _results.push({
+            date: date,
+            content: content
+          });
+        }
+        return _results;
+      }).call(this);
+      return this.posts(posts);
+    };
+
+    HeroinePage.prototype._posts = [
+      {
+        date: "April 3",
+        content: "I had tix for tonight's show at the Showbox, but there was\nsome sort of security checkpoint thing set up on I-5, and it took HOURS\nto get through it. We missed the opening act, and I only show half the\nshow. So. Pissed."
+      }, {
+        date: "March 26",
+        content: [
+          "<p>Apparently those government people are interested in the places, but\nwe don't know where they are. Can anyone help?</p>", {
+            control: FlickrInterestingPhoto,
+            width: "100%"
+          }
+        ]
+      }, {
+        date: "March 21",
+        content: {
+          control: LoremIpsum
+        }
+      }, {
+        date: "March 19",
+        content: "My friends keep bugging me to come back, so I'm going to give Facebook\nanother try."
+      }
+    ];
 
     return HeroinePage;
 
