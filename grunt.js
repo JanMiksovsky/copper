@@ -17,24 +17,34 @@ module.exports = function(grunt) {
     // Project configuration.
     grunt.initConfig({
         coffee: {
+            citizen: {
+                src: sortDependencies.sortClassFiles( "citizen/*.coffee" ),
+                dest: "build/citizen.js",
+                options: { bare: false }
+            },
             controls: {
                 src: sortDependencies.sortClassFiles( "controls/*.coffee" ),
-                dest: "controls/controls.js",
+                dest: "build/controls.js",
                 options: { bare: false }
             },
             facebook: {
                 src: sortDependencies.sortClassFiles( "facebook/*.coffee" ),
-                dest: "facebook/facebook.js",
+                dest: "build/facebook.js",
                 options: { bare: false }
             },
-            models: {
-                src: sortDependencies.sortClassFiles( "models/*.coffee" ),
-                dest: "models/models.js",
+            satellite: {
+                src: sortDependencies.sortClassFiles( "satellite/*.coffee" ),
+                dest: "build/satellite.js",
                 options: { bare: false }
             },
-            profile: {
-                src: sortDependencies.sortClassFiles( "profile/*.coffee" ),
-                dest: "profile/profile.js",
+            timeline: {
+                src: sortDependencies.sortClassFiles( "timeline/*.coffee" ),
+                dest: "build/timeline.js",
+                options: { bare: false }
+            },
+            utilities: {
+                src: sortDependencies.sortClassFiles( "utilities/*.coffee" ),
+                dest: "build/utilities.js",
                 options: { bare: false }
             },
             app: {
@@ -47,34 +57,45 @@ module.exports = function(grunt) {
             js: {
                 src: [
                     "lib/*.js",
-                    "facebook/facebook.js",
-                    "models/models.js",
-                    "controls/controls.js"
+                    "build/utilities.js",
+                    "build/controls.js",
+                    "build/facebook.js",
+                    "build/satellite.js",
+                    "build/timeline.js"
                 ],
                 dest: "dup.js"
             },
             css: {
                 src: [
-                    "facebook/facebook.css",
-                    "controls/controls.css",
+                    "build/*.css"
                 ],
                 dest: "dup.css"
             }
         },
         less: {
+            citizen: {
+                files: {
+                    "build/citizen.css": sortDependencies.sortClassFiles( "citizen/*.less" )
+                }
+            },
             controls: {
                 files: {
-                    "controls/controls.css": sortDependencies.sortClassFiles( "controls/*.less" )
+                    "build/controls.css": sortDependencies.sortClassFiles( "controls/*.less" )
                 }
             },
             facebook: {
                 files: {
-                    "facebook/facebook.css": sortDependencies.sortClassFiles( "facebook/*.less" )
+                    "build/facebook.css": sortDependencies.sortClassFiles( "facebook/*.less" )
                 }
             },
-            profile: {
+            satellite: {
                 files: {
-                    "profile/profile.css": sortDependencies.sortClassFiles( "profile/*.less" )
+                    "build/satellite.css": sortDependencies.sortClassFiles( "satellite/*.less" )
+                }
+            },
+            timeline: {
+                files: {
+                    "build/timeline.css": sortDependencies.sortClassFiles( "timeline/*.less" )
                 }
             }
         }
