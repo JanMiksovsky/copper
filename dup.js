@@ -1421,19 +1421,19 @@ Cookie utility functions
           html: "div",
           ref: "caption"
         }, {
-          html: "<img src='resources/crosshairs.png'/>",
+          html: "<img src='../resources/crosshairs.png'/>",
           ref: "crosshairs1",
           "class": "crosshairs"
         }, {
-          html: "<img src='resources/crosshairs.png'/>",
+          html: "<img src='../resources/crosshairs.png'/>",
           ref: "crosshairs2",
           "class": "crosshairs"
         }, {
-          html: "<img src='resources/crosshairs.png'/>",
+          html: "<img src='../resources/crosshairs.png'/>",
           ref: "crosshairs3",
           "class": "crosshairs"
         }, {
-          html: "<img src='resources/crosshairs.png'/>",
+          html: "<img src='../resources/crosshairs.png'/>",
           ref: "crosshairs4",
           "class": "crosshairs"
         }

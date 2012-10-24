@@ -330,7 +330,11 @@
     };
 
     HeroinePage.prototype.initialize = function() {
-      var content, control, date, post, posts;
+      var content, control, date, post, posts,
+        _this = this;
+      this.on("click", ".satelliteSample", function() {
+        return typeof console !== "undefined" && console !== null ? console.log("satellitePhotoClick") : void 0;
+      });
       posts = (function() {
         var _i, _len, _ref, _results;
         _ref = this._posts;
@@ -355,9 +359,34 @@
     HeroinePage.prototype._posts = [
       {
         date: "July 10",
-        content: ["Apparently those government people are interested in the places, but\nwe don't know where they are. Can anyone help?"]
+        content: [
+          "Apparently those government people are interested in these places, but\nwe don't know where they are. If we could just figure out what they have\nin common, we could help put a stop to whatever they have planned. Can\nanyone help?", {
+            html: "<img class='satelliteSample' src='../resources/satelliteSample.png'/>"
+          }
+        ]
+      }, {
+        date: "June 2",
+        content: [
+          {
+            control: LoremIpsum,
+            sentences: 1
+          }, {
+            control: FlickrInterestingPhoto
+          }
+        ]
+      }, {
+        date: "May 20",
+        content: {
+          control: LoremIpsum
+        }
       }, {
         date: "May 15",
+        content: {
+          control: LoremIpsum,
+          sentences: 1
+        }
+      }, {
+        date: "April 27",
         content: {
           control: FlickrInterestingPhoto
         }

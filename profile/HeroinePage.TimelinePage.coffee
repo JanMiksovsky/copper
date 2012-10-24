@@ -15,6 +15,8 @@ class window.HeroinePage extends TimelinePage
     profilePhoto: "../resources/profilePhoto.jpg"
 
   initialize: ->
+    @on "click", ".satelliteSample", =>
+      console?.log "satellitePhotoClick"
     # TODO: Come up with better way to turn JSON for posts into live controls.
     posts = for post in @_posts
       { date, content } = post
@@ -26,12 +28,26 @@ class window.HeroinePage extends TimelinePage
   _posts: [
     date: "July 10", content: [
       """
-      Apparently those government people are interested in the places, but
-      we don't know where they are. Can anyone help?
+      Apparently those government people are interested in these places, but
+      we don't know where they are. If we could just figure out what they have
+      in common, we could help put a stop to whatever they have planned. Can
+      anyone help?
       """
+    ,
+      html: "<img class='satelliteSample' src='../resources/satelliteSample.png'/>"
     ]
   ,
-    date: "May 15", content: control: FlickrInterestingPhoto
+    date: "June 2", content: [
+      control: LoremIpsum, sentences: 1
+    ,
+      control: FlickrInterestingPhoto
+    ]
+  ,
+    date: "May 20", content: control: LoremIpsum
+  ,
+    date: "May 15", content: control: LoremIpsum, sentences: 1
+  ,
+    date: "April 27", content: control: FlickrInterestingPhoto
   ,
     date: "April 8", content: [
       control: LoremIpsum, sentences: 1

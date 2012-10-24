@@ -198,6 +198,10 @@
   width: 411px;
 }
 
+.HeroinePage .satelliteSample {
+  cursor: pointer;
+}
+
 .TimelinePost .byline {
   border-bottom: 1px solid #E5E5E5;
   margin-bottom: 5px;
