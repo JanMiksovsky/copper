@@ -31,12 +31,18 @@ class window.HomePage extends DupPage
 
   # Send the user to the registration page.
   register: ->
+    # App id depends on whether we're running locally or in production.
+    applicationId = if window.location.hostname === "localhost" then
+      "136995693107715"
+    else
+      "400736616662108"
     # Facebook auth needs an absolute URL, but we want this app to be able to
     # run in multiple locations (localhost, etc.), so we build a URL ourselves.
     parts = window.location.href.split "/"
     parts[ parts.length - 1 ] = "register.html" # Replace page
     url = parts.join "/"
-    Facebook.authorize "136995693107715", url, [ "email", "user_birthday" ]
+
+    Facebook.authorize , url, [ "email", "user_birthday" ]
 
   test: ->
     $.post "http://localhost:5000/verify/jan@miksovsky.com", null, ( data ) =>
