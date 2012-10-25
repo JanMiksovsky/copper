@@ -98,7 +98,7 @@ class window.RegisterPage extends DupPage
   initialize: ->
     @birthday null
     Facebook.currentUser ( user ) => @currentUser user
-    @$submitButton().click ( event )=>
+    @$submitButton().click ( event ) =>
       # TODO: Remove ability to skip validation by holding down CTRL.
       valid = event.ctrlKey or @valid()
       if valid
