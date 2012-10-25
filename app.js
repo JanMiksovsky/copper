@@ -6,7 +6,7 @@ Basic web server in Node.js + Express
 
 
 (function() {
-  var app, fs, nodemailer, port, server, smtpTransport, verificationMessage, _ref;
+  var app, fs, nodemailer, port, sendFile, server, smtpTransport, verificationMessage, _ref;
 
   app = require("express")();
 
@@ -21,8 +21,20 @@ Basic web server in Node.js + Express
   server.listen(port);
 
   app.get(/(.*)/, function(request, response) {
-    var filePath;
-    filePath = request.params[0];
+    if (typeof console !== "undefined" && console !== null) {
+      console.log("get: " + request.params[0]);
+    }
+    return sendFile(request.params[0], response);
+  });
+
+  app.post(/(.*)/, function(request, response) {
+    if (typeof console !== "undefined" && console !== null) {
+      console.log("post: " + request.params[0]);
+    }
+    return sendFile(request.params[0], response);
+  });
+
+  sendFile = function(filePath, response) {
     if (filePath === "/") {
       filePath = "index.html";
     }
@@ -30,13 +42,10 @@ Basic web server in Node.js + Express
       filePath = "/" + filePath;
     }
     filePath = "" + __dirname + "/client" + filePath;
-    if (typeof console !== "undefined" && console !== null) {
-      console.log("get: " + filePath);
-    }
     if (fs.existsSync(filePath)) {
       return response.sendfile(filePath);
     }
-  });
+  };
 
   smtpTransport = nodemailer.createTransport("SMTP", {
     service: "Gmail",

@@ -12,13 +12,21 @@ server.listen port
 
 # Very basic file server.
 app.get /(.*)/, ( request, response ) ->
-  filePath = request.params[0]
+  console?.log "get: #{request.params[0]}"
+  sendFile request.params[0], response
+
+# Also handle POSTs, since that's how Facebook wants to get a canvas page.
+app.post /(.*)/, ( request, response ) ->
+  console?.log "post: #{request.params[0]}"
+  sendFile request.params[0], response
+
+# Send the indicated file (if it exists) using the indicated response.
+sendFile = ( filePath, response ) ->
   if filePath == "/"
     filePath = "index.html"
   if filePath.substr( 0, 1 ) != "/"
     filePath = "/#{filePath}"
   filePath = "#{__dirname}/client#{filePath}"
-  console?.log "get: #{filePath}"
   if fs.existsSync filePath
     response.sendfile filePath
 
