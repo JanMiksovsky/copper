@@ -9,10 +9,10 @@
 
 module.exports = function(grunt) {
 
-    grunt.loadTasks( "../../quickui/grunt" );
+    grunt.loadTasks( "../quickui/grunt" );
     grunt.loadNpmTasks( "grunt-contrib-less" );
 
-    var sortDependencies = require( "../../quickui/grunt/sortDependencies.js" );
+    var sortDependencies = require( "sort-dependencies" );
 
     // Project configuration.
     grunt.initConfig({
@@ -23,17 +23,17 @@ module.exports = function(grunt) {
                 options: { bare: false }
             },
             controls: {
-                src: sortDependencies.sortClassFiles( "controls/*.coffee" ),
+                src: sortDependencies.sortFiles( "controls/*.coffee" ),
                 dest: "build/controls.js",
                 options: { bare: false }
             },
             facebook: {
-                src: sortDependencies.sortClassFiles( "facebook/*.coffee" ),
+                src: sortDependencies.sortFiles( "facebook/*.coffee" ),
                 dest: "build/facebook.js",
                 options: { bare: false }
             },
             missions: {
-                src: sortDependencies.sortClassFiles(
+                src: sortDependencies.sortFiles(
                     "citizen/*.coffee",
                     "satellite/*.coffee",
                     "terminal/*.coffee",
@@ -43,7 +43,7 @@ module.exports = function(grunt) {
                 options: { bare: false }
             },
             os: {
-                src: sortDependencies.sortClassFiles(
+                src: sortDependencies.sortFiles(
                     "terminal/shell/*.coffee",
                     "terminal/commands/*.coffee"
                 ),
@@ -51,7 +51,7 @@ module.exports = function(grunt) {
                 options: { bare: false }
             },
             utilities: {
-                src: sortDependencies.sortClassFiles( "utilities/*.coffee" ),
+                src: sortDependencies.sortFiles( "utilities/*.coffee" ),
                 dest: "build/utilities.js",
                 options: { bare: false }
             }
@@ -74,7 +74,7 @@ module.exports = function(grunt) {
         less: {
             all: {
                 files: {
-                    "copper.css": sortDependencies.sortClassFiles( "*/*.less" )
+                    "copper.css": sortDependencies.sortFiles( "*/*.less" )
                 }
             }
         }

@@ -780,7 +780,7 @@ Wrap access to Facebook.
     HomePage.prototype.initialize = function() {
       var _this = this;
       this.$buttonRegister().click(function() {
-        return Facebook.authorize("136995693107715", "http://localhost/copper/dup/citizen/register.html", ["email", "user_birthday"]);
+        return Facebook.authorize("136995693107715", "http://localhost/copper/citizen/register.html", ["email", "user_birthday"]);
       });
       return this.$linkAbout().click(function() {
         return Dialog.showDialog(Dialog, {

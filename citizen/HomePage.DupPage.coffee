@@ -13,7 +13,7 @@ class window.HomePage extends DupPage
 
   initialize: ->
     @$buttonRegister().click =>
-      Facebook.authorize "136995693107715", "http://localhost/copper/dup/citizen/register.html", [ "email", "user_birthday" ]
+      Facebook.authorize "136995693107715", "http://localhost/copper/citizen/register.html", [ "email", "user_birthday" ]
     @$linkAbout().click =>
       Dialog.showDialog Dialog,
         cancelOnOutsideClick: true
