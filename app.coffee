@@ -16,8 +16,9 @@ app.get /(.*)/, ( request, response ) ->
   if filePath == "/"
     filePath = "index.html"
   if filePath.substr( 0, 1 ) != "/"
-    filePath = "/client/#{filePath}"
-  filePath = __dirname + filePath
+    filePath = "/#{filePath}"
+  filePath = "#{__dirname}/client#{filePath}"
+  console?.log "get: #{filePath}"
   if fs.existsSync filePath
     response.sendfile filePath
 

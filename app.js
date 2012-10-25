@@ -27,9 +27,12 @@ Basic web server in Node.js + Express
       filePath = "index.html";
     }
     if (filePath.substr(0, 1) !== "/") {
-      filePath = "/client/" + filePath;
+      filePath = "/" + filePath;
     }
-    filePath = __dirname + filePath;
+    filePath = "" + __dirname + "/client" + filePath;
+    if (typeof console !== "undefined" && console !== null) {
+      console.log("get: " + filePath);
+    }
     if (fs.existsSync(filePath)) {
       return response.sendfile(filePath);
     }
