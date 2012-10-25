@@ -780,7 +780,7 @@ Wrap access to Facebook.
     HomePage.prototype.initialize = function() {
       var _this = this;
       this.$buttonRegister().click(function() {
-        return Facebook.authorize("136995693107715", "http://localhost/copper/citizen/register.html", ["email", "user_birthday"]);
+        return Facebook.authorize("136995693107715", "http://localhost/copper/client/register.html", ["email", "user_birthday"]);
       });
       return this.$linkAbout().click(function() {
         return Dialog.showDialog(Dialog, {
@@ -1080,7 +1080,7 @@ Wrap access to Facebook.
     SuspectList.prototype.inherited = {
       content: [
         {
-          html: "<img src='/copper/resources/progressIndicator.gif'/>",
+          html: "<img src='resources/progressIndicator.gif'/>",
           ref: "progressIndicator"
         }, {
           control: List,
@@ -1178,9 +1178,9 @@ Wrap access to Facebook.
       return null;
     };
 
-    Suspects._picturesFemale = ["/copper/resources/pictures/female1.jpg", "/copper/resources/pictures/female2.jpg", "/copper/resources/pictures/female3.jpg", "/copper/resources/pictures/female4.jpg", "/copper/resources/pictures/female5.jpg", "/copper/resources/pictures/female6.jpg", "/copper/resources/pictures/female7.jpg", "/copper/resources/pictures/female8.jpg", "/copper/resources/pictures/female9.jpg", "/copper/resources/pictures/female10.jpg"];
+    Suspects._picturesFemale = ["resources/pictures/female1.jpg", "resources/pictures/female2.jpg", "resources/pictures/female3.jpg", "resources/pictures/female4.jpg", "resources/pictures/female5.jpg", "resources/pictures/female6.jpg", "resources/pictures/female7.jpg", "resources/pictures/female8.jpg", "resources/pictures/female9.jpg", "resources/pictures/female10.jpg"];
 
-    Suspects._picturesMale = ["/copper/resources/pictures/male1.jpg", "/copper/resources/pictures/male2.jpg", "/copper/resources/pictures/male3.jpg", "/copper/resources/pictures/male4.jpg", "/copper/resources/pictures/male5.jpg", "/copper/resources/pictures/male6.jpg", "/copper/resources/pictures/male7.jpg", "/copper/resources/pictures/male8.jpg", "/copper/resources/pictures/male9.jpg", "/copper/resources/pictures/male10.jpg"];
+    Suspects._picturesMale = ["resources/pictures/male1.jpg", "resources/pictures/male2.jpg", "resources/pictures/male3.jpg", "resources/pictures/male4.jpg", "resources/pictures/male5.jpg", "resources/pictures/male6.jpg", "resources/pictures/male7.jpg", "resources/pictures/male8.jpg", "resources/pictures/male9.jpg", "resources/pictures/male10.jpg"];
 
     Suspects._suspects = [
       {
@@ -1675,19 +1675,19 @@ Wrap access to Facebook.
           html: "div",
           ref: "caption"
         }, {
-          html: "<img src='../resources/crosshairs.png'/>",
+          html: "<img src='resources/crosshairs.png'/>",
           ref: "crosshairs1",
           "class": "crosshairs"
         }, {
-          html: "<img src='../resources/crosshairs.png'/>",
+          html: "<img src='resources/crosshairs.png'/>",
           ref: "crosshairs2",
           "class": "crosshairs"
         }, {
-          html: "<img src='../resources/crosshairs.png'/>",
+          html: "<img src='resources/crosshairs.png'/>",
           ref: "crosshairs3",
           "class": "crosshairs"
         }, {
-          html: "<img src='../resources/crosshairs.png'/>",
+          html: "<img src='resources/crosshairs.png'/>",
           ref: "crosshairs4",
           "class": "crosshairs"
         }
@@ -2223,13 +2223,13 @@ Wrap access to Facebook.
       cityPage: "http://www.facebook.com/pages/Bellevue-Washington/111723635511834",
       college: "Harvey Mudd College",
       collegePage: "http://www.facebook.com/pages/Harvey-Mudd-College/107892159239091",
-      coverPhoto: "../resources/coverPhoto.jpg",
+      coverPhoto: "resources/coverPhoto.jpg",
       employer: "Microsoft Corporation",
       employerPage: "http://www.facebook.com/Microsoft",
       major: "English",
       name: "Ann Williams",
       position: "Project Manager",
-      profilePhoto: "../resources/profilePhoto.jpg"
+      profilePhoto: "resources/profilePhoto.jpg"
     };
 
     HeroinePage.prototype.initialize = function() {
@@ -2264,7 +2264,7 @@ Wrap access to Facebook.
         date: "July 10",
         content: [
           "Apparently those government people are interested in these places, but\nwe don't know where they are. If we could just figure out what they have\nin common, we could help put a stop to whatever they have planned. Can\nanyone help?", {
-            html: "<img class='satelliteSample' src='../resources/satelliteSample.png'/>"
+            html: "<img class='satelliteSample' src='resources/satelliteSample.png'/>"
           }
         ]
       }, {
@@ -2349,7 +2349,7 @@ Wrap access to Facebook.
           "class": "clearfix",
           content: [
             {
-              html: "<img src='../resources/profilePhoto.jpg'/>",
+              html: "<img src='resources/profilePhoto.jpg'/>",
               ref: "profilePhoto"
             }, {
               html: "div",

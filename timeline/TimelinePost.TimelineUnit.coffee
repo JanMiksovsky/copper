@@ -3,7 +3,7 @@ class window.TimelinePost extends TimelineUnit
   inherited:
     content: [
       html: "div", ref: "byline", class: "clearfix", content: [
-        html: "<img src='../resources/profilePhoto.jpg'/>", ref: "profilePhoto"
+        html: "<img src='resources/profilePhoto.jpg'/>", ref: "profilePhoto"
       ,
         html: "div", ref: "authorBlock", content: [
           control: Link, ref: "TimelinePost_author"

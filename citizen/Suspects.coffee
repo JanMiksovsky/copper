@@ -35,29 +35,29 @@ class window.Suspects
     null
 
   @_picturesFemale: [
-    "/copper/resources/pictures/female1.jpg"
-    "/copper/resources/pictures/female2.jpg"
-    "/copper/resources/pictures/female3.jpg"
-    "/copper/resources/pictures/female4.jpg"
-    "/copper/resources/pictures/female5.jpg"
-    "/copper/resources/pictures/female6.jpg"
-    "/copper/resources/pictures/female7.jpg"
-    "/copper/resources/pictures/female8.jpg"
-    "/copper/resources/pictures/female9.jpg"
-    "/copper/resources/pictures/female10.jpg"
+    "resources/pictures/female1.jpg"
+    "resources/pictures/female2.jpg"
+    "resources/pictures/female3.jpg"
+    "resources/pictures/female4.jpg"
+    "resources/pictures/female5.jpg"
+    "resources/pictures/female6.jpg"
+    "resources/pictures/female7.jpg"
+    "resources/pictures/female8.jpg"
+    "resources/pictures/female9.jpg"
+    "resources/pictures/female10.jpg"
   ]
 
   @_picturesMale: [
-    "/copper/resources/pictures/male1.jpg"
-    "/copper/resources/pictures/male2.jpg"
-    "/copper/resources/pictures/male3.jpg"
-    "/copper/resources/pictures/male4.jpg"
-    "/copper/resources/pictures/male5.jpg"
-    "/copper/resources/pictures/male6.jpg"
-    "/copper/resources/pictures/male7.jpg"
-    "/copper/resources/pictures/male8.jpg"
-    "/copper/resources/pictures/male9.jpg"
-    "/copper/resources/pictures/male10.jpg"
+    "resources/pictures/male1.jpg"
+    "resources/pictures/male2.jpg"
+    "resources/pictures/male3.jpg"
+    "resources/pictures/male4.jpg"
+    "resources/pictures/male5.jpg"
+    "resources/pictures/male6.jpg"
+    "resources/pictures/male7.jpg"
+    "resources/pictures/male8.jpg"
+    "resources/pictures/male9.jpg"
+    "resources/pictures/male10.jpg"
   ]
 
   # Collection of random generated names used for the other suspects.

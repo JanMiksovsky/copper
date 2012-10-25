@@ -6,13 +6,13 @@ class window.HeroinePage extends TimelinePage
     cityPage: "http://www.facebook.com/pages/Bellevue-Washington/111723635511834"
     college: "Harvey Mudd College"
     collegePage: "http://www.facebook.com/pages/Harvey-Mudd-College/107892159239091"
-    coverPhoto: "../resources/coverPhoto.jpg"
+    coverPhoto: "resources/coverPhoto.jpg"
     employer: "Microsoft Corporation"
     employerPage: "http://www.facebook.com/Microsoft"
     major: "English"
     name: "Ann Williams"
     position: "Project Manager"
-    profilePhoto: "../resources/profilePhoto.jpg"
+    profilePhoto: "resources/profilePhoto.jpg"
 
   initialize: ->
     @on "click", ".satelliteSample", =>
@@ -35,7 +35,7 @@ class window.HeroinePage extends TimelinePage
       anyone help?
       """
     ,
-      html: "<img class='satelliteSample' src='../resources/satelliteSample.png'/>"
+      html: "<img class='satelliteSample' src='resources/satelliteSample.png'/>"
     ]
   ,
     date: "June 2", content: [
