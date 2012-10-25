@@ -32,7 +32,7 @@ class window.HomePage extends DupPage
   # Send the user to the registration page.
   register: ->
     # App id depends on whether we're running locally or in production.
-    applicationId = if window.location.hostname === "localhost" then
+    applicationId = if window.location.hostname == "localhost"
       "407741369292793"
     else
       "400736616662108"
@@ -42,7 +42,7 @@ class window.HomePage extends DupPage
     parts[ parts.length - 1 ] = "register.html" # Replace page
     url = parts.join "/"
 
-    Facebook.authorize , url, [ "email", "user_birthday" ]
+    Facebook.authorize applicationId, url, [ "email", "user_birthday" ]
 
   test: ->
     $.post "http://localhost:5000/verify/jan@miksovsky.com", null, ( data ) =>

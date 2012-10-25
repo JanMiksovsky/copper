@@ -793,11 +793,12 @@ Wrap access to Facebook.
     };
 
     HomePage.prototype.register = function() {
-      var parts, url;
+      var applicationId, parts, url;
+      applicationId = window.location.hostname === "localhost" ? "407741369292793" : "400736616662108";
       parts = window.location.href.split("/");
       parts[parts.length - 1] = "register.html";
       url = parts.join("/");
-      return Facebook.authorize("136995693107715", url, ["email", "user_birthday"]);
+      return Facebook.authorize(applicationId, url, ["email", "user_birthday"]);
     };
 
     HomePage.prototype.test = function() {
