@@ -1,7 +1,7 @@
-*.sublime*
-app.js
+/*.sublime*
+/app.js
 /build/
-copper.js
-copper.css
-known_hosts
+/client/copper.js
+/client/copper.css
+/known_hosts
 /node_modules/
