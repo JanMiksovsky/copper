@@ -16,6 +16,6 @@
         "npm": "1.1.x"
     },
     "scripts": {
-        "install": "grunt.cmd"
+        "install": "node_modules/grunt/bin/grunt"
     }
 }
