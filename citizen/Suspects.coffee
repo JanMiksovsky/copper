@@ -1,5 +1,8 @@
 ###
 Deals with selecting random "suspects".
+
+TODO: Simplify. This originally assumed a suspect's name would be shown, but
+now it's just a picture. So all the names and gender stuff can go away.
 ###
 
 class window.Suspects
@@ -32,29 +35,29 @@ class window.Suspects
     null
 
   @_picturesFemale: [
-    "/copper/dup/resources/pictures/female1.jpg"
-    "/copper/dup/resources/pictures/female2.jpg"
-    "/copper/dup/resources/pictures/female3.jpg"
-    "/copper/dup/resources/pictures/female4.jpg"
-    "/copper/dup/resources/pictures/female5.jpg"
-    "/copper/dup/resources/pictures/female6.jpg"
-    "/copper/dup/resources/pictures/female7.jpg"
-    "/copper/dup/resources/pictures/female8.jpg"
-    "/copper/dup/resources/pictures/female9.jpg"
-    "/copper/dup/resources/pictures/female10.jpg"
+    "/copper/resources/pictures/female1.jpg"
+    "/copper/resources/pictures/female2.jpg"
+    "/copper/resources/pictures/female3.jpg"
+    "/copper/resources/pictures/female4.jpg"
+    "/copper/resources/pictures/female5.jpg"
+    "/copper/resources/pictures/female6.jpg"
+    "/copper/resources/pictures/female7.jpg"
+    "/copper/resources/pictures/female8.jpg"
+    "/copper/resources/pictures/female9.jpg"
+    "/copper/resources/pictures/female10.jpg"
   ]
 
   @_picturesMale: [
-    "/copper/dup/resources/pictures/male1.jpg"
-    "/copper/dup/resources/pictures/male2.jpg"
-    "/copper/dup/resources/pictures/male3.jpg"
-    "/copper/dup/resources/pictures/male4.jpg"
-    "/copper/dup/resources/pictures/male5.jpg"
-    "/copper/dup/resources/pictures/male6.jpg"
-    "/copper/dup/resources/pictures/male7.jpg"
-    "/copper/dup/resources/pictures/male8.jpg"
-    "/copper/dup/resources/pictures/male9.jpg"
-    "/copper/dup/resources/pictures/male10.jpg"
+    "/copper/resources/pictures/male1.jpg"
+    "/copper/resources/pictures/male2.jpg"
+    "/copper/resources/pictures/male3.jpg"
+    "/copper/resources/pictures/male4.jpg"
+    "/copper/resources/pictures/male5.jpg"
+    "/copper/resources/pictures/male6.jpg"
+    "/copper/resources/pictures/male7.jpg"
+    "/copper/resources/pictures/male8.jpg"
+    "/copper/resources/pictures/male9.jpg"
+    "/copper/resources/pictures/male10.jpg"
   ]
 
   # Collection of random generated names used for the other suspects.

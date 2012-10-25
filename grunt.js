@@ -68,13 +68,13 @@ module.exports = function(grunt) {
                     "build/missions.js",
                     "build/os.js"
                 ],
-                dest: "copper.js"
+                dest: "client/copper.js"
             }
         },
         less: {
             all: {
                 files: {
-                    "copper.css": sortDependencies.sortFiles( "*/*.less" )
+                    "client/copper.css": sortDependencies.sortFiles( "*/*.less" )
                 }
             }
         }

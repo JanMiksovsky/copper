@@ -5,7 +5,7 @@ class window.DupPage extends Page
     content: [
       { html: "div", ref: "header", content: [
         { html: "div", ref: "titleElements", class: "container", content: [
-          { html: "<img src='/copper/dup/resources/dupLogo.png'/>", ref: "logo" }
+          { html: "<img src='resources/dupLogo.png'/>", ref: "logo" }
           { html: "h1", ref: "DupPage_title" }
         ]}
       ]}

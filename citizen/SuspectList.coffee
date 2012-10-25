@@ -2,7 +2,7 @@ class window.SuspectList extends Control
 
   inherited:
     content: [
-      { html: "<img src='/copper/dup/resources/progressIndicator.gif'/>", ref: "progressIndicator" }
+      { html: "<img src='/copper/resources/progressIndicator.gif'/>", ref: "progressIndicator" }
       {
         control: List
         ref: "list"
