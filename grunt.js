@@ -17,11 +17,6 @@ module.exports = function(grunt) {
     // Project configuration.
     grunt.initConfig({
         coffee: {
-            citizen: {
-                src: sortDependencies.sortClassFiles( "citizen/*.coffee" ),
-                dest: "build/citizen.js",
-                options: { bare: false }
-            },
             controls: {
                 src: sortDependencies.sortClassFiles( "controls/*.coffee" ),
                 dest: "build/controls.js",
@@ -32,14 +27,13 @@ module.exports = function(grunt) {
                 dest: "build/facebook.js",
                 options: { bare: false }
             },
-            satellite: {
-                src: sortDependencies.sortClassFiles( "satellite/*.coffee" ),
-                dest: "build/satellite.js",
-                options: { bare: false }
-            },
-            timeline: {
-                src: sortDependencies.sortClassFiles( "timeline/*.coffee" ),
-                dest: "build/timeline.js",
+            missions: {
+                src: sortDependencies.sortClassFiles(
+                    "citizen/*.coffee",
+                    "satellite/*.coffee",
+                    "timeline/*.coffee"
+                ),
+                dest: "build/missions.js",
                 options: { bare: false }
             },
             utilities: {
@@ -56,49 +50,21 @@ module.exports = function(grunt) {
         concat: {
             js: {
                 src: [
-                    /* These initial declarations should come before the rest. */
+                    /* These initial declarations should come before the missions. */
                     "lib/*.js",
                     "build/utilities.js",
                     "build/controls.js",
                     "build/facebook.js",
                     /* Remaining declarations can come in any order. */
-                    "build/citizen.js",
-                    "build/satellite.js",
-                    "build/timeline.js"
+                    "build/missions.js"
                 ],
                 dest: "dup.js"
-            },
-            css: {
-                src: [
-                    "build/*.css"
-                ],
-                dest: "dup.css"
             }
         },
         less: {
-            citizen: {
+            all: {
                 files: {
-                    "build/citizen.css": sortDependencies.sortClassFiles( "citizen/*.less" )
-                }
-            },
-            controls: {
-                files: {
-                    "build/controls.css": sortDependencies.sortClassFiles( "controls/*.less" )
-                }
-            },
-            facebook: {
-                files: {
-                    "build/facebook.css": sortDependencies.sortClassFiles( "facebook/*.less" )
-                }
-            },
-            satellite: {
-                files: {
-                    "build/satellite.css": sortDependencies.sortClassFiles( "satellite/*.less" )
-                }
-            },
-            timeline: {
-                files: {
-                    "build/timeline.css": sortDependencies.sortClassFiles( "timeline/*.less" )
+                    "dup.css": sortDependencies.sortClassFiles( "*/*.less" )
                 }
             }
         }
