@@ -1,0 +1,2 @@
+commands.civstat = ->
+  

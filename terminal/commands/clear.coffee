@@ -1,0 +1,2 @@
+commands.clear = ->
+  terminal.clear()
