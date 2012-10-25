@@ -1,21 +1,19 @@
 {
-    "name": "copper-dup",
+    "name": "copper-game",
     "version": "0.0.1",
     "dependencies": {
         "express": "3.x",
-        "nodemailer": "0.3.x"
-    },
-    "devDependencies": {
         "grunt": "~0.3",
         "grunt-contrib-less": "~0.3.0",
         "less": "~1.3.0",
-        "sort-dependencies": "~0.1"
+        "sort-dependencies": "~0.1",
+        "nodemailer": "0.3.x"
     },
     "engines": {
         "node": "0.8.x",
         "npm": "1.1.x"
     },
     "scripts": {
-        "install": "node_modules/grunt/bin/grunt"
+        "install": "grunt"
     }
 }
