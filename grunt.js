@@ -17,6 +17,11 @@ module.exports = function(grunt) {
     // Project configuration.
     grunt.initConfig({
         coffee: {
+            app: {
+                src: "app.coffee",
+                dest: "app.js",
+                options: { bare: false }
+            },
             controls: {
                 src: sortDependencies.sortClassFiles( "controls/*.coffee" ),
                 dest: "build/controls.js",
@@ -31,19 +36,23 @@ module.exports = function(grunt) {
                 src: sortDependencies.sortClassFiles(
                     "citizen/*.coffee",
                     "satellite/*.coffee",
+                    "terminal/*.coffee",
                     "timeline/*.coffee"
                 ),
                 dest: "build/missions.js",
                 options: { bare: false }
             },
+            os: {
+                src: sortDependencies.sortClassFiles(
+                    "terminal/shell/*.coffee",
+                    "terminal/commands/*.coffee"
+                ),
+                dest: "build/os.js",
+                options: { bare: false }
+            },
             utilities: {
                 src: sortDependencies.sortClassFiles( "utilities/*.coffee" ),
                 dest: "build/utilities.js",
-                options: { bare: false }
-            },
-            app: {
-                src: "app.coffee",
-                dest: "app.js",
                 options: { bare: false }
             }
         },
@@ -56,15 +65,16 @@ module.exports = function(grunt) {
                     "build/controls.js",
                     "build/facebook.js",
                     /* Remaining declarations can come in any order. */
-                    "build/missions.js"
+                    "build/missions.js",
+                    "build/os.js"
                 ],
-                dest: "dup.js"
+                dest: "copper.js"
             }
         },
         less: {
             all: {
                 files: {
-                    "dup.css": sortDependencies.sortClassFiles( "*/*.less" )
+                    "copper.css": sortDependencies.sortClassFiles( "*/*.less" )
                 }
             }
         }

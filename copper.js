@@ -397,7 +397,10 @@ A Google map.
         mapTypeId: this.mapTypeId()
       };
       map = new google.maps.Map(canvas, options);
-      return this.map(map);
+      this.map(map);
+      if (!(this.mapTypeId() != null)) {
+        return this.mapTypeId(google.maps.MapTypeId.ROADMAP);
+      }
     };
 
     GoogleMap.prototype.center = function(latLng) {
@@ -414,7 +417,7 @@ A Google map.
     GoogleMap.prototype.mapTypeId = Control.property(function(mapTypeId) {
       var _ref;
       return (_ref = this.map()) != null ? _ref.setMapTypeId(mapTypeId) : void 0;
-    }, google.maps.MapTypeId.ROADMAP);
+    });
 
     GoogleMap.prototype._unsupported = function() {};
 
@@ -1664,8 +1667,7 @@ Wrap access to Facebook.
       content: [
         {
           control: "GoogleMap",
-          ref: "map",
-          mapTypeId: google.maps.MapTypeId.SATELLITE
+          ref: "map"
         }, {
           html: "div",
           ref: "caption"
@@ -1691,6 +1693,7 @@ Wrap access to Facebook.
 
     SatellitePhoto.prototype.initialize = function() {
       this.$caption().content("DUP Panopticon satellite capture<br/>\n" + (new Date()));
+      this.$map().mapTypeId(google.maps.MapTypeId.SATELLITE);
       return this.map().setOptions({
         draggable: false,
         streetViewControl: false,
@@ -1704,6 +1707,170 @@ Wrap access to Facebook.
     return SatellitePhoto;
 
   })(Control);
+
+  window.Log = (function(_super) {
+
+    __extends(Log, _super);
+
+    function Log() {
+      return Log.__super__.constructor.apply(this, arguments);
+    }
+
+    Log.prototype.clear = function() {
+      return this.content("");
+    };
+
+    Log.prototype.tag = "pre";
+
+    Log.prototype.write = function(s) {
+      var content;
+      content = this.content();
+      if (content.length === 0) {
+        content = "";
+      }
+      return this.content(content + s);
+    };
+
+    Log.prototype.writeln = function(s) {
+      s = s != null ? s : "";
+      return this.write(s + "\n");
+    };
+
+    return Log;
+
+  })(Control);
+
+  window.Terminal = (function(_super) {
+
+    __extends(Terminal, _super);
+
+    function Terminal() {
+      return Terminal.__super__.constructor.apply(this, arguments);
+    }
+
+    Terminal.prototype.inherited = {
+      content: [
+        {
+          control: "Log",
+          ref: "log"
+        }, {
+          control: "HorizontalPanels",
+          left: {
+            html: "pre",
+            ref: "prompt"
+          },
+          content: {
+            html: "<input type='text' spellcheck='false'/>",
+            ref: "userInput"
+          }
+        }
+      ]
+    };
+
+    Terminal.prototype.clear = Control.chain("$log", "clear");
+
+    Terminal.prototype.focusOnUserInput = function() {
+      return this.$userInput().focus();
+    };
+
+    Terminal.prototype.initialize = function() {
+      var _this = this;
+      this.click(function() {
+        return _this.focusOnUserInput();
+      });
+      this.$userInput().keydown(function(event) {
+        if (event.which === 13) {
+          return _this._handleInput();
+        }
+      });
+      return this.inDocument(function() {
+        return this.focusOnUserInput();
+      });
+    };
+
+    Terminal.prototype.prompt = Control.chain("$prompt", "content");
+
+    Terminal.prototype.readln = function(callback) {
+      this.prompt(env.prompt);
+      this.focusOnUserInput();
+      this.scrollToUserInput();
+      return this._readlnCallbacks().push(callback);
+    };
+
+    Terminal.prototype.scrollToUserInput = function() {
+      var $document, $userInput, userInputBottom, windowHeight;
+      $document = $(document);
+      $userInput = this.$userInput();
+      userInputBottom = $userInput.offset().top + $userInput.height();
+      windowHeight = $(window).height();
+      if (userInputBottom > $document.scrollTop() + windowHeight) {
+        return $document.scrollTop($document.height() - windowHeight);
+      }
+    };
+
+    Terminal.prototype.userInput = Control.chain("$userInput", "content");
+
+    Terminal.prototype.write = Control.chain("$log", "write");
+
+    Terminal.prototype.writeln = Control.chain("$log", "writeln");
+
+    Terminal.prototype._readlnCallbacks = Control.property(null, []);
+
+    Terminal.prototype._handleInput = function() {
+      var callback, input;
+      input = this.userInput();
+      this.write(this.prompt());
+      this.writeln(input);
+      this.userInput("");
+      callback = this._readlnCallbacks().shift();
+      if (callback != null) {
+        return callback.call(this, input);
+      }
+    };
+
+    return Terminal;
+
+  })(Control);
+
+  window.TerminalPage = (function(_super) {
+
+    __extends(TerminalPage, _super);
+
+    function TerminalPage() {
+      return TerminalPage.__super__.constructor.apply(this, arguments);
+    }
+
+    TerminalPage.prototype.inherited = {
+      title: "Copper Terminal",
+      content: [
+        {
+          control: Terminal,
+          ref: "terminal"
+        }
+      ]
+    };
+
+    TerminalPage.prototype.initialize = function() {
+      var userName;
+      userName = Page.urlParameters().user;
+      return login(userName);
+    };
+
+    TerminalPage.prototype.clear = Control.chain("$terminal", "clear");
+
+    TerminalPage.prototype.prompt = Control.chain("$terminal", "prompt");
+
+    TerminalPage.prototype.readln = Control.chain("$terminal", "readln");
+
+    TerminalPage.prototype.terminal = Control.chain("$terminal", "control");
+
+    TerminalPage.prototype.write = Control.chain("terminal", "write");
+
+    TerminalPage.prototype.writeln = Control.chain("terminal", "writeln");
+
+    return TerminalPage;
+
+  })(Page);
 
   window.FacebookIcon = (function(_super) {
 
@@ -2213,5 +2380,739 @@ Wrap access to Facebook.
     return TimelinePost;
 
   })(TimelineUnit);
+
+}).call(this);
+
+// Generated by CoffeeScript 1.3.3
+
+/*
+Handles formatting arrays of text into columns a la "ls" command output.
+*/
+
+
+(function() {
+  var File,
+    __hasProp = {}.hasOwnProperty,
+    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    __slice = [].slice;
+
+  window.columns = {
+    bestColumnWidths: function(lengths) {
+      var columnCount, lineLength, widths, _i, _ref;
+      for (columnCount = _i = _ref = lengths.length; _ref <= 1 ? _i <= 1 : _i >= 1; columnCount = _ref <= 1 ? ++_i : --_i) {
+        widths = columns.columnWidths(lengths, columnCount);
+        lineLength = columns.lineLength(widths);
+        if (lineLength <= columns.maxLineLength) {
+          return widths;
+        }
+      }
+      return widths;
+    },
+    columnSpacing: 2,
+    columnWidths: function(lengths, columnCount) {
+      var column, i, widths, _i, _ref;
+      widths = (function() {
+        var _i, _results;
+        _results = [];
+        for (i = _i = 1; 1 <= columnCount ? _i <= columnCount : _i >= columnCount; i = 1 <= columnCount ? ++_i : --_i) {
+          _results.push(0);
+        }
+        return _results;
+      })();
+      for (i = _i = 0, _ref = lengths.length - 1; 0 <= _ref ? _i <= _ref : _i >= _ref; i = 0 <= _ref ? ++_i : --_i) {
+        column = i % columnCount;
+        widths[column] = Math.max(widths[column], lengths[i]);
+      }
+      return widths;
+    },
+    format: function(strings) {
+      var columnWidths, lengths, s;
+      lengths = (function() {
+        var _i, _len, _results;
+        _results = [];
+        for (_i = 0, _len = strings.length; _i < _len; _i++) {
+          s = strings[_i];
+          _results.push(s.length);
+        }
+        return _results;
+      })();
+      columnWidths = columns.bestColumnWidths(lengths);
+      return columns.formatColumns(strings, columnWidths);
+    },
+    formatColumns: function(strings, columnWidths) {
+      var column, columnCount, i, margin, padded, result, s, stringCount, _i, _len;
+      columnCount = columnWidths.length;
+      stringCount = strings.length;
+      margin = columns.repeat(" ", columns.columnSpacing);
+      result = "";
+      for (i = _i = 0, _len = strings.length; _i < _len; i = ++_i) {
+        s = strings[i];
+        column = i % columnCount;
+        padded = columns.pad(s, columnWidths[column]);
+        result += padded;
+        if (column < columnCount - 1) {
+          result += margin;
+        } else if (i < stringCount - 1) {
+          result += "\n";
+        }
+      }
+      return result;
+    },
+    lineLength: function(widths) {
+      var length, width, _i, _len;
+      length = 0;
+      for (_i = 0, _len = widths.length; _i < _len; _i++) {
+        width = widths[_i];
+        length += width;
+      }
+      length += (widths.length - 1) * columns.columnSpacing;
+      return length;
+    },
+    maxLineLength: 78,
+    pad: function(s, length) {
+      var spaces;
+      spaces = columns.repeat(" ", length - s.length);
+      return s + spaces;
+    },
+    repeat: function(s, count) {
+      return (new Array(count + 1)).join(s);
+    }
+  };
+
+  window.commands = {};
+
+  window.env = {
+    currentDirectory: null,
+    prompt: null,
+    readme: "Agents who have not yet completed compulsory training should enter \"help\" at\nthe console prompt.\n",
+    setUser: function(userName) {
+      var homeDirectory, homePath, readme, _ref;
+      if (fs.root == null) {
+        fs.root = new Directory("/", null, files);
+      }
+      env.userName = userName;
+      homePath = fs.join("/usr", userName);
+      homeDirectory = fs.root.getDirectoryWithPath(homePath);
+      env.homeDirectory = homeDirectory != null ? homeDirectory : fs.root;
+      if (((_ref = env.homeDirectory.contents) != null ? _ref.length : void 0) === 0) {
+        readme = new TextFile("readme", null, env.readme);
+        env.homeDirectory.addFile(readme);
+      }
+      return env.currentDirectory = env.homeDirectory;
+    },
+    userName: null
+  };
+
+  File = (function() {
+
+    function File(name, parent, contents) {
+      this.name = name;
+      this.parent = parent;
+      this.contents = contents;
+    }
+
+    return File;
+
+  })();
+
+  /*
+  File system
+  */
+
+
+  window.files = {
+    bin: {},
+    etc: {},
+    usr: {
+      adrianb: {},
+      andrewk: {},
+      andreww: {},
+      andym: {},
+      andyx: {},
+      billro: {},
+      billyh: {},
+      bradm: {},
+      brentt: {},
+      brianf: {},
+      bruceo: {},
+      chrishe: {},
+      christopherb: {},
+      chrisz: {},
+      dannyw: {},
+      darrenb: {},
+      davem: {},
+      davidm: {},
+      dongjoonl: {},
+      edwardp: {},
+      emiliog: {},
+      gailo: {},
+      gregt: {},
+      haroldl: {},
+      horiad: {},
+      isaiahs: {},
+      jaimeg: {},
+      jamesm: {},
+      jancea: {},
+      janm: {
+        foo: "Foo\n",
+        bar: "Bar\n",
+        google: "http://google.com",
+        maze: "-> /usr/danaa"
+      },
+      jasminp: {},
+      jasonc: {},
+      jasons: {},
+      jefff: {},
+      jeffl: {},
+      jeffm: {},
+      joannaw: {},
+      johng: {},
+      johnh: {},
+      joshj: {},
+      joshr: {},
+      kens: {},
+      leae: {},
+      liannec: {},
+      lukes: {},
+      mattd: {},
+      mattl: {},
+      mattv: {},
+      maxc: {},
+      mdhaynes: {},
+      michaelm: {},
+      mikeg: {},
+      mikeh: {},
+      morganh: {},
+      natef: {},
+      nathanr: {},
+      parkerh: {},
+      philo: {},
+      rameyh: {},
+      ranjith: {},
+      rickb: {},
+      rickl: {},
+      romanm: {},
+      scottw: {},
+      seans: {},
+      shahbaaz: {},
+      shannonl: {},
+      sofiew: {},
+      soniaj: {},
+      sooyunj: {},
+      spencera: {},
+      stephenw: {},
+      stevei: {},
+      susanl: {},
+      tedf: {},
+      teresab: {},
+      tobyt: {},
+      tomm: {},
+      tyk: {},
+      willh: {},
+      williamr: {}
+    }
+  };
+
+  /*
+  Maze puzzle in Dana's folder.
+  */
+
+
+  window.files.usr.danaa = {
+    plans: {
+      round1: {
+        copy: "-> /usr/danaa/plans-review/copy"
+      },
+      round2: {
+        plans2: "-> /usr/danaa/plans2"
+      }
+    },
+    plans2: {
+      plans: "-> /usr/danaa/plans",
+      review: "-> /usr/danaa/plans-review/plans"
+    },
+    "plans-review": {
+      copy: {
+        latest: "-> /usr/danaa/plans/round2"
+      },
+      plans: {
+        "final": "-> /usr/danaa/plans-review/plans-final-FINAL"
+      },
+      "plans-final": {
+        "for-review": "-> /usr/danaa/plans/round2"
+      },
+      "plans.copy": {
+        round1: {
+          plans: "-> /usr/danaa/plans/round1",
+          round2: {
+            secret: "Congratulations, you have found the super-secret file!\n"
+          }
+        },
+        original: "-> /usr/danaa/plans2/plans"
+      },
+      "plans-final-FINAL": "-> /usr/danaa/plans-review/plans-final"
+    },
+    readme: "Ugh, where the hell is the final plan?\nWhen I find the idiot who created these files, I'm going to make sure they\ndie a slow death.\n-D\n"
+  };
+
+  window.fs = {
+    exists: function(path) {
+      return fs.root.exists(path);
+    },
+    join: function(path1, path2) {
+      return fs.normalize(path1 + fs.separator + path2);
+    },
+    normalize: function(path) {
+      var part, parts, _i, _len, _ref;
+      parts = [];
+      _ref = path.split(fs.separator);
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        part = _ref[_i];
+        switch (part) {
+          case "":
+            break;
+          case "..":
+            parts.pop();
+            break;
+          default:
+            parts.push(part);
+        }
+      }
+      return fs.separator + parts.join(fs.separator);
+    },
+    root: null,
+    separator: "/"
+  };
+
+  window.login = function(userName) {
+    terminal.clear();
+    window.stdout = terminal;
+    stdout.writeln(login.welcome);
+    env.prompt = "login: ";
+    if (userName != null) {
+      return login._startShellForUser(userName);
+    } else {
+      return terminal.readln(function(userName) {
+        if ((userName != null ? userName.length : void 0) > 0) {
+          env.prompt = "password: ";
+          return terminal.readln(function(password) {
+            return login._startShellForUser(userName);
+          });
+        } else {
+          return login();
+        }
+      });
+    }
+  };
+
+  login._startShellForUser = function(userName) {
+    stdout.writeln("" + userName + " logged in");
+    stdout.writeln("" + (new Date()));
+    stdout.writeln(login.motd);
+    env.setUser(userName);
+    return commands.sh();
+  };
+
+  login.welcome = "DUPos/X 12.0d\nWelcome to the D.U.P. agent console\n\nThis server is for use only by authorized Department of Unified Protection\nagents. Use of this service constitutes acceptance of our security policies.\nIf you do not agree to or understand these policies, or are not an authorized\nagent, you must disconnect immediately.\n";
+
+  login.motd = "Enter \"help\" for a list of commands.";
+
+  window.logout = function() {
+    env.userName = null;
+    env.homeDirectory = null;
+    return login();
+  };
+
+  window.SymbolicLink = (function(_super) {
+
+    __extends(SymbolicLink, _super);
+
+    function SymbolicLink() {
+      return SymbolicLink.__super__.constructor.apply(this, arguments);
+    }
+
+    SymbolicLink.prototype.destination = function() {
+      return fs.root.getFileWithPath(this.contents);
+    };
+
+    return SymbolicLink;
+
+  })(File);
+
+  /*
+  Link the terminal to the topmost page.
+  */
+
+
+  window.terminal = {
+    clear: function() {
+      return this.page().clear();
+    },
+    readln: function(callback) {
+      return this.page().readln(callback);
+    },
+    page: function() {
+      return $("body").control();
+    },
+    prompt: function(s) {
+      return this.page().prompt(s);
+    },
+    write: function(s) {
+      return this.page().write(s);
+    },
+    writeln: function(s) {
+      return this.page().writeln(s);
+    }
+  };
+
+  window.TextFile = (function(_super) {
+
+    __extends(TextFile, _super);
+
+    function TextFile(name, parent, contents) {
+      this.name = name;
+      this.parent = parent;
+      this.contents = contents;
+      TextFile.__super__.constructor.call(this, this.name, this.parent, this.contents);
+      if (!(this.contents != null)) {
+        this.contents = "";
+      }
+    }
+
+    TextFile.prototype.write = function(s) {
+      return this.contents += s;
+    };
+
+    TextFile.prototype.writeln = function(s) {
+      return this.write(s + "\n");
+    };
+
+    return TextFile;
+
+  })(File);
+
+  commands.cat = function() {
+    var arg, args, file, _i, _len;
+    args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
+    for (_i = 0, _len = args.length; _i < _len; _i++) {
+      arg = args[_i];
+      file = env.currentDirectory.getFileWithPath(arg);
+      if (file == null) {
+        stdout.writeln("cat: " + arg + ": No such file or directory");
+        return;
+      }
+      if (file instanceof Directory) {
+        stdout.writeln("cat: " + arg + ": Is a directory");
+        return;
+      }
+      if (file.contents != null) {
+        stdout.write(file.contents);
+      }
+    }
+  };
+
+  commands.cd = function(arg) {
+    var directory;
+    if ((arg != null ? arg.substr(0, 1) : void 0) === fs.separator) {
+      stdout.writeln("cd: Absolute addressing disabled due to exigent circumstances.");
+      return;
+    }
+    directory = arg != null ? env.currentDirectory.getDirectoryWithPath(arg) : env.homeDirectory;
+    if (directory) {
+      env.currentDirectory = directory;
+      return stdout.writeln(env.currentDirectory.path());
+    } else {
+      return stdout.writeln("cd: " + arg + ": No such file or directory");
+    }
+  };
+
+  commands.civstat = function() {};
+
+  commands.clear = function() {
+    return terminal.clear();
+  };
+
+  commands.debug = function() {
+    debugger;
+  };
+
+  commands.echo = function() {
+    var args, message;
+    args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
+    message = args.join(" ");
+    return stdout.writeln(message);
+  };
+
+  commands.help = function() {
+    return stdout.writeln(commands.help.message);
+  };
+
+  commands.help.message = "\nAvailable commands:\n\ncat [filename]      Display the contents of file(s)\ncd [directoryname]  Change directory. Enter \"cd ..\" to go up one level.\nclear               Clear the terminal console\necho [arguments]    Echo arguments\nhelp                Display this message\nlogout              Log out\nls                  List directory contents\npwd                 Display the name of the current directory\nwhoami              show the name of the current user\n";
+
+  commands.ls = function(arg) {
+    var child, file, fileNames, output;
+    if (arg != null) {
+      file = env.currentDirectory.getFileWithPath(arg);
+      if (file == null) {
+        stdout.writeln("ls: " + arg + ": No such file or directory");
+        return;
+      }
+    } else {
+      file = env.currentDirectory;
+    }
+    if (file instanceof Directory) {
+      fileNames = (function() {
+        var _i, _len, _ref, _results;
+        _ref = file.contents;
+        _results = [];
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          child = _ref[_i];
+          _results.push(child.name);
+        }
+        return _results;
+      })();
+      fileNames.sort();
+      output = columns.format(fileNames);
+      if (output.length > 0) {
+        return stdout.writeln(output);
+      }
+    } else {
+      return stdout.writeln(file.name);
+    }
+  };
+
+  commands.open = function() {
+    var arg, args, file, _i, _len;
+    args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
+    for (_i = 0, _len = args.length; _i < _len; _i++) {
+      arg = args[_i];
+      file = env.currentDirectory.getFileWithPath(arg);
+      if (file == null) {
+        stdout.writeln("open: " + arg + ": No such file or directory");
+        return;
+      }
+      if (file instanceof Directory) {
+        stdout.writeln("open: " + arg + ": Is a directory");
+        return;
+      }
+      if (file.contents != null) {
+        window.open(file.contents);
+      }
+    }
+  };
+
+  commands.pwd = function() {
+    return stdout.writeln(env.currentDirectory.path());
+  };
+
+  commands.sh = function() {
+    if (!env.currentDirectory) {
+      env.currentDirectory = "/";
+    }
+    env.prompt = "$ ";
+    window.stdout = terminal;
+    return terminal.readln(function(s) {
+      var args, command, commandFn, existingFile, outputFile, redirect, _ref;
+      switch (s) {
+        case "":
+          break;
+        case "exit":
+        case "logout":
+          logout();
+          return;
+        default:
+          _ref = commands.sh.parse(s), command = _ref.command, args = _ref.args, redirect = _ref.redirect;
+          commandFn = commands[command];
+          if (commandFn != null) {
+            if (redirect != null) {
+              existingFile = env.currentDirectory.getFileWithName(redirect);
+              if (existingFile != null) {
+                outputFile = existingFile;
+              } else {
+                outputFile = new TextFile(redirect, env.currentDirectory);
+                env.currentDirectory.contents.push(outputFile);
+              }
+              window.stdout = outputFile;
+            }
+            commandFn.apply(null, args);
+          } else {
+            stdout.writeln("" + commandName + ": command not found");
+          }
+      }
+      return commands.sh();
+    });
+  };
+
+  commands.sh.parse = function(s) {
+    var args, command, main, parts, redirect, _ref;
+    parts = s.split(">");
+    main = parts[0];
+    redirect = (_ref = parts[1]) != null ? _ref.trim() : void 0;
+    args = main.split(" ");
+    command = args.shift();
+    return {
+      command: command,
+      args: args,
+      redirect: redirect
+    };
+  };
+
+  commands.sum = function() {
+    var arg, args, file, result, _i, _len;
+    args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
+    if (args.length === 0) {
+      stdout.writeln("usage: sum [files...]");
+      return;
+    }
+    result = 0;
+    for (_i = 0, _len = args.length; _i < _len; _i++) {
+      arg = args[_i];
+      file = env.currentDirectory.getFileWithPath(arg);
+      if (file == null) {
+        stdout.writeln("sum: " + arg + ": No such file or directory");
+        return;
+      }
+      result += commands.sum.sumFile(file);
+    }
+    return stdout.writeln(result);
+  };
+
+  commands.sum.sumDirectory = function(directory) {
+    var file, result, _i, _len, _ref;
+    result = 0;
+    _ref = directory.contents;
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      file = _ref[_i];
+      result += commands.sum.sumFile(file);
+    }
+    return result;
+  };
+
+  commands.sum.sumFile = function(file) {
+    if (file instanceof Directory) {
+      return commands.sum.sumDirectory(file);
+    } else if (file instanceof TextFile) {
+      return commands.sum.sumString(file.contents);
+    } else {
+      return 0;
+    }
+  };
+
+  commands.sum.sumString = function(string) {
+    return string.length;
+  };
+
+  commands.whoami = function() {
+    return stdout.writeln(env.userName);
+  };
+
+  commands.xyzzy = function() {
+    return stdout.writeln("Nothing happens");
+  };
+
+  window.Directory = (function(_super) {
+
+    __extends(Directory, _super);
+
+    Directory.prototype.addFile = function(file) {
+      file.parent = this;
+      return this.contents.push(file);
+    };
+
+    function Directory(name, parent, fileData) {
+      var data;
+      this.name = name;
+      this.parent = parent;
+      this.contents = (function() {
+        var _results;
+        _results = [];
+        for (name in fileData) {
+          data = fileData[name];
+          _results.push(this._dataToFile(name, data));
+        }
+        return _results;
+      }).call(this);
+    }
+
+    Directory.prototype.exists = function(path) {
+      return (this.getFileWithPath(path)) != null;
+    };
+
+    Directory.prototype.getDirectoryWithPath = function(path) {
+      var file;
+      file = this.getFileWithPath(path);
+      if (file instanceof Directory) {
+        return file;
+      } else {
+        return null;
+      }
+    };
+
+    Directory.prototype.getFileWithName = function(name) {
+      var file, _i, _len, _ref;
+      _ref = this.contents;
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        file = _ref[_i];
+        if (file.name === name) {
+          return file;
+        }
+      }
+      return null;
+    };
+
+    Directory.prototype.getFileWithPath = function(path) {
+      var file, first, parts, rest, _ref;
+      if (!(path != null) || path === "") {
+        return this;
+      }
+      parts = path.split(fs.separator);
+      first = parts[0];
+      rest = (parts.slice(1)).join(fs.separator);
+      if (first === "" || first === ".") {
+        return this.getFileWithPath(rest);
+      } else if (first === "..") {
+        return (_ref = this.parent) != null ? _ref.getFileWithPath(rest) : void 0;
+      } else {
+        file = this.getFileWithName(first);
+        if (file != null) {
+          if (file instanceof SymbolicLink) {
+            file = file.destination();
+          }
+          if (file instanceof Directory) {
+            return file.getFileWithPath(rest);
+          } else {
+            if (rest.length === 0) {
+              return file;
+            } else {
+              return null;
+            }
+          }
+        } else {
+          return null;
+        }
+      }
+    };
+
+    Directory.prototype.path = function() {
+      var parentPath;
+      parentPath = this.parent != null ? this.parent.path() : "";
+      return fs.join(parentPath, this.name);
+    };
+
+    Directory.prototype._dataToFile = function(name, data) {
+      if (typeof data === "string") {
+        if (data.substr(0, 3) === "-> ") {
+          return new SymbolicLink(name, this, data.substr(3));
+        } else {
+          return new TextFile(name, this, data);
+        }
+      } else {
+        return new Directory(name, this, data);
+      }
+    };
+
+    return Directory;
+
+  })(File);
 
 }).call(this);
