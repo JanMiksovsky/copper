@@ -6,7 +6,7 @@ class window.SatellitePhoto extends Control
 
   inherited:
     content: [
-      { control: "GoogleMap", ref: "map", mapTypeId: google.maps.MapTypeId.SATELLITE }      
+      { control: "GoogleMap", ref: "map" }      
       { html: "div", ref: "caption" }
       { html: "<img src='../resources/crosshairs.png'/>", ref: "crosshairs1", class: "crosshairs" }
       { html: "<img src='../resources/crosshairs.png'/>", ref: "crosshairs2", class: "crosshairs" }
@@ -19,6 +19,7 @@ class window.SatellitePhoto extends Control
       DUP Panopticon satellite capture<br/>
       #{new Date()}
     """
+    @$map().mapTypeId google.maps.MapTypeId.SATELLITE
     @map().setOptions
       draggable: false
       streetViewControl: false
