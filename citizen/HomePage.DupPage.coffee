@@ -13,8 +13,7 @@ class window.HomePage extends DupPage
 
   initialize: ->
     @$buttonRegister().click =>
-      # TODO: Generalize
-      Facebook.authorize "136995693107715", "http://localhost/copper/client/register.html", [ "email", "user_birthday" ]
+      @register()
     @$linkAbout().click =>
       Dialog.showDialog Dialog,
         cancelOnOutsideClick: true
@@ -29,6 +28,15 @@ class window.HomePage extends DupPage
           </p>
           """
         width: "500px"
+
+  # Send the user to the registration page.
+  register: ->
+    # Facebook auth needs an absolute URL, but we want this app to be able to
+    # run in multiple locations (localhost, etc.), so we build a URL ourselves.
+    parts = window.location.href.split "/"
+    parts[ parts.length - 1 ] = "register.html" # Replace page
+    url = parts.join "/"
+    Facebook.authorize "136995693107715", url, [ "email", "user_birthday" ]
 
   test: ->
     $.post "http://localhost:5000/verify/jan@miksovsky.com", null, ( data ) =>

@@ -780,7 +780,7 @@ Wrap access to Facebook.
     HomePage.prototype.initialize = function() {
       var _this = this;
       this.$buttonRegister().click(function() {
-        return Facebook.authorize("136995693107715", "http://localhost/copper/client/register.html", ["email", "user_birthday"]);
+        return _this.register();
       });
       return this.$linkAbout().click(function() {
         return Dialog.showDialog(Dialog, {
@@ -790,6 +790,14 @@ Wrap access to Facebook.
           width: "500px"
         });
       });
+    };
+
+    HomePage.prototype.register = function() {
+      var parts, url;
+      parts = window.location.href.split("/");
+      parts[parts.length - 1] = "register.html";
+      url = parts.join("/");
+      return Facebook.authorize("136995693107715", url, ["email", "user_birthday"]);
     };
 
     HomePage.prototype.test = function() {

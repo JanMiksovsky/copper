@@ -4,6 +4,7 @@ Wrap access to Facebook.
 
 class window.Facebook
 
+  # Get an access token
   @authorize: ( applicationId, redirectUri, scopes, params ) ->
     scopesParam = if scopes? then scopes.join "," else ""
     url = "https://graph.facebook.com/oauth/authorize?client_id=#{applicationId}&scope=#{scopesParam}&type=user_agent&display=page&redirect_uri=#{redirectUri}"
