@@ -19,18 +19,15 @@ module.exports = function(grunt) {
         coffee: {
             app: {
                 src: "app.coffee",
-                dest: "app.js",
-                options: { bare: false }
+                dest: "app.js"
             },
             controls: {
                 src: sortDependencies.sortFiles( "controls/*.coffee" ),
-                dest: "build/controls.js",
-                options: { bare: false }
+                dest: "build/controls.js"
             },
             facebook: {
                 src: sortDependencies.sortFiles( "facebook/*.coffee" ),
-                dest: "build/facebook.js",
-                options: { bare: false }
+                dest: "build/facebook.js"
             },
             missions: {
                 src: sortDependencies.sortFiles(
@@ -39,21 +36,18 @@ module.exports = function(grunt) {
                     "terminal/*.coffee",
                     "timeline/*.coffee"
                 ),
-                dest: "build/missions.js",
-                options: { bare: false }
+                dest: "build/missions.js"
             },
             os: {
                 src: sortDependencies.sortFiles(
                     "terminal/shell/*.coffee",
                     "terminal/commands/*.coffee"
                 ),
-                dest: "build/os.js",
-                options: { bare: false }
+                dest: "build/os.js"
             },
             utilities: {
                 src: sortDependencies.sortFiles( "utilities/*.coffee" ),
-                dest: "build/utilities.js",
-                options: { bare: false }
+                dest: "build/utilities.js"
             }
         },
         concat: {
