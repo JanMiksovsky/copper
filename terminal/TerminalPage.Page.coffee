@@ -3,7 +3,7 @@ class window.TerminalPage extends Page
   inherited:
     title: "Copper Terminal"
     content: [
-      { control: Terminal, ref: "terminal" }
+      { control: "Terminal", ref: "terminal" }
     ]
 
   initialize: ->
