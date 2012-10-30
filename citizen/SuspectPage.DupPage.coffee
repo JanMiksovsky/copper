@@ -43,10 +43,12 @@ class window.SuspectPage extends DupPage
       @next()
 
   next: ->
+    @sendIntroMessage()
     window.location = "thankYou.html"
 
   sendIntroMessage: ->
     email = Cookie.get "email"
-    url = "#{window.origin}/email/intro/#{email}"
-    $.post url, null, ( data ) =>
-      console?.log "Intro message sent"
+    if email?
+      url = "#{window.location.origin}/email/intro/#{email}"
+      $.post url, null, ( data ) =>
+        console?.log "Intro message sent"
