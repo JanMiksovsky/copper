@@ -26,15 +26,17 @@ class window.SuspectList extends Control
 
     # Get random suspects
     friends = @friends()
-    suspects = Suspects.select 3, friends
+    suspects = Suspects.select 5, friends
 
-    # Add in one of the user's friends
-    friendIndex = Math.floor Math.random() * friends.length
-    friend = friends[ friendIndex ]
-    suspects.push
-      isFriend: true
-      name: friend.name
-      picture: Facebook.pictureUrlForUser friend
+    # Add in some of the user's friends
+    # friendIndex = Math.floor Math.random() * friends.length
+    # friend = friends[ friendIndex ]
+    selectedFriends = @_selectFriends friends, 3
+    for friend in selectedFriends
+      suspects.push
+        isFriend: true
+        name: friend.name
+        picture: Facebook.pictureUrlForUser friend
 
     # Shuffle and display
     shuffled = Utilities.shuffle suspects
@@ -46,3 +48,8 @@ class window.SuspectList extends Control
   _loaded: Control.property ( loaded ) ->
     @$progressIndicator().toggle !loaded
     @$list().css "visibility", if loaded then "inherit" else "hidden"
+
+  # Randomly select the indicated number of friends.
+  _selectFriends: ( friends, count ) ->
+    shuffled = Utilities.shuffle friends
+    return shuffled.splice 0, count
