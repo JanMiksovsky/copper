@@ -14,9 +14,9 @@ class window.SuspectTile extends Control
   initialize: ->
     @click =>
       if @suspect().isFriend
-        alert "You lose karma because you implicated a friend."
+        @trigger "selectFriend"
       else
-        alert "You lose karma because you implicated an innocent stranger."
+        @trigger "selectStranger"
 
   picture: Control.chain "$picture", "prop/src"
 

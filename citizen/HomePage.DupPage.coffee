@@ -43,7 +43,3 @@ class window.HomePage extends DupPage
     url = parts.join "/"
 
     Facebook.authorize applicationId, url, [ "email", "user_birthday" ]
-
-  test: ->
-    $.post "http://localhost:5000/verify/jan@miksovsky.com", null, ( data ) =>
-      debugger

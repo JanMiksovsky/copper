@@ -104,6 +104,7 @@ class window.RegisterPage extends DupPage
       if valid
         # TODO: Send address and preferred email to service
         Cookie.set "address", @address()
+        Cookie.set "email", @email()
         @navigateWithAccessToken "referral.html"
 
   name: Control.chain "$name", "content"

@@ -1,4 +1,4 @@
-class window.ReferralPage extends DupPage
+class window.SuspectPage extends DupPage
 
   inherited:
     content: [
@@ -35,5 +35,18 @@ class window.ReferralPage extends DupPage
 
   initialize: ->
     @$linkReload().click => @$suspectList().reload()
+    @$suspectList().on "selectFriend selectStranger", =>
+      # TODO: Lose karma
+      @next()
     @$linkAbstain().click =>
-      alert "You gain karma by not cooperating."
+      # TODO: Gain karma
+      @next()
+
+  next: ->
+    window.location = "thankYou.html"
+
+  sendIntroMessage: ->
+    email = Cookie.get "email"
+    url = "#{window.origin}/email/intro/#{email}"
+    $.post url, null, ( data ) =>
+      console?.log "Intro message sent"
