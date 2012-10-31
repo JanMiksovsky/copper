@@ -27,10 +27,17 @@ class window.SatellitePhoto extends Control
       #{new Date()}
     """
     @$map().mapTypeId google.maps.MapTypeId.SATELLITE
+
+    # Use the map's current zoom level as the min and max zoom level to
+    # effectively disable various types of zooming (wheel, keyboard, etc).
+    zoomLevel = @map().getZoom()
+
     @map().setOptions
       draggable: false
       streetViewControl: false
       tilt: 0
+      minZoom: zoomLevel
+      maxZoom: zoomLevel
       zoomControl: false
 
   map: Control.chain "$map", "map"
