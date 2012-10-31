@@ -29,10 +29,11 @@ class window.HeroinePage extends TimelinePage
   _posts: [
     date: "July 10", content: [
       """
-      Apparently those government people are interested in these places, but
-      we don't know where they are. If we could just figure out what they have
-      in common, we could help put a stop to whatever they have planned. Can
-      anyone help?
+      While those D.U.P. people were busy combing through Frank's house, he
+      managed to liberate a USB drive from one of their bags. The drive was
+      labeled, "Bellevue, WA", and had the following photos on it. Can anyone
+      help identify where these are? If we could just figure out what they have
+      in common, we could help put a stop to whatever they have planned.
       """
     ,
       html: "<img class='satelliteSample' src='resources/satelliteSample.png'/>"
@@ -57,10 +58,10 @@ class window.HeroinePage extends TimelinePage
     ]
   ,
     date: "April 3",  content: """
-      I had tix for tonight's show at the Showbox, but there was
-      some sort of security checkpoint thing set up on I-5, and it took HOURS
-      to get through it. We missed the opening act, and I only show half the
-      show. So. Pissed.
+      I had tix for tonight's show at the Showbox, but there was some sort of
+      security checkpoint thing set up on I-5, and it took HOURS to get through
+      it. We missed the opening act, and I only got to see half the show. So.
+      Pissed.
     """
   ,
     date: "March 29", content: control: LoremIpsum
