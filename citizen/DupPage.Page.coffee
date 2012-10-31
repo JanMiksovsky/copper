@@ -5,7 +5,8 @@ class window.DupPage extends Page
     content: [
       html: "div", ref: "header", content:
         html: "div", ref: "titleElements", class: "container", content: [
-          html: "<img src='resources/dupLogo.png'/>", ref: "logo"
+          html: "<a href='index.html'>", content:
+           html: "<img src='resources/dupLogo.png'/>", ref: "logo"
         ,
           html: "h3", ref: "organization", content: "Department of Unified Protection"
         ,
