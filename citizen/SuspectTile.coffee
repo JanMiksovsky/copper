@@ -14,7 +14,7 @@ class window.SuspectTile extends Control
   initialize: ->
     @click =>
       if @suspect().isFriend
-        @trigger "selectFriend"
+        @trigger "selectFriend", [ @suspect() ]
       else
         @trigger "selectStranger"
 

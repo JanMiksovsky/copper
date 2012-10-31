@@ -34,6 +34,7 @@ class window.SuspectList extends Control
     selectedFriends = @_selectFriends friends, 3
     for friend in selectedFriends
       suspects.push
+        id: friend.id
         isFriend: true
         name: friend.name
         picture: Facebook.pictureUrlForUser friend

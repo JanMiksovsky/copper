@@ -23,6 +23,7 @@ class window.RegisterPage extends DupPage
         ref: "name"
         generic: false
         required: true
+        spellcheck: false
       ]
     ,
       html: "div", content: [
@@ -44,7 +45,7 @@ class window.RegisterPage extends DupPage
       html: "div", content: [
         "<div class='label'>Primary residence address where we can find you:</div>"
       ,
-        html: "<textarea>", ref: "address"
+        html: "<textarea spellcheck='false'>", ref: "address"
       ]
     ,
       html: "div", content: [
@@ -54,6 +55,8 @@ class window.RegisterPage extends DupPage
         ref: "email"
         generic: false
         required: true
+        spellcheck: false
+        type: "email"
       ]
     ,
       html: "div", content: [

@@ -22,9 +22,11 @@ class window.Facebook
     @_call "me/friends", null, ( result ) =>
       callback result.data
 
+  # Return the picture for the given user, using either a user object or an ID.
   @pictureUrlForUser: ( user ) ->
+    id = user.id ? user
     @_getAccessToken()
-    "#{@_baseUrl}#{user.id}/picture?access_token=#{@accessToken}&height=160&width=160"
+    "#{@_baseUrl}#{id}/picture?access_token=#{@accessToken}&height=160&width=160"
 
   @_baseUrl: "https://graph.facebook.com/"
 

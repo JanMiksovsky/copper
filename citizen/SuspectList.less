@@ -8,10 +8,15 @@
   }
 
   .SuspectTile {
-    display: inline-block;
+    cursor: pointer;
     margin-bottom: 10px;
+    
     &:not(:last-child) {
       margin-right: 10px;
+    }
+
+    &:hover {
+      border-color: darkred;
     }
   }
 }

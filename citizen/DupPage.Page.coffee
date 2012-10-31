@@ -27,8 +27,10 @@ class window.DupPage extends Page
 
   header: Control.chain "$DupPage_header", "content"
 
-  navigateWithAccessToken: ( url ) ->
-    window.location = "#{url}?access_token=#{@accessToken()}"
+  navigateWithAccessToken: ( url, params ) ->
+    params = if params? then params + "&" else ""
+    params += "access_token=#{@accessToken()}"
+    window.location = "#{url}?#{params}"
 
   title: ( title ) ->
     result = super title

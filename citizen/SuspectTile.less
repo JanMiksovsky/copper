@@ -1,7 +1,7 @@
 .SuspectTile {
 
   border: 1px solid #ccc;
-  cursor: pointer;
+  display: inline-block;
   font-family: "Courier New", monospace;
   font-weight: bold;
   padding: 20px;
@@ -24,7 +24,7 @@
     position: absolute;
   }
 
-  img {
+  .picture {
     /* Make image grayscale */
     filter: grayscale( 100% ); /* Current draft standard */
     -webkit-filter: grayscale( 100% ); /* New WebKit */
@@ -32,10 +32,9 @@
     -ms-filter: grayscale( 100% ); 
     -o-filter: grayscale( 100% ); /* Not yet supported in Gecko, Opera or IE */ 
     filter: gray; /* IE */
-  }
 
-  &:hover {
-    border-color: red;
+    height: 160px;
+    width: 160px;
   }
 
 }

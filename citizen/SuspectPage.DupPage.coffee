@@ -2,12 +2,6 @@ class window.SuspectPage extends DupPage
 
   inherited:
     content: [
-      """<p>
-      The nationwide Citizen Watch Program assists the Department of Unified
-      Protection in identifying citizens of interest to security investigations.
-      All citizens are periodically required to review photographs of suspicious
-      individuals and indicate any associations with individuals they know.
-      </p>"""
       "<h2>Your Security Begins with Cooperation</h2>"
       """<p>
       Please identify one of the following:
@@ -24,27 +18,27 @@ class window.SuspectPage extends DupPage
         that we may carry out our mission to keep our nation secure. If you
         abstain from making a selection, your failure to comply may subject you,
         your family, and your associates to investigation and/or indefinite
-        incarceration. 
+        incarceration.
         """
         { control: Link, ref: "linkAbstain", content: "Abstain" }
       ]}
-      "<h2>Suspicion Breeds Confidence</h2>"
-      "<p>Always report suspicious activity to local law enforcement.</p>"
     ]
-    title: "Citizen Watch Program"
+    title: "Do you know any of these people?"
 
   initialize: ->
     @$linkReload().click => @$suspectList().reload()
-    @$suspectList().on "selectFriend selectStranger", =>
+    @$suspectList().on "selectFriend selectStranger", ( event, suspect ) =>
       # TODO: Lose karma
-      @next()
+      @next suspect
     @$linkAbstain().click =>
       # TODO: Gain karma
-      @next()
+      @next suspect
 
-  next: ->
+  next: ( suspect ) ->
     @sendIntroMessage()
-    window.location = "thankYou.html"
+    params = if suspect?
+      "suspectId=#{suspect.id}"
+    @navigateWithAccessToken "thankYou.html", params
 
   sendIntroMessage: ->
     email = Cookie.get "email"
