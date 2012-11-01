@@ -40,7 +40,7 @@ class window.HeroinePage extends TimelinePage
     ]
   ,
     date: "June 2", content: [
-      control: LoremIpsum, sentences: 1
+      "Nice shot"
     ,
       control: FlickrInterestingPhoto
     ]
@@ -52,7 +52,7 @@ class window.HeroinePage extends TimelinePage
     date: "April 27", content: control: FlickrInterestingPhoto
   ,
     date: "April 8", content: [
-      control: LoremIpsum, sentences: 1
+      "Wow"
     ,
       control: FlickrInterestingPhoto
     ]
