@@ -40,11 +40,7 @@ class window.HomePage extends DupPage
 
   # Send the user to the registration page.
   register: ->
-    # App id depends on whether we're running locally or in production.
-    applicationId = if window.location.hostname == "localhost"
-      "407741369292793"
-    else
-      "400736616662108"
+    applicationId = Application.id()
     # Facebook auth needs an absolute URL, but we want this app to be able to
     # run in multiple locations (localhost, etc.), so we build a URL ourselves.
     parts = window.location.href.split "/"

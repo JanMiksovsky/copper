@@ -13,6 +13,8 @@ class window.TimelinePost extends TimelineUnit
       ]
     ,
       html: "div", ref: "TimelinePost_content"
+    ,
+      control: "CommentComposer"
     ]
 
   author: Control.chain "$TimelinePost_author", "content"

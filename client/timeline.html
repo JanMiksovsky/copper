@@ -23,8 +23,19 @@ html {
 }
 </style>
 
+<script>
+$( function() {
+    // If we don't have an access token, call FB and redirect to this page.
+    if ( Facebook.accessToken() == null ) {
+        Facebook.authorize( Application.id(), window.location );
+    } else {
+        $( "body" ).control( HeroinePage );
+    }
+});
+</script>
+
 </head>
 
-<body data-create-controls="true" data-control="HeroinePage"/>
+<body/>
 
 </html>

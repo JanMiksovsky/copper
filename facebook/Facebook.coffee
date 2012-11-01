@@ -4,6 +4,9 @@ Wrap access to Facebook.
 
 class window.Facebook
 
+  @accessToken: ->
+    Page.urlParameters().access_token
+
   # Get an access token
   @authorize: ( applicationId, redirectUri, scopes, params ) ->
     scopesParam = if scopes? then scopes.join "," else ""
@@ -23,18 +26,18 @@ class window.Facebook
       callback result.data
 
   # Return the picture for the given user, using either a user object or an ID.
-  @pictureUrlForUser: ( user ) ->
+  @pictureUrlForUser: ( user, size ) ->
     id = user.id ? user
-    @_getAccessToken()
-    "#{@_baseUrl}#{id}/picture?access_token=#{@accessToken}&height=160&width=160"
+    size = size ? 160
+    "#{@_baseUrl}#{id}/picture?access_token=#{@accessToken()}&height=#{size}&width=#{size}"
 
   @_baseUrl: "https://graph.facebook.com/"
 
   # Main Facebook call entry point.
   @_call: ( path, params, callback ) ->
-    @_getAccessToken()
+    @accessToken()
     callParams = [
-      "access_token=#{@accessToken}"
+      "access_token=#{@accessToken()}"
       "callback=?" # Required for $.getJSON to work.
     ]
     if params
@@ -44,7 +47,3 @@ class window.Facebook
     $.getJSON url, ( result ) ->
       unless result.error?
         callback result
-
-  @_getAccessToken: ->
-    if not @accessToken?
-      @accessToken = Page.urlParameters().access_token
