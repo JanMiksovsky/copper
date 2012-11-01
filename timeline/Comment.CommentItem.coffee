@@ -1,4 +1,4 @@
-class window.Comment extends Control
+class window.Comment extends CommentItem
 
   inherited:
     content: [

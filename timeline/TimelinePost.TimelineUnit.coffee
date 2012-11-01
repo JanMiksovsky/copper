@@ -22,10 +22,19 @@ class window.TimelinePost extends TimelineUnit
         control: Link, content: "Comment"
       ]
     ,
-      control: "CommentComposer"
+      control: "List", ref: "commentList", itemClass: "Comment"
+    ,
+      control: "CommentComposer", ref: "commentComposer"
     ]
 
   author: Control.chain "$TimelinePost_author", "content"
   authorPage: Control.chain "$TimelinePost_author", "href"
+  comments: Control.chain "$commentList", "items"
   content: Control.chain "$TimelinePost_content", "content"
   date: Control.chain "$TimelinePost_date", "content"
+
+  initialize: ->
+    @$commentComposer().on "saveComment", ( event, comment ) =>
+      newComment = @$commentComposer().comment()
+      @comments @comments().concat newComment
+      @$commentComposer().content ""
