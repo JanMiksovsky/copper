@@ -14,7 +14,8 @@ class window.Comment extends CommentItem
   user: ( user ) ->
     result = super user
     if user isnt undefined
-      @$linkUser().properties
-        content: user.name
-        href: user.link
+      Facebook.profileForUser user, ( profile ) =>
+        @$linkUser().properties
+          content: profile.name
+          href: profile.link
     return result

@@ -23,10 +23,10 @@ class window.HeroinePage extends TimelinePage
 
     # TODO: Come up with better way to turn JSON for posts into live controls.
     posts = for post in @_posts
-      { date, content } = post
+      { date, content, comments } = post
       control = Control.create().json content: content
       content = control.content()
-      { date, content }
+      { date, content, comments }
     @posts posts
 
     satellitePost = @$timeline().controls().eq 0
@@ -52,6 +52,10 @@ class window.HeroinePage extends TimelinePage
       """
     ,
       html: "<img class='satelliteSample' src='resources/satelliteSample.png'/>"
+    ]
+    comments: [
+      user: "-2"
+      content: "I think these are somewhere in Bellevue."
     ]
   ,
     date: "June 2", content: [

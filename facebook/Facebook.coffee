@@ -37,6 +37,13 @@ class window.Facebook
     size = size ? 160
     "#{@_baseUrl}#{id}/picture?access_token=#{@accessToken()}&height=#{size}&width=#{size}"
 
+  @profileForUser: ( user, callback ) ->
+    id = user.id ? user
+    if Facebook.isFakeUser user
+      callback fakeFacebookUsers[ id ]
+    else
+      @_cachedFacebookCall id, null, callback
+
   # Construct a URL that includes the path and the indicated params
   @url: ( path, params ) ->
     paramList = if params?
