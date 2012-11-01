@@ -15,9 +15,11 @@ class window.HeroinePage extends TimelinePage
     profilePhoto: "resources/profilePhoto.jpg"
 
   initialize: ->
+
     @on "click", ".satelliteSample", =>
       # Dialog.showDialog SatelliteDialog
       window.location = "satellite.html"
+
     # TODO: Come up with better way to turn JSON for posts into live controls.
     posts = for post in @_posts
       { date, content } = post
@@ -25,6 +27,16 @@ class window.HeroinePage extends TimelinePage
       content = control.content()
       { date, content }
     @posts posts
+
+    satellitePost = @$timeline().controls().eq 0
+    satellitePost.on "saveComment", ( event, comment ) =>
+      if comment.toLowerCase().indexOf( "subway" ) >= 0
+        responseComment =
+          user: "100001022161023"
+          content: """
+          Ah, that totally makes sense!
+          """
+        satellitePost.addComment responseComment
 
   _posts: [
     date: "July 10", content: [

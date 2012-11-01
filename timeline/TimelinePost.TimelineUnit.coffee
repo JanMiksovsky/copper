@@ -27,6 +27,9 @@ class window.TimelinePost extends TimelineUnit
       control: "CommentComposer", ref: "commentComposer"
     ]
 
+  addComment: ( comment ) ->
+    @comments @comments().concat comment
+
   author: Control.chain "$TimelinePost_author", "content"
   authorPage: Control.chain "$TimelinePost_author", "href"
   comments: Control.chain "$commentList", "items"
@@ -35,6 +38,5 @@ class window.TimelinePost extends TimelineUnit
 
   initialize: ->
     @$commentComposer().on "saveComment", ( event, comment ) =>
-      newComment = @$commentComposer().comment()
-      @comments @comments().concat newComment
+      @addComment @$commentComposer().comment()
       @$commentComposer().content ""
