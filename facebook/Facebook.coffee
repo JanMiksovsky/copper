@@ -25,9 +25,15 @@ class window.Facebook
     @_cachedFacebookCall "me/friends", null, ( result ) =>
       callback result.data
 
+  @isFakeUser: ( user ) ->
+    id = user.id ? user
+    parseInt( id ) < 0
+
   # Return the picture for the given user, using either a user object or an ID.
   @pictureUrlForUser: ( user, size ) ->
     id = user.id ? user
+    if Facebook.isFakeUser user
+      return fakeFacebookUsers[ id ].picture
     size = size ? 160
     "#{@_baseUrl}#{id}/picture?access_token=#{@accessToken()}&height=#{size}&width=#{size}"
 

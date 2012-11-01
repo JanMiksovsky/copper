@@ -10,11 +10,12 @@ class window.HeroinePage extends TimelinePage
     employer: "Microsoft Corporation"
     employerPage: "http://www.facebook.com/Microsoft"
     major: "English"
-    name: "Ann Williams"
     position: "Project Manager"
-    profilePhoto: "resources/profilePhoto.jpg"
 
   initialize: ->
+
+    @name fakeFacebookUsers.heroine.name
+    @profilePhoto fakeFacebookUsers.heroine.picture
 
     @on "click", ".satelliteSample", =>
       # Dialog.showDialog SatelliteDialog
@@ -32,7 +33,7 @@ class window.HeroinePage extends TimelinePage
     satellitePost.on "saveComment", ( event, comment ) =>
       if comment.toLowerCase().indexOf( "subway" ) >= 0
         responseComment =
-          user: "100001022161023"
+          user: fakeFacebookUsers.heroine
           content: """
           Ah, that totally makes sense!
           """
