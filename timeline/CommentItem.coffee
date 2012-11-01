@@ -11,5 +11,5 @@ class window.CommentItem extends Control
 
   content: Control.chain "$CommentItem_content", "content"
 
-  user: ( user ) ->
+  user: Control.property ( user ) ->
     @$picture().prop "src", Facebook.pictureUrlForUser user, 32
