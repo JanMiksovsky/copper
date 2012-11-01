@@ -2,7 +2,7 @@ class window.CommentComposer extends CommentItem
 
   inherited:
     content:
-      control: AutoSizeTextBox, placeholder: "Write a comment..."
+      control: AutoSizeTextBox, ref, "commentTextBox", placeholder: "Write a comment..."
 
   initialize: ->
     @user "me"

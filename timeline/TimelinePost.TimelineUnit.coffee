@@ -14,6 +14,14 @@ class window.TimelinePost extends TimelineUnit
     ,
       html: "div", ref: "TimelinePost_content"
     ,
+      html: "div", ref: "likeBlock", content: [
+        control: Link, content: "Like"
+      ,
+        " · "
+      ,
+        control: Link, content: "Comment"
+      ]
+    ,
       control: "CommentComposer"
     ]
 
