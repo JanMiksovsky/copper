@@ -6,7 +6,7 @@ class window.HeroinePage extends TimelinePage
     cityPage: "http://www.facebook.com/pages/Bellevue-Washington/111723635511834"
     college: "Harvey Mudd College"
     collegePage: "http://www.facebook.com/pages/Harvey-Mudd-College/107892159239091"
-    coverPhoto: "resources/coverPhoto.jpg"
+    # coverPhoto: "resources/coverPhoto.jpg"
     employer: "Microsoft Corporation"
     employerPage: "http://www.facebook.com/Microsoft"
     infoTiles: "resources/facebookInfoTiles.png"
@@ -21,6 +21,11 @@ class window.HeroinePage extends TimelinePage
     @on "click", ".satelliteSample", =>
       # Dialog.showDialog SatelliteDialog
       window.location = "satellite.html"
+    @on "click", ( event ) =>
+      # CTRL+clicking on page gives us a way to drop into the debugger with a
+      # reference to the page. This is helpful when debugging inside Facebook.
+      if event.ctrlKey
+        debugger
 
     # TODO: Come up with better way to turn JSON for posts into live controls.
     posts = for post in @_posts

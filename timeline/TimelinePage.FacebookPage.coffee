@@ -4,7 +4,13 @@ class window.TimelinePage extends FacebookPage
     # Many of the refs use Facebook's name to facilitate borrowing their styles.
     content: [
       html: "div", ref: "fbTimelineSection", content: [
-        html: "img", ref: "TimelinePage_coverPhoto"
+        html: "div", ref: "coverWrap", content: [
+          control: "GoogleImageSearch"
+          ref: "coverPhoto"
+          apiKey: "AIzaSyBv9uyS4BISNFq3Nqy1nEIacR8rZq9mbKQ"
+          searchEngine: "012110630167570475131:yb8gc1mbcwk"
+          imageSize: "xlarge"
+        ]
       ,
         html: "div", ref: "fbTimelineHeadline", content: [
           html: "div", ref: "photoContainer", content:
@@ -37,11 +43,14 @@ class window.TimelinePage extends FacebookPage
     ]
 
   birthday: Control.chain "$aboutTile", "birthday"
-  city: Control.chain "$aboutTile", "city"
+
+  city: Control.chain( "$aboutTile", "city", ( city ) ->
+    @$coverPhoto().query "#{city} skyline"
+  )
+
   cityPage: Control.chain "$aboutTile", "cityPage"
   college: Control.chain "$aboutTile", "college"
   collegePage: Control.chain "$aboutTile", "collegePage"
-  coverPhoto: Control.chain "$TimelinePage_coverPhoto", "prop/src"
   employer: Control.chain "$aboutTile", "employer"
   employerPage: Control.chain "$aboutTile", "employerPage"
   infoTiles: Control.chain "$TimelinePage_infoTiles", "prop/src"
@@ -49,6 +58,14 @@ class window.TimelinePage extends FacebookPage
   initialize: ->
     @$buttonAbout().click =>
       Dialog.showDialog AboutDialog
+
+    # If city photo loads and is too tall, vertically center it
+    $coverPhoto = @$coverPhoto()
+    $coverPhoto.load =>
+      coverPhotoHeight = $coverPhoto.height()
+      containerHeight = @$coverWrap().height()
+      if coverPhotoHeight > containerHeight
+        $coverPhoto.css "top", ( containerHeight - coverPhotoHeight ) / 2
 
   major: Control.chain "$aboutTile", "major"
 
