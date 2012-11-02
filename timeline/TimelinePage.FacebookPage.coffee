@@ -18,8 +18,11 @@ class window.TimelinePage extends FacebookPage
         html: "div", ref: "fbTimelineNavigationPagelet", content:
           html: "div", ref: "TimelineNavContent", content:
             html: "div", ref: "fbTimelineNavigation", content:
-              html: "div", ref: "fbTimelineTopRow", content:
+              html: "div", ref: "fbTimelineTopRow", content: [
                 control: "TimelineAboutTile", ref: "aboutTile"
+              ,
+                html: "img", ref: "TimelinePage_infoTiles"
+              ]
       ]
     ,
       control: "Timeline", ref: "timeline"
@@ -33,6 +36,7 @@ class window.TimelinePage extends FacebookPage
   coverPhoto: Control.chain "$TimelinePage_coverPhoto", "prop/src"
   employer: Control.chain "$aboutTile", "employer"
   employerPage: Control.chain "$aboutTile", "employerPage"
+  infoTiles: Control.chain "$TimelinePage_infoTiles", "prop/src"
   major: Control.chain "$aboutTile", "major"
 
   name: Control.chain( "$TimelinePage_name", "content", ( name ) ->

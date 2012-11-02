@@ -9,6 +9,7 @@ class window.HeroinePage extends TimelinePage
     coverPhoto: "resources/coverPhoto.jpg"
     employer: "Microsoft Corporation"
     employerPage: "http://www.facebook.com/Microsoft"
+    infoTiles: "resources/facebookInfoTiles.png"
     major: "English"
     position: "Project Manager"
 
