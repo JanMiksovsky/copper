@@ -32,22 +32,30 @@ class window.HeroinePage extends TimelinePage
     satellitePost = @$timeline().controls().eq 0
     satellitePost.on "saveComment", ( event, comment ) =>
       if comment.toLowerCase().indexOf( "subway" ) >= 0
-        responseComment =
-          user: fakeFacebookUsers.heroine
-          content: """
-          Ah, that totally makes sense!
-          """
-        satellitePost.addComment responseComment
+        # Wait a second before responding.
+        setTimeout =>
+          @postCommentResponse satellitePost
+        , 1000
+
+  postCommentResponse: ( post ) ->
+    Facebook.currentUser ( currentUser ) =>
+      post.addComment
+        user: fakeFacebookUsers.heroine
+        content: """
+          Ah, that totally makes sense! At one of the rallys, we met a guy who
+          works there. #{currentUser.first_name}, can you go there and talk to
+          him? The only name we have for him is, "Peacock".
+        """
 
   _posts: [
     date: "July 10", content: [
       """
       <p>
       While those D.U.P. people were busy combing through Frank's house, he
-      managed to liberate a USB drive from one of their bags. The drive was
-      labeled, "Bellevue, WA", and had the following photos on it. Can anyone
-      help identify where these are? If we could just figure out what they have
-      in common, we could help put a stop to whatever they have planned.
+      managed to liberate a USB drive from one of their bags. It had the
+      following photos on it. Can anyone help identify where these places are?
+      If we could just figure out what they have in common, we could help put a
+      stop to whatever they have planned.
       </p>
       """
     ,

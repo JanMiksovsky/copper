@@ -2,11 +2,17 @@ class window.Comment extends CommentItem
 
   inherited:
     content: [
-      control: Link, ref: "linkUser"
+      html: "div", content: [
+        control: Link, ref: "linkUser"
+      ,
+        " "
+      ,
+        html: "span", ref: "Comment_content"
+      ]
     ,
-      " "
-    ,
-      html: "span", ref: "Comment_content"
+      html: "div", ref: "commentLikeBlock", content: [
+        control: Link, content: "Like"
+      ]
     ]
 
   content: Control.chain "$Comment_content", "content"
