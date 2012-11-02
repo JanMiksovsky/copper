@@ -12,8 +12,6 @@ class window.TimelinePage extends FacebookPage
               html: "div", ref: "uiScaledImageContainer", content:
                 html: "img", ref: "TimelinePage_profilePhoto"
         ,
-          html: "h2", ref: "TimelinePage_name"
-        ,
           html: "div", ref: "actions", content: [
             control: "FacebookButton", content: "Friends"
           ,
@@ -21,6 +19,8 @@ class window.TimelinePage extends FacebookPage
           ,
             control: "FacebookButton", ref: "buttonAbout", content: "What's This?"
           ]
+        ,
+          html: "h2", ref: "TimelinePage_name"
         ]
       ,
         html: "div", ref: "fbTimelineNavigationPagelet", content:
