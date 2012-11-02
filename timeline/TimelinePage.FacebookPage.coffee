@@ -13,6 +13,14 @@ class window.TimelinePage extends FacebookPage
                 html: "img", ref: "TimelinePage_profilePhoto"
         ,
           html: "h2", ref: "TimelinePage_name"
+        ,
+          html: "div", ref: "actions", content: [
+            control: "FacebookButton", content: "Friends"
+          ,
+            control: "FacebookButton", content: "Message"
+          ,
+            control: "FacebookButton", ref: "buttonAbout", content: "What's This?"
+          ]
         ]
       ,
         html: "div", ref: "fbTimelineNavigationPagelet", content:
@@ -37,6 +45,11 @@ class window.TimelinePage extends FacebookPage
   employer: Control.chain "$aboutTile", "employer"
   employerPage: Control.chain "$aboutTile", "employerPage"
   infoTiles: Control.chain "$TimelinePage_infoTiles", "prop/src"
+
+  initialize: ->
+    @$buttonAbout().click =>
+      Dialog.showDialog AboutDialog
+
   major: Control.chain "$aboutTile", "major"
 
   name: Control.chain( "$TimelinePage_name", "content", ( name ) ->
