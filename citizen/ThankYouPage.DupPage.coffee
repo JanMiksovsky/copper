@@ -17,7 +17,7 @@ class window.ThankYouPage extends DupPage
       </p>
       """
     ,
-      control: SuspectTile, ref: "suspectTile"
+      control: "SuspectTile", ref: "suspectTile"
     ,
       """
       <p>
