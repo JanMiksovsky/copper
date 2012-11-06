@@ -31,6 +31,7 @@ module.exports = function(grunt) {
             },
             missions: {
                 src: sortDependencies.sortFiles(
+                    "chatter/*.coffee",
                     "citizen/*.coffee",
                     "retail/*.coffee",
                     "satellite/*.coffee",
