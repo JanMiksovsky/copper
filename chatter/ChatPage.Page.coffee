@@ -13,5 +13,6 @@ class window.ChatPage extends Page
       @userInput ""
     @inDocument =>
       @$userInput().find( "input" ).focus()
+    ChatterBot.test()
 
   userInput: Control.chain "$userInput", "content"
