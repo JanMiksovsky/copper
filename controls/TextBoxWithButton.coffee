@@ -1,10 +1,12 @@
 class window.TextBoxWithButton2 extends Control
 
   inherited:
-    content: [
-      { control: TextBox, ref: "TextBoxWithButton_textBox" }
-      { control: BasicButton, ref: "TextBoxWithButton_goButton", content: "Go" }
-    ]
+    content: 
+      control: HorizontalPanels
+      content:
+        control: TextBox, ref: "TextBoxWithButton_textBox"
+      right:
+        control: BasicButton, ref: "TextBoxWithButton_goButton", content: "Go"
   
   # The content of the text box.
   content: ( value ) ->

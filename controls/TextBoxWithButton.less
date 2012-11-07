@@ -1,5 +1,13 @@
 .TextBoxWithButton2 {
-  .TextBoxWithButton_textBox {
-    margin-right: 0.5em;
+
+  // Hack
+  .SimpleFlexBox_content {
+    padding-right: 0.5em;
   }
+
+  .TextBoxWithButton_textBox {
+    box-sizing: border-box;
+    width: 100%;
+  }
+
 }
