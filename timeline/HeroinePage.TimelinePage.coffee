@@ -35,24 +35,6 @@ class window.HeroinePage extends TimelinePage
       { date, content, comments }
     @posts posts
 
-    # satellitePost = @$timeline().controls().eq 0
-    # satellitePost.on "saveComment", ( event, comment ) =>
-    #   if comment.toLowerCase().indexOf( "subway" ) >= 0
-    #     # Wait a second before responding.
-    #     setTimeout =>
-    #       @postCommentResponse satellitePost
-    #     , 1000
-
-  # postCommentResponse: ( post ) ->
-  #   Facebook.currentUser ( currentUser ) =>
-  #     post.addComment
-  #       user: fakeFacebookUsers.heroine
-  #       content: """
-  #         Ah, that totally makes sense! At one of the rallys, we met a guy who
-  #         works there. #{currentUser.first_name}, can you go there and talk to
-  #         him? The only name we have for him is, "Peacock".
-  #       """
-
   _posts: [
     date: "July 10", content: [
       """

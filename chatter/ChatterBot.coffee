@@ -22,9 +22,6 @@ class window.ChatterBot
       response = response.replace placeholder, capture
     response
 
-  @test: ->
-    console?.log @respond "I need help."
-
 ChatterBot.patterns = [
   input: /.*(s|S)ubway.*/
   output:
