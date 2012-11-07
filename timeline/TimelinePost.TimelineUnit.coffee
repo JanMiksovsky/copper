@@ -38,5 +38,11 @@ class window.TimelinePost extends TimelineUnit
 
   initialize: ->
     @$commentComposer().on "saveComment", ( event, comment ) =>
-      @addComment @$commentComposer().comment()
+      @addComment comment
       @$commentComposer().content ""
+      response = ChatterBot.respond comment.content
+      setTimeout =>
+        @addComment
+          user: fakeFacebookUsers.heroine
+          content: response
+      , 1000

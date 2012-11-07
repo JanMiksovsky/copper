@@ -19,5 +19,5 @@ class window.CommentComposer extends CommentItem
     @$commentTextBox().keydown ( event ) =>
       if event.which == 13 # Enter
         if @content()?.length > 0
-          @trigger "saveComment", [ @content() ]
+          @trigger "saveComment", [ @comment() ]
         false

@@ -13,7 +13,7 @@ class window.ChatterBot
     { pattern, match } = @bestMatch input
     responses = pattern.output
     response = if $.isArray responses
-      responses[ Math.floor Math.random responses.length ]
+      responses[ Math.floor responses.length * Math.random() ]
     else
       responses # Only one response
     captures = match.slice 1
@@ -26,7 +26,16 @@ class window.ChatterBot
     console?.log @respond "I need help."
 
 ChatterBot.patterns = [
-  input: /.*hello.*/
+  input: /.*(s|S)ubway.*/
+  output:
+    # TODO: Use player's name.
+    """
+    Ah, that totally makes sense! At one of the rallys, we met a guy who works
+    there. Can you go there and talk to him? The only name we have for
+    him is, "Peacock".
+    """
+,
+  input: /.*(h|H)ello.*/
   output: "Greetings."
 ,
   input: /^I (?:wish |would like )(?:I could |I was able to |to be able to )(.*)\./
@@ -52,30 +61,30 @@ ChatterBot.patterns = [
     "Well then, I hope you get to $1."
   ]
 ,
-  input: /Why dont you (.*?)[\?]/
+  input: /Why don't you (.*?)[\?]/
   output: [
-    "Do you really think I dont $1?"
+    "Do you really think I don't $1?"
     "Perhaps eventually I will $1."
     "Do you really want me to $1?"
   ]
 ,
-  input: /Why cant I (.*?)[\?]/
+  input: /Why can't I (.*?)[\?]/
   output: [
     "Do you think you should be able to $1?"
-    "If you could $1, what would you do?","I dont know -- why cant you $1?"
+    "If you could $1, what would you do?","I don't know -- why can't you $1?"
     "Have you really tried?"
   ]
 ,
-  input: /I cant (.*) you\./
+  input: /I can't (.*) you\./
   output: [
-    "How do you know you cant $1 me?"
+    "How do you know you can't $1 me?"
     "Perhaps you could $1 me if you tried."
     "What would it take for you to $1 me?"
   ]
 ,
-  input: /I cant (.*)\./
+  input: /I can't (.*)\./
   output: [
-    "How do you know you cant $1?"
+    "How do you know you can't $1?"
     "Perhaps you could $1 if you tried."
     "What would it take for you to $1?"
   ]
@@ -99,7 +108,7 @@ ChatterBot.patterns = [
   output: [
     "How do you suppose?"
     "Perhaps you can answer your own question."
-    "What is it youre really asking?"
+    "What is it you're really asking?"
   ]
 ,
   input: /Because (.*)\./
@@ -119,14 +128,14 @@ ChatterBot.patterns = [
   output: [
     "Do you doubt $1?"
     "Do you really think so?"
-    "But youre not sure $1?"
+    "But you're not sure $1?"
   ]
 ,
   input: /(.*) friend(.*)\./
   output: [
     "Tell me more about your friends."
     "When you think of a friend, what comes to mind?"
-    "Why dont you tell me about a childhood friend?"
+    "Why don't you tell me about a childhood friend?"
   ]
 ,
   input: /Yes\./
@@ -165,14 +174,14 @@ ChatterBot.patterns = [
 ,
   input: /Can you (.*?)[\?]/
   output: [
-    "What makes you think I cant $1?"
+    "What makes you think I can't $1?"
     "If I could $1, then what?"
     "Why do you ask if I can $1?"
   ]
 ,
   input: /Can I (.*?)[\?]/
   output: [
-    "Perhaps you dont want to $1."
+    "Perhaps you don't want to $1."
     "Do you want to be able to $1?"
     "If you could $1, would you?"
   ]
@@ -180,21 +189,21 @@ ChatterBot.patterns = [
   input: /You are (.*)\./
   output: [
     "Why do you think I am $1?"
-    "Does it please you to think that Im $1?"
+    "Does it please you to think that I'm $1?"
     "Perhaps you would like me to be $1."
-    "Perhaps youre really talking about yourself?"
+    "Perhaps you're really talking about yourself?"
   ]
 ,
-  input: /Youre (.*)\./
+  input: /you're (.*)\./
   output: [
     "Why do you say I am $1?"
     "Why do you think I am $1?", "Are we talking about you, or me?"
   ]
 ,
-  input: /I dont (.*)\./
+  input: /I don't (.*)\./
   output: [
-    "Dont you really $1?"
-    "Why dont you $1?"
+    "don't you really $1?"
+    "Why don't you $1?"
     "Do you want to $1?"
   ]
 ,
@@ -244,7 +253,7 @@ ChatterBot.patterns = [
   input: /Why (.*)\?/,
   output: [
     "Why do you think $1?"
-    "Why dont you tell me the reason why $1?"
+    "Why don't you tell me the reason why $1?"
   ]
 ,
   input: /I want (.*)\./
@@ -289,31 +298,28 @@ ChatterBot.patterns = [
 ,
   input: /(.*) your fav(o|ou)rite(.*?)[\?]/
   output: [
-    "I really dont have a favorite."
+    "I really don't have a favorite."
     "I have so many favorites its hard to choose one."
   ]
 ,
   input: /(.*?)[\?]/
   output: [
     "Hmm, not sure I know.."
-    "Thats an interesting question..."
-    "Gosh, Im not sure I can answer that..."
+    "That's a good question..."
+    "Not sure I can answer that..."
     "Why do you ask that?"
-    "Please consider whether you can answer your own question."
-    "Perhaps the answer lies within yourself?"
-    "Why dont you tell me?"
-    "If you knew that in one year you would die suddenly, would you change anything about the way you are living now?"
+    "Why don't you tell me?"
   ]
 ,
   input: /(.*)/
   output: [
     "Do you have any hobbies?",
-    "I see,please continue..."
+    "I see, please continue..."
     "What exactly are we talking about?"
     "Can you go over that again please.."
-    "Um, i get the feeling this conversation is not going anywhere.."
+    "Um, I get the feeling this conversation is not going anywhere.."
     "oh yeah?"
-    "hmm, is that so.."
+    "hmm, is that so..."
     "Please tell me more."
     "Lets change focus a bit... Tell me about your family."
     "Can you elaborate on that?"
@@ -322,10 +328,5 @@ ChatterBot.patterns = [
     "I see.  And what does that tell you?"
     "How does that make you feel?"
     "How do you feel when you say that?"
-    "If you had to have one piece of music softly playing in your mind for the rest of your life, what would you want it to be?"
-    "What room of your home do you spend the most time in?"
-    "If you could go back in time and become friends with one famous person, whom would you chose?"
-    "Which of the seven dwarfs personifies you best – Dopey, Sneezy, Sleepy, Bashful, Grumpy, Happy, or Doc?"
-    "Which animal would you leave out of the ark?"
   ]
 ]
