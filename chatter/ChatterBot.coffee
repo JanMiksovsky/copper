@@ -304,7 +304,7 @@ ChatterBot.patterns = [
 ,
   input: /(.*?)[\?]/
   output: [
-    "Hmm, not sure I know.."
+    "Hmm, not sure I know..."
     "That's a good question..."
     "Not sure I can answer that..."
     "Why do you ask that?"
@@ -316,12 +316,12 @@ ChatterBot.patterns = [
     "Do you have any hobbies?",
     "I see, please continue..."
     "What exactly are we talking about?"
-    "Can you go over that again please.."
-    "Um, I get the feeling this conversation is not going anywhere.."
-    "oh yeah?"
+    "Can you go over that again please?"
+    "Um, I get the feeling this conversation is not going anywhere."
+    "yeah?"
     "hmm, is that so..."
     "Please tell me more."
-    "Lets change focus a bit... Tell me about your family."
+    "Let's change focus a bit... Tell me about your family."
     "Can you elaborate on that?"
     "I see."
     "Very interesting."
