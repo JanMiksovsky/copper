@@ -82,6 +82,6 @@ class window.Terminal extends Control
     @userInput ""
     @history().push input
     @historyPosition 0
-    callback = @_readlnCallbacks().shift()
+    callback = @_readlnCallbacks().pop()
     if callback?
       callback.call @, input
