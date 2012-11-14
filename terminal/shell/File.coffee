@@ -1,3 +1,3 @@
-class File
+class window.File
 
   constructor: ( @name, @parent, @contents ) ->

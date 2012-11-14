@@ -30,7 +30,7 @@ commands.sh = ->
             window.stdout = outputFile
           commandFn args...
         else
-          stdout.writeln "#{commandName}: command not found"
+          stdout.writeln "#{command}: command not found"
     commands.sh()
 
 commands.sh.parse = ( s ) ->
