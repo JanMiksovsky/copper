@@ -21,10 +21,24 @@ class window.Terminal extends Control
     @click =>
       @focusOnUserInput()
     @$userInput().keydown ( event ) =>
-      if event.which == 13 # Enter
-        @_handleInput()
+      switch event.which
+        when 13 # Enter
+          @_handleInput()
+          false
+        when 38 # Up
+          @_navigateHistory 1
+          false
+        when 40 # Down
+          @_navigateHistory -1
+          false
     @inDocument ->
       @focusOnUserInput()
+
+  history: Control.property( null, [] )
+
+  # The index into the history of commands, 1 = most recent command,
+  # 2 = next most recent command, etc.
+  historyPosition: Control.property null, 0
 
   prompt: Control.chain "$prompt", "content"
 
@@ -50,6 +64,15 @@ class window.Terminal extends Control
 
   writeln: Control.chain "$log", "writeln"
 
+  _navigateHistory: ( step ) ->
+    history = @history()
+    position = @historyPosition()
+    position += step
+    if position > 0 and position <= history.length
+      command = history[ history.length - position ]
+      @userInput command
+      @historyPosition position
+
   _readlnCallbacks: Control.property( null, [] )
 
   _handleInput: ->
@@ -57,6 +80,8 @@ class window.Terminal extends Control
     @write @prompt()
     @writeln input
     @userInput ""
+    @history().push input
+    @historyPosition 0
     callback = @_readlnCallbacks().shift()
     if callback?
       callback.call @, input
