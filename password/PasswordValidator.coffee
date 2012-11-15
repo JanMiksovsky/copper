@@ -1,6 +1,8 @@
 class window.PasswordValidator
 
   constructor: ( @accountId ) ->
+    if not PasswordValidator.puzzles?
+      PasswordValidator.puzzles = PasswordValidator.generatePuzzles()
     trigramHead = @accountId.slice 0, 3
     trigramTail = @accountId.slice 3, 6
     @checksumHead = @checksum trigramHead
@@ -24,21 +26,13 @@ class window.PasswordValidator
     parseInt( trigram[0] ) + parseInt( trigram[1] ) + parseInt( trigram[2] )
 
   # Hash a numeric account ID into the numeric trigram space
-  hash: ( accountId ) ->
-    parseInt( accountId ) % @possibleTrigrams
+  # hash: ( accountId ) ->
+  #   parseInt( accountId ) % @possibleTrigrams
 
-  nthTrigram: ( n ) ->
-    dividend = n
-    digits = "0123456789"
-    trigram = ""
-    for divisor in [ 9 * 8, 8, 1 ]
-      quotient = Math.floor dividend / divisor
-      digit = digits[ quotient ]
-      trigram += digit # Add digit to trigram
-      digits = digits.replace digit, "" # Remove the digit from consideration
-      remainder = dividend % divisor
-      dividend = remainder
-    trigram
-
-  # Count of permutations of 3 digits
-  possibleTrigrams: 10 * 9 * 8
+  @generatePuzzles: ->
+    puzzles = []
+    for i in [3..24]
+      for j in [3..24]
+        if i + j >= 15 and i + j <= 39
+          puzzles.push [ i, j ]
+    puzzles
