@@ -20,8 +20,8 @@ class window.PasswordValidator
     else
       "Password changed"
 
-  checksum: ( s ) ->
-    parseInt( s[0] ) + parseInt( s[1] ) + parseInt( s[2] )
+  checksum: ( trigram ) ->
+    parseInt( trigram[0] ) + parseInt( trigram[1] ) + parseInt( trigram[2] )
 
   # Hash a numeric account ID into the numeric trigram space
   hash: ( accountId ) ->
