@@ -1,3 +1,7 @@
+###
+General-purpose utility functions
+###
+
 class window.Utilities
 
   # Return a copied of the given array shuffled with Fisher-Yates algorithm.
@@ -11,6 +15,13 @@ class window.Utilities
       copy[j] = temp
     copy
 
+  # Return the unique members of the given array (or string).
+  @unique: ( array ) ->
+    result = []
+    for item in array
+      if $.inArray( item, result ) < 0
+        result.push item
+    result
 
 # After loading a page, seed the random number generator.
 $ ->

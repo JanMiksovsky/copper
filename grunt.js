@@ -48,6 +48,10 @@ module.exports = function(grunt) {
                 ),
                 dest: "build/os.js"
             },
+            test: {
+                src: "test/*.coffee",
+                dest: "test/unittests.js"
+            },
             utilities: {
                 src: sortDependencies.sortFiles( "utilities/*.coffee" ),
                 dest: "build/utilities.js"
