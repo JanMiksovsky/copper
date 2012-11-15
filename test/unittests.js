@@ -29,13 +29,16 @@ Unit tests for PasswordValidator.
       return checkPassword(testAccount1, "111111111", "Digits may not be repeated");
     });
     test("PasswordValidator: checksum on first three digits", function() {
-      return checkPassword(testAccount1, "123456789", "First three digits must add to 8");
+      return checkPassword(testAccount1, "123456789", "First three digits must add to 9");
     });
     test("PasswordValidator: checksum on last three digits", function() {
-      return checkPassword(testAccount1, "125346789", "Last three digits must add to 18");
+      return checkPassword(testAccount1, "234156789", "Last three digits must add to 10");
     });
-    return test("PasswordValidator: valid password", function() {
-      return checkPassword(testAccount1, "125379468", "Password changed");
+    test("PasswordValidator: valid password", function() {
+      return checkPassword(testAccount1, "234567019", "Password changed");
+    });
+    return test("PasswordValidator: valid password for another number", function() {
+      return checkPassword(testAccount2, "986345012", "Password changed");
     });
   });
 
