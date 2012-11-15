@@ -11,4 +11,6 @@ commands.passwd = ( phone, password ) ->
   #     return
   #   commands.passwd phone
 
-  
+  validator = new PasswordValidator phone
+  message = validator.validate password
+  stdout.writeln message
