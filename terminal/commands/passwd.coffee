@@ -1,13 +1,14 @@
-commands.passwd = ( phone ) ->
+commands.passwd = ( phone, password ) ->
 
-  if not phone?
-    stdout.writeln "usage: passwd &lt;phone number&gt;"
+  if not ( phone? and password? )
+    stdout.writeln "usage: passwd [phone number] [new password]"
     return
 
-  stdout.writeln "passwd: Changing password for #{phone}"
-  env.prompt = "Enter new password: "
-  window.stdout = terminal
-  terminal.readln ( password ) ->
-    if password == ""
-      return
-    commands.passwd phone
+  # env.prompt = "Enter new password: "
+  # window.stdout = terminal
+  # terminal.readln ( password ) ->
+  #   if password == ""
+  #     return
+  #   commands.passwd phone
+
+  

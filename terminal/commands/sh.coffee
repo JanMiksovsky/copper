@@ -1,12 +1,12 @@
 commands.sh = ->
 
-  # For debugging, expose all commands on the window global.
+  # For debugging, uncomment the lines below to expose all commands on the
+  # window global so commands can be easily invoked in the debug console.
   # for name, command of commands
   #   window[ name ] = command
 
   unless env.currentDirectory
     env.currentDirectory = "/"
-  # env.prompt = "#{env.currentDirectory}> "
   env.prompt = "$ "
   window.stdout = terminal
   terminal.readln ( s ) ->
