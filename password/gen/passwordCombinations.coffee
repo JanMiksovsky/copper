@@ -7,6 +7,15 @@ class PasswordCombinations
   @checksum: ( trigram ) ->
     parseInt( trigram[0] ) + parseInt( trigram[1] ) + parseInt( trigram[2] )
 
+  # Compare two puzzles (e.g., for sorting) by comparing their checksums.
+  @comparePuzzles: ( puzzle1, puzzle2 ) ->
+    diff1 = puzzle1[0] - puzzle2[0]
+    diff2 = puzzle1[1] - puzzle2[1]
+    if diff1 == 0 # First trigram scores equal?
+      diff2 # Sort by second trigram score
+    else
+      diff1 # Sort by first trigram score
+
   # Given a trigram, remove its digits from the set of digits, and return the
   # set of trigrams which can be generated from the resulting reduced digit set.
   @counterparts: ( trigram ) ->
@@ -35,12 +44,13 @@ class PasswordCombinations
     [ @checksum( trigram1 ), @checksum( trigram2 ) ]
 
   @puzzles: ->
+    # Generate the puzzles
     puzzles = ( for trigramPair in @trigramPairs @digits
       @puzzle trigramPair[0], trigramPair[1]
     )
-    @unique puzzles, ( puzzle1, puzzle2 ) =>
-      # Puzzles are equal if their respective trigrams have the same checksum.
-      puzzle1[0] == puzzle2[0] and puzzle1[1] == puzzle2[1]
+    unique = @unique puzzles, ( puzzle1, puzzle2 ) =>
+      @comparePuzzles( puzzle1, puzzle2 ) == 0
+    unique.sort @comparePuzzles
 
   # Return a new string containing the sorted characters from s.
   @sortString: ( s ) ->
@@ -93,3 +103,5 @@ if require? and process?
   path = require "path"
   if path.basename( process.argv[1] ) == "PasswordCombinations.js"
     console?.log PasswordCombinations.puzzles()
+
+module.exports = PasswordCombinations

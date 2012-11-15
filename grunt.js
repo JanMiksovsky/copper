@@ -55,7 +55,7 @@ module.exports = function(grunt) {
             /* Build-time tools, not included in client. */
             tools: {
                 src: "password/gen/*.coffee",
-                dest: "password/gen/PasswordCombinations.js"
+                dest: "build/tools.js"
             },
             utilities: {
                 src: sortDependencies.sortFiles( "utilities/*.coffee" ),
@@ -71,11 +71,15 @@ module.exports = function(grunt) {
                     "build/controls.js",
                     "build/facebook.js",
                     /* Remaining declarations can come in any order. */
+                    "build/passwordCombinations.js",
                     "build/missions.js",
                     "build/os.js"
                 ],
                 dest: "client/copper.js"
             }
+        },
+        gen: {
+            dest: "build/passwordCombinations.js"
         },
         less: {
             all: {
@@ -88,5 +92,23 @@ module.exports = function(grunt) {
 
     // Default task.
     grunt.registerTask( "default", "coffee less concat" );
+
+    // Build everything
+    grunt.registerTask( "all", "coffee:tools gen default" );
+
+    // Generate password combinations file.
+    grunt.registerMultiTask( "gen", "Generate password puzzle combinations", function() {
+
+        var passwordCombinations = require( "./build/tools.js" );
+        var path = require( "path" );
+        var fs = require( "fs" );
+
+        dest = path.resolve( this.data );
+        puzzles = passwordCombinations.puzzles();
+        json = JSON.stringify( puzzles );
+        js = "var passwordCombinations = " + json + ";"
+        fs.writeFileSync( dest, js );
+
+    });
     
 };
