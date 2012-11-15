@@ -31,23 +31,6 @@ Build-time class to generate the ranges of allowable password combinations.
       }
     };
 
-    PasswordCombinations.ranges = function() {
-      var ranges, sum, _i, _len, _ref;
-      ranges = {};
-      _ref = this.trigramSums(this.trigrams(this.digits));
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        sum = _ref[_i];
-        ranges[sum] = [];
-      }
-      return ranges;
-    };
-
-    PasswordCombinations.subtract = function(charsToRemove, s) {
-      var regex;
-      regex = new RegExp("[" + charsToRemove + "]", "g");
-      return s.replace(regex, "");
-    };
-
     PasswordCombinations.permutations = function(s, n) {
       var char, i, rest, result, subpermutation, _i, _j, _len, _len1, _ref;
       result = [];
@@ -69,6 +52,28 @@ Build-time class to generate the ranges of allowable password combinations.
       return result;
     };
 
+    PasswordCombinations.puzzle = function(trigram1, trigram2) {
+      return [this.checksum(trigram1), this.checksum(trigram2)];
+    };
+
+    PasswordCombinations.puzzles = function() {
+      var puzzles, trigramPair,
+        _this = this;
+      puzzles = (function() {
+        var _i, _len, _ref, _results;
+        _ref = this.trigramPairs(this.digits);
+        _results = [];
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          trigramPair = _ref[_i];
+          _results.push(this.puzzle(trigramPair[0], trigramPair[1]));
+        }
+        return _results;
+      }).call(this);
+      return this.unique(puzzles, function(puzzle1, puzzle2) {
+        return puzzle1[0] === puzzle2[0] && puzzle1[1] === puzzle2[1];
+      });
+    };
+
     PasswordCombinations.sortString = function(s) {
       var array, char, item, result, _i, _len, _ref;
       array = (function() {
@@ -87,6 +92,12 @@ Build-time class to generate the ranges of allowable password combinations.
         result += item;
       }
       return result;
+    };
+
+    PasswordCombinations.subtract = function(charsToRemove, s) {
+      var regex;
+      regex = new RegExp("[" + charsToRemove + "]", "g");
+      return s.replace(regex, "");
     };
 
     PasswordCombinations.trigrams = function(s) {
@@ -114,25 +125,20 @@ Build-time class to generate the ranges of allowable password combinations.
       return result;
     };
 
-    PasswordCombinations.trigramSums = function(trigrams) {
-      var sum, sums, trigram, _i, _len;
-      sums = [];
-      for (_i = 0, _len = trigrams.length; _i < _len; _i++) {
-        trigram = trigrams[_i];
-        sum = this.checksum(trigram);
-        if (sums.indexOf(sum) < 0) {
-          sums.push(sum);
-        }
-      }
-      return sums;
-    };
-
-    PasswordCombinations.unique = function(array) {
-      var item, result, _i, _len;
+    PasswordCombinations.unique = function(array, compare) {
+      var existingItem, found, item, result, _i, _j, _len, _len1;
       result = [];
       for (_i = 0, _len = array.length; _i < _len; _i++) {
         item = array[_i];
-        if (result.indexOf(item) < 0) {
+        found = false;
+        for (_j = 0, _len1 = result.length; _j < _len1; _j++) {
+          existingItem = result[_j];
+          if (compare(item, existingItem)) {
+            found = true;
+            break;
+          }
+        }
+        if (!found) {
           result.push(item);
         }
       }
@@ -140,18 +146,13 @@ Build-time class to generate the ranges of allowable password combinations.
     };
 
     PasswordCombinations.uniquePermutations = function(s, n) {
-      var permutation, permutations, sorted;
+      var compareSorted, permutations,
+        _this = this;
       permutations = this.permutations(s, n);
-      sorted = (function() {
-        var _i, _len, _results;
-        _results = [];
-        for (_i = 0, _len = permutations.length; _i < _len; _i++) {
-          permutation = permutations[_i];
-          _results.push(this.sortString(permutation));
-        }
-        return _results;
-      }).call(this);
-      return this.unique(sorted);
+      compareSorted = function(x, y) {
+        return _this.sortString(x) === _this.sortString(y);
+      };
+      return this.unique(permutations, compareSorted);
     };
 
     return PasswordCombinations;
@@ -162,7 +163,7 @@ Build-time class to generate the ranges of allowable password combinations.
     path = require("path");
     if (path.basename(process.argv[1]) === "PasswordCombinations.js") {
       if (typeof console !== "undefined" && console !== null) {
-        console.log(PasswordCombinations.trigramPairs(PasswordCombinations.digits));
+        console.log(PasswordCombinations.puzzles());
       }
     }
   }

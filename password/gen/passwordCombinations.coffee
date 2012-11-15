@@ -18,16 +18,6 @@ class PasswordCombinations
   @factorial: (n) ->
     if n <= 1 then 1 else n * @factorial n - 1
 
-  @ranges: ->
-    ranges = {}
-    for sum in @trigramSums @trigrams @digits
-      ranges[ sum ] = []
-    ranges
-
-  @subtract: ( charsToRemove, s ) ->
-    regex = new RegExp "[#{charsToRemove}]", "g"
-    s.replace regex, ""
-
   # All permutations of n characters taken from string s.
   @permutations: ( s, n ) ->
     result = []
@@ -41,6 +31,17 @@ class PasswordCombinations
             result.push char + subpermutation
     result
 
+  @puzzle: ( trigram1, trigram2 ) ->
+    [ @checksum( trigram1 ), @checksum( trigram2 ) ]
+
+  @puzzles: ->
+    puzzles = ( for trigramPair in @trigramPairs @digits
+      @puzzle trigramPair[0], trigramPair[1]
+    )
+    @unique puzzles, ( puzzle1, puzzle2 ) =>
+      # Puzzles are equal if their respective trigrams have the same checksum.
+      puzzle1[0] == puzzle2[0] and puzzle1[1] == puzzle2[1]
+
   # Return a new string containing the sorted characters from s.
   @sortString: ( s ) ->
     array = ( char for char in s )
@@ -48,6 +49,10 @@ class PasswordCombinations
     for item in array.sort()
       result += item
     result
+
+  @subtract: ( charsToRemove, s ) ->
+    regex = new RegExp "[#{charsToRemove}]", "g"
+    s.replace regex, ""
   
   # All unique permutations of three characters.
   @trigrams: ( s) ->
@@ -63,19 +68,16 @@ class PasswordCombinations
       result = result.concat combinations
     result
 
-  @trigramSums: ( trigrams ) ->
-    sums = []
-    for trigram in trigrams
-      sum = @checksum trigram
-      if sums.indexOf( sum ) < 0
-        sums.push sum
-    sums
-
   # Return the unique members of the given array (or string).
-  @unique: ( array ) ->
+  @unique: ( array, compare ) ->
     result = []
     for item in array
-      if result.indexOf( item ) < 0
+      found = false
+      for existingItem in result
+        if compare item, existingItem
+          found = true
+          break
+      if not found
         result.push item
     result
 
@@ -83,12 +85,11 @@ class PasswordCombinations
   # "ab" and "ba" are considered the same.
   @uniquePermutations: ( s, n ) ->
     permutations = @permutations s, n
-    sorted = ( @sortString permutation for permutation in permutations )
-    @unique sorted
+    compareSorted = ( x, y ) => @sortString( x ) == @sortString( y )
+    @unique permutations, compareSorted
 
 # Handle direct invocation from Node.
 if require? and process?
   path = require "path"
   if path.basename( process.argv[1] ) == "PasswordCombinations.js"
-    # console?.log PasswordCombinations.ranges()
-    console?.log PasswordCombinations.trigramPairs PasswordCombinations.digits
+    console?.log PasswordCombinations.puzzles()
