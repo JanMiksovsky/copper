@@ -15,6 +15,12 @@ Build-time class to generate the ranges of allowable password combinations.
       return parseInt(trigram[0]) + parseInt(trigram[1]) + parseInt(trigram[2]);
     };
 
+    PasswordCombinations.counterparts = function(trigram) {
+      var reduced;
+      reduced = this.subtract(trigram, this.digits);
+      return this.trigrams(reduced);
+    };
+
     PasswordCombinations.digits = "0123456789";
 
     PasswordCombinations.factorial = function(n) {
@@ -25,19 +31,21 @@ Build-time class to generate the ranges of allowable password combinations.
       }
     };
 
-    PasswordCombinations.trigrams = function() {
-      return this.uniquePermutations(this.digits, 3);
-    };
-
     PasswordCombinations.ranges = function() {
       var ranges, sum, _i, _len, _ref;
       ranges = {};
-      _ref = this.trigramSums(this.trigrams);
+      _ref = this.trigramSums(this.trigrams(this.digits));
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         sum = _ref[_i];
         ranges[sum] = [];
       }
       return ranges;
+    };
+
+    PasswordCombinations.subtract = function(charsToRemove, s) {
+      var regex;
+      regex = new RegExp("[" + charsToRemove + "]", "g");
+      return s.replace(regex, "");
     };
 
     PasswordCombinations.permutations = function(s, n) {
@@ -77,6 +85,31 @@ Build-time class to generate the ranges of allowable password combinations.
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         item = _ref[_i];
         result += item;
+      }
+      return result;
+    };
+
+    PasswordCombinations.trigrams = function(s) {
+      return this.uniquePermutations(s, 3);
+    };
+
+    PasswordCombinations.trigramPairs = function(s) {
+      var combinations, counterpart, result, trigram, _i, _len, _ref;
+      result = [];
+      _ref = this.trigrams(s);
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        trigram = _ref[_i];
+        combinations = (function() {
+          var _j, _len1, _ref1, _results;
+          _ref1 = this.counterparts(trigram);
+          _results = [];
+          for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
+            counterpart = _ref1[_j];
+            _results.push([trigram, counterpart]);
+          }
+          return _results;
+        }).call(this);
+        result = result.concat(combinations);
       }
       return result;
     };
@@ -129,7 +162,7 @@ Build-time class to generate the ranges of allowable password combinations.
     path = require("path");
     if (path.basename(process.argv[1]) === "PasswordCombinations.js") {
       if (typeof console !== "undefined" && console !== null) {
-        console.log(PasswordCombinations.trigrams());
+        console.log(PasswordCombinations.trigramPairs(PasswordCombinations.digits));
       }
     }
   }
