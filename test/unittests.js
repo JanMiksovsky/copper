@@ -1,6 +1,31 @@
 (function() {
 
   $(function() {
+    test("machine: push", function() {
+      var machine;
+      machine = new DupMachine();
+      deepEqual(machine.stack, []);
+      machine.push(1);
+      deepEqual(machine.stack, [1]);
+      machine.push(2);
+      return deepEqual(machine.stack, [1, 2]);
+    });
+    return test("machine: add", function() {
+      var machine;
+      machine = new DupMachine();
+      deepEqual(machine.stack, []);
+      machine.push(1);
+      machine.push(2);
+      machine.add();
+      return deepEqual(machine.stack, [3]);
+    });
+  });
+
+}).call(this);
+
+(function() {
+
+  $(function() {
     var stackEqual;
     stackEqual = function(code, expected) {
       var output, program;
