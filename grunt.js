@@ -33,6 +33,7 @@ module.exports = function(grunt) {
                 src: sortDependencies.sortFiles(
                     "chatter/*.coffee",
                     "citizen/*.coffee",
+                    "coding/*.coffee",
                     "retail/*.coffee",
                     "password/*.coffee",
                     "satellite/*.coffee",

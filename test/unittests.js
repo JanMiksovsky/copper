@@ -1,3 +1,20 @@
+(function() {
+
+  $(function() {
+    var stackEqual;
+    stackEqual = function(code, expected) {
+      var output, program;
+      program = new DupProgram(code);
+      output = program.run();
+      return deepEqual(output, expected);
+    };
+    return test("dup: hello", function() {
+      return stackEqual("hello", 5);
+    });
+  });
+
+}).call(this);
+
 
 /*
 Unit tests for PasswordValidator.
