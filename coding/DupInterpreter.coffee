@@ -13,6 +13,10 @@ class window.DupInterpreter
   # The default value of this is the DupInterpreter.commands collection.
   commands: null
 
+  # Force program to end by setting program counter past end of program.
+  end: ->
+    @pc = @program.length
+
   # Reset the machine, then execute the program.
   run: ( program ) ->
     if program?
@@ -67,6 +71,11 @@ class window.DupInterpreter
   # If not found, the program counter is advanced to the end of the program.
   # TODO: Cache results
   seek: ( character ) ->
+    index = @program.indexOf "}", @pc + 1
+    if index < 0
+      @end # Not found
+    else
+      @pc = index
 
   # The stack
   stack: []
@@ -256,8 +265,8 @@ DupInterpreter.commands =
   #   @push getc()
 
   # Start a comment
-  # "{": ->
-  #   ip = seek("}")
+  "{": ->
+    @seek "}"
 
   # Bitwise XOR
   # ( a b -- a^b )
