@@ -6,19 +6,21 @@ http://esolangs.org/wiki/DUP
 
 class window.DupInterpreter
 
-  constructor: ->
+  constructor: ( @program ) ->
     @reset()
 
   # The set of commands available to the interpreter.
   # The default value of this is the DupInterpreter.commands collection.
   commands: null
 
-  # Parse the given string and execute the commands in the given program.
-  execute: ( program ) ->
-    @pc = 0
+  # Reset the machine, then execute the program.
+  run: ( program ) ->
+    if program?
+      @program = program
+    @reset()
     number = null
-    while @pc < program.length
-      character = program[@pc]
+    while @pc < @program.length
+      character = @program[@pc]
       if /\d/.test character
         # Add digit to current number
         number = ( number ? 0 ) * 10 + parseInt character
@@ -38,6 +40,7 @@ class window.DupInterpreter
     if number?
       # Program ended with a number; push that.
       @push number
+      number = null
     # Return the interpreter so calls can be chained
     @
 
@@ -58,11 +61,7 @@ class window.DupInterpreter
   reset: ->
     @commands = DupInterpreter.commands
     @stack = []
-
-  # Reset the machine state, then execute the given program.
-  run: ( program ) ->
-    @reset()
-    @execute program
+    @pc = 0
 
   # Advance the program counter to the specified character.
   # If not found, the program counter is advanced to the end of the program.

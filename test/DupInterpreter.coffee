@@ -37,19 +37,12 @@ $ ->
     interpreter.pop()
     stackEqual []
 
-  test "DUP: execute", ->
-    interpreter.push 1
-    interpreter.push 2
-    interpreter.execute "+"
-    stackEqual [ 3 ]
-  
-  test "DUP: parse integer", ->
-    interpreter.execute "123"
-    stackEqual [ 123 ]
-
   ###
   Commands
   ###
+
+  test "DUP: parse integer", ->
+    runEqual "123", [ 123 ]
 
   test "DUP: + (add)", ->
     runEqual "1 2+", [ 3 ]
