@@ -177,9 +177,9 @@ class window.DupInterpreter
   # Rotate the top three items on the stack (FORTH: ROT)
   # ( a b c -- b c a )
   "@": ->
-    c = @pop
-    b = @pop
-    a = @pop
+    c = @pop()
+    b = @pop()
+    a = @pop()
     @push b
     @push c
     @push a
@@ -192,8 +192,8 @@ class window.DupInterpreter
   # Swap the top two items on the stack (FORTH: SWAP)
   # ( a b -- b a )
   "\\": ->
-    @pop b
-    @pop a
+    b = @pop()
+    a = @pop()
     @push b
     @push a
 

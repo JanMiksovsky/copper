@@ -88,16 +88,16 @@ $ ->
     runEqual "1 2 3@", [ 2, 3, 1 ]
 
   test "DUP: \ (swap)", ->
-    runEqual "1 2\", [ 2, 1 ]
+    runEqual "1 2\\", [ 2, 1 ]
 
   test "DUP: ß (flush)", ->
     runEqual "ß", []
 
   test "DUP: ø (pick)", ->
-    runEqual "1 2 3 4 5 3", [ 1 2 3 4 5 2 ]
+    runEqual "1 2 3 4 5 3ø", [ 1, 2, 3, 4, 5, 2 ]
 
   test "DUP: _ (negate)", ->
-    runEqual "3", [ -3 ]
+    runEqual "3_", [ -3 ]
 
   test "DUP: | (XOR)", ->
     runEqual "1 2|", [ 3 ]
