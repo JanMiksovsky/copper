@@ -17,6 +17,9 @@ class window.DupInterpreter
   end: ->
     @pc = @program.length
 
+  # Program memory
+  memory: null
+
   # Reset the machine, then execute the program.
   run: ( program ) ->
     if program?
@@ -49,7 +52,7 @@ class window.DupInterpreter
     @
 
   # Program counter: current character position in program we're executing.
-  pc: 0
+  pc: null
 
   # Return the nth item from the top of the stack.
   pick: ( n ) ->
@@ -65,6 +68,7 @@ class window.DupInterpreter
   reset: ->
     @commands = DupInterpreter.commands
     @stack = []
+    @memory = []
     @pc = 0
 
   # Advance the program counter to the specified character.
@@ -78,7 +82,7 @@ class window.DupInterpreter
       @pc = index
 
   # The stack
-  stack: []
+  stack: null
 
 ###
 DUP built-in commands
@@ -178,13 +182,15 @@ DupInterpreter.commands =
 
   # Store a value into a memory address.
   # ( value address -- )
-  # ":": ->
-  #   vars[@pop()] = @pop()
+  ":": ->
+    address = @pop()
+    @memory[ address ] = @pop()
 
   # Retrieve the value of a memory address.
   # ( address -- value )
-  # ";": ->
-  #   @push vars[@pop()]
+  ";": ->
+    address = @pop()
+    @push @memory[ address ]
 
   # Less than
   # ( a b -- a<b )
