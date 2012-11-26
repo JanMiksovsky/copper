@@ -99,6 +99,9 @@ $ ->
   test "DUP: _ (negate)", ->
     runEqual "3_", [ -3 ]
 
+  test "DUP: { (begin comment)", ->
+    runEqual "{ This is a comment } 1", [ 1 ]
+
   test "DUP: | (XOR)", ->
     runEqual "1 2|", [ 3 ]
 
@@ -110,3 +113,9 @@ $ ->
 
   test "DUP: » (right shift)", ->
     runEqual "8 3»", [ 1 ]
+
+  test "DUP: unknown command", ->
+    throws ->
+      interpreter.run "X"
+    ,
+      /Unknown DUP command: X/

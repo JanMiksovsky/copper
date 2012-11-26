@@ -15,8 +15,10 @@ class window.DupInterpreter
 
   # Parse the given string and execute the commands in the given program.
   execute: ( program ) ->
+    @pc = 0
     number = null
-    for character in program
+    while @pc < program.length
+      character = program[@pc]
       if /\d/.test character
         # Add digit to current number
         number = ( number ? 0 ) * 10 + parseInt character
@@ -29,12 +31,18 @@ class window.DupInterpreter
         unless /\s/.test character
           # Execute command
           command = @commands[ character ]
+          unless command?
+            throw "Unknown DUP command: #{character}"
           command.call @
+      @pc++
     if number?
       # Program ended with a number; push that.
       @push number
     # Return the interpreter so calls can be chained
     @
+
+  # Program counter: current character position in program we're executing.
+  pc: 0
 
   # Return the nth item from the top of the stack.
   pick: ( n ) ->
@@ -55,6 +63,11 @@ class window.DupInterpreter
   run: ( program ) ->
     @reset()
     @execute program
+
+  # Advance the program counter to the specified character.
+  # If not found, the program counter is advanced to the end of the program.
+  # TODO: Cache results
+  seek: ( character ) ->
 
   # The stack
   stack: []
