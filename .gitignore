@@ -5,3 +5,4 @@
 /client/copper.css
 /known_hosts
 /node_modules/
+/test/unittests.js
