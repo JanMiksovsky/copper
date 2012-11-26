@@ -9,6 +9,10 @@ class window.DupInterpreter
   constructor: ->
     @reset()
 
+  # The set of commands available to the interpreter.
+  # The default value of this is the DupInterpreter.commands collection.
+  commands: null
+
   # Parse the given string and execute the commands in the given program.
   execute: ( program ) ->
     number = null
@@ -24,7 +28,8 @@ class window.DupInterpreter
         # Ignore whitespace
         unless /\s/.test character
           # Execute command
-          @[ character ]()
+          command = @commands[ character ]
+          command.call @
     if number?
       # Program ended with a number; push that.
       @push number
@@ -43,6 +48,7 @@ class window.DupInterpreter
 
   # Reset the machine state.
   reset: ->
+    @commands = DupInterpreter.commands
     @stack = []
 
   # Reset the machine state, then execute the given program.
@@ -53,13 +59,21 @@ class window.DupInterpreter
   # The stack
   stack: []
 
-  ###
-  Commands
-  The comments use FORTH notation to indicate a function's effects on the stack.
-  Example: the notation ( a b -- a+b ) indicates the function takes two numbers
-  a and b off the stack and leaves their sum.
-  ###
+###
+DUP built-in commands
 
+This collection is maintained on the DupInterpreter class. It's copied to
+interpreter instances before the interpreter runs, because the ⇒ operator can
+destructively modify the built-in commands. This ensures that one program run
+can't contaminate subsequent program runs.
+
+The comments use FORTH notation to indicate a function's effects on the stack.
+Example: the notation ( a b -- a+b ) indicates the function takes two numbers
+a and b off the stack and leaves their sum.
+
+###
+DupInterpreter.commands = 
+  
   # Execute the function at TOS
   # ( function -- )
   # "!": ->
