@@ -80,6 +80,7 @@ class window.DupInterpreter
   # Advance the program counter to the specified character.
   # If not found, the program counter is advanced to the end of the program.
   # TODO: Cache results
+  # TODO: Deal with nested braces, quotes, etc.
   seek: ( character ) ->
     index = @program.indexOf character, @pc + 1
     if index < 0
@@ -217,14 +218,14 @@ DupInterpreter.commands =
   # Conditionally execute a function
   # ( condition if-true if-false -- )
   "?": ->
-    falseAddress = @pop()
-    trueAddress = @pop()
+    falseLambda = @pop()
+    trueLambda = @pop()
     condition = @pop()
     @returnStack.push @pc
     @pc = if condition
-      trueAddress
+      trueLambda
     else
-      falseAddress
+      falseLambda
 
   # Rotate the top three items on the stack (FORTH: ROT)
   # ( a b c -- b c a )
@@ -268,7 +269,7 @@ DupInterpreter.commands =
   "_": ->
     @push -@pop()
 
-  # Read a character from the input and push  its value on the stack.
+  # Read a character from the input and push its value on the stack.
   # ( -- char )
   # This command was ^ in FALSE.
   # "`": ->
@@ -300,11 +301,12 @@ DupInterpreter.commands =
 
   # Define the next character as an operator that invokes the given lambda.
   # ( function -- )
-  # "⇒": ->
-  #   op = @pop()
-  #   commands[code.charAt(++ip)] = ->
-  #     ret.push ip
-  #     ip = op
+  "⇒": ->
+    lambda = @pop()
+    character = @program.charAt ++@pc
+    @commands[ character ] = =>
+      @returnStack.push @pc
+      @pc = lambda
 
   # String
   # '"': ->

@@ -145,5 +145,8 @@ $ ->
   test "DUP: » (right shift)", ->
     runEqual "8 3»", [ 1 ]
 
+  test "DUP: ⇒ (define)", ->
+    runEqual "[2*]⇒d 3dd", [ 12 ]
+
   test "DUP: unknown character gets pushed onto stack", ->
     runEqual "abc", [ "a", "b", "c" ]
