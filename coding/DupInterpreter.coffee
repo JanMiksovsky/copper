@@ -66,6 +66,10 @@ class window.DupInterpreter
   push: ( n ) ->
     @stack.push n
 
+  # Read a character from the input stream.
+  # This method should be overridden to obtain input from the desired location.
+  read: ->
+
   # Reset the machine state.
   reset: ->
     @commands = DupInterpreter.commands
@@ -91,7 +95,7 @@ class window.DupInterpreter
   # The stack
   stack: null
 
-  # Write a character.
+  # Write a character to the output stream.
   # This method should be overridden to direct output to the desired location.
   write: ( character ) ->
 
@@ -276,9 +280,14 @@ DupInterpreter.commands =
 
   # Read a character from the input and push its value on the stack.
   # ( -- char )
-  # This command was ^ in FALSE.
-  # "`": ->
-  #   @push getc()
+  # Return -1 for end-of-input. This command was ^ in FALSE.
+  "`": ->
+    character = @read()
+    code = if character?.length > 0
+      character.charCodeAt 0
+    else
+      -1
+    @push code
 
   # Start a comment
   "{": ->

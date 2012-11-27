@@ -13,6 +13,10 @@ $ ->
       interpreter = new DupInterpreter()
       input = ""
       output = ""
+      interpreter.read = ->
+        character = input[0]
+        input = input.slice 1
+        character
       interpreter.write = ( character ) ->
         output += character
 
@@ -147,6 +151,10 @@ $ ->
 
   test "DUP: _ (negate)", ->
     runEqual "3_", [ -3 ]
+
+  test "DUP: ` (read character)", ->
+    input = "ABC"
+    runEqual "````", [ 65, 66, 67, -1 ]
 
   test "DUP: { (begin comment)", ->
     runEqual "{ This is a comment } 1", [ 1 ]
