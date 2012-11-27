@@ -91,6 +91,10 @@ class window.DupInterpreter
   # The stack
   stack: null
 
+  # Write a character.
+  # This method should be overridden to direct output to the desired location.
+  write: ( character ) ->
+
 ###
 DUP built-in commands
 
@@ -114,9 +118,9 @@ DupInterpreter.commands =
 
   # While loop
   # ( [condition] [body] -- )
-  # "#": ->
-  #   ret.push ip, @pick(1), @pop()
-  #   ip = @pop()
+  "#": ->
+    # ret.push ip, @pick(1), @pop()
+    # ip = @pop()
 
   # Duplicate the top of stack (FORTH: DUP)
   # ( n -- n n )
@@ -161,8 +165,9 @@ DupInterpreter.commands =
 
   # Write a character to the output.
   # ( char -- )
-  # ",": ->
-  #  put String.fromCharCode(@pop())
+  ",": ->
+    character = String.fromCharCode @pop()
+    @write character
 
   # Subtract
   # ( a b -- a-b )
@@ -171,8 +176,8 @@ DupInterpreter.commands =
 
   # Write the TOS to the output as a decimal number.
   # ( n -- )
-  # ".": ->
-  #  put @pop()
+  ".": ->
+    @write @pop()
 
   # Divide (FORTH: /MOD )
   # ( numerator denominator -- remainder quotient )

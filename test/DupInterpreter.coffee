@@ -5,10 +5,16 @@ DUP interpreter unit tests
 $ ->
 
   interpreter = null
+  input = null
+  output = null
 
   module "DUP interpreter tests",
     setup: ->
       interpreter = new DupInterpreter()
+      input = ""
+      output = ""
+      interpreter.write = ( character ) ->
+        output += character
 
   stackEqual = ( expectedStack ) ->
     deepEqual interpreter.stack, expectedStack
@@ -49,8 +55,16 @@ $ ->
     deepEqual interpreter.returnStack, []
     runEqual "[1+]a: 2a;!", [ 3 ]
 
+  test "DUP: # (while)", ->
+    # Find first power of 2 greater than or equal to 100
+    runEqual "2[$100<][2*]#", [ 128 ]
+
   test "DUP: + (add)", ->
     runEqual "1 2+", [ 3 ]
+
+  test "DUP: , (output character)", ->
+    runEqual "65,", []
+    equal output, "A"
 
   test "DUP: $ (dup)", ->
     runEqual "1$", [ 1, 1]
@@ -77,6 +91,10 @@ $ ->
 
   test "DUP: - (subtract)", ->
     runEqual "3 1-", [ 2 ]
+
+  test "DUP: . (output number)", ->
+    runEqual "10 10*.", []
+    equal output, "100"
 
   test "DUP: / (divide)", ->
     runEqual "7 3/", [ 1, 2 ]
