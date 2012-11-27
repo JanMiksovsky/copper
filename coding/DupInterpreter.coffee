@@ -38,11 +38,13 @@ class window.DupInterpreter
           number = null
         # Ignore whitespace
         unless /\s/.test character
-          # Execute command
           command = @commands[ character ]
-          unless command?
-            throw "Unknown DUP command: #{character}"
-          command.call @
+          if command?
+            # Execute command
+            command.call @
+          else
+            # Any other character gets pushed onto stack.
+            @push character
       @pc++
     if number?
       # Program ended with a number; push that.
@@ -68,16 +70,20 @@ class window.DupInterpreter
   reset: ->
     @commands = DupInterpreter.commands
     @stack = []
+    @returnStack = []
     @memory = []
     @pc = 0
+
+  # Return stack (also known as the secondary stack)
+  returnStack: null
 
   # Advance the program counter to the specified character.
   # If not found, the program counter is advanced to the end of the program.
   # TODO: Cache results
   seek: ( character ) ->
-    index = @program.indexOf "}", @pc + 1
+    index = @program.indexOf character, @pc + 1
     if index < 0
-      @end # Not found
+      @end() # Not found
     else
       @pc = index
 
@@ -101,9 +107,9 @@ DupInterpreter.commands =
   
   # Execute the function at TOS
   # ( function -- )
-  # "!": ->
-  #   ret.push ip
-  #   ip = @pop()
+  "!": ->
+    @returnStack.push @pc
+    @pc = @pop()
 
   # While loop
   # ( [condition] [body] -- )
@@ -128,18 +134,19 @@ DupInterpreter.commands =
 
   # Unicode character value of the next character in the program.
   # ( char -- Unicode value of char )
-  # "'": ->
-  #   @push code.charCodeAt(++ip)
+  "'": ->
+    code = @program.charCodeAt ++@pc
+    @push code
 
   # Push from data stack to return stack (FORTH: >R)
   # ( n -- )
-  # "(": ->
-  #   ret.push @pop()
+  "(": ->
+    @returnStack.push @pop()
 
   # Pop from return stack to data stack (FORTH: R>)
   # ( -- n )
-  # ")": ->
-  #   @push ret.pop()
+  ")": ->
+    @push @returnStack.pop()
 
   # Multiply
   # ( a b -- a*b )
@@ -226,9 +233,9 @@ DupInterpreter.commands =
     @push a
 
   # Begin a function lambda, reading up to the matching right brace.
-  # "[": ->
-  #   @push ip
-  #   ip = matching_brace()
+  "[": ->
+    @push @pc
+    @seek "]"
 
   # Swap the top two items on the stack (FORTH: SWAP)
   # ( a b -- b a )
@@ -249,15 +256,8 @@ DupInterpreter.commands =
     @push @pick @pop()
 
   # End a function lambda and place it on the stack.
-  # "]": ->
-  #   n = ret.length - 3
-  #   if n >= 0 and code.charAt(ret[n]) is "#"
-  #     if @pop()
-  #       ret.push ret[n + 1], ret[n + 2]
-  #     else
-  #       ret.pop()
-  #       ret.pop()
-  #   ip = ret.pop()
+  "]": ->
+    @pc = @returnStack.pop()
 
   # Negate the number at the top of the stack.
   # ( n -- -n )

@@ -44,6 +44,11 @@ $ ->
   test "DUP: parse integer", ->
     runEqual "123", [ 123 ]
 
+  test "DUP: ! (execute lambda)", ->
+    runEqual "2[1+]!", [ 3 ]
+    deepEqual interpreter.returnStack, []
+    runEqual "[1+]a: 2a;!", [ 3 ]
+
   test "DUP: + (add)", ->
     runEqual "1 2+", [ 3 ]
 
@@ -56,6 +61,17 @@ $ ->
   test "DUP: & (AND)", ->
     runEqual "6 3&", [ 2 ]
 
+  test "DUP: ' (character code)", ->
+    runEqual "'A", [ 65 ]
+
+  test "DUP: ( (push to return stack)", ->
+    runEqual "1(", []
+    deepEqual interpreter.returnStack, [ 1 ]
+
+  test "DUP: ) (pop from return stack)", ->
+    runEqual "1(2)", [ 2, 1 ]
+    deepEqual interpreter.returnStack, []
+
   test "DUP: * (multiply)", ->
     runEqual "2 3*", [ 6 ]
 
@@ -66,11 +82,14 @@ $ ->
     runEqual "7 3/", [ 1, 2 ]
 
   test "DUP: : (store in memory)", ->
-    interpreter.run "7 3:"
+    runEqual "7 3:", []
     deepEqual interpreter.memory, [ undefined, undefined, undefined, 7 ]
+    runEqual "1a:", []
+    equal interpreter.memory.a, 1
 
   test "DUP: ; (retrieve from memory)", ->
     runEqual "7 3: 1 2+;", [ 7 ]
+    runEqual "1a:a;a;+", [ 2 ]
 
   test "DUP: < (less than)", ->
     runEqual "1 2<", [ -1 ]
@@ -87,7 +106,10 @@ $ ->
   test "DUP: @ (rotate)", ->
     runEqual "1 2 3@", [ 2, 3, 1 ]
 
-  test "DUP: \ (swap)", ->
+  test "DUP: [ (begin lambda)", ->
+    runEqual "[1+]2", [ 0, 2 ]
+
+  test "DUP: \\ (swap)", ->
     runEqual "1 2\\", [ 2, 1 ]
 
   test "DUP: ß (flush)", ->
@@ -95,6 +117,11 @@ $ ->
 
   test "DUP: ø (pick)", ->
     runEqual "1 2 3 4 5 3ø", [ 1, 2, 3, 4, 5, 2 ]
+
+  test "DUP: ] (end lambda)", ->
+    # Sequence "(]" is effectively GOTO to a specific index in program + 1.
+    # So this should skip over the "8" and execute the "9".
+    runEqual "3(]89", [ 9 ]
 
   test "DUP: _ (negate)", ->
     runEqual "3_", [ -3 ]
@@ -114,8 +141,5 @@ $ ->
   test "DUP: » (right shift)", ->
     runEqual "8 3»", [ 1 ]
 
-  test "DUP: unknown command", ->
-    throws ->
-      interpreter.run "X"
-    ,
-      /Unknown DUP command: X/
+  test "DUP: unknown character gets pushed onto stack", ->
+    runEqual "abc", [ "a", "b", "c" ]
