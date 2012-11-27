@@ -103,6 +103,10 @@ $ ->
     runEqual "2 1>", [ -1 ]
     runEqual "1 2>", [ 0 ]
 
+  test "DUP: ? (if)", ->
+    runEqual "0[2][3]?", [ 3 ]
+    runEqual "1[2][3]?", [ 2 ]
+
   test "DUP: @ (rotate)", ->
     runEqual "1 2 3@", [ 2, 3, 1 ]
 

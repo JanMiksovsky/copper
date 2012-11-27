@@ -215,12 +215,16 @@ DupInterpreter.commands =
     @push -( @pop() < @pop() )
 
   # Conditionally execute a function
-  # ( condition function -- )
-  # "?": ->
-  #   f = @pop()
-  #   t = @pop()
-  #   ret.push ip
-  #   ip = (if @pop() then t else f)
+  # ( condition if-true if-false -- )
+  "?": ->
+    falseAddress = @pop()
+    trueAddress = @pop()
+    condition = @pop()
+    @returnStack.push @pc
+    @pc = if condition
+      trueAddress
+    else
+      falseAddress
 
   # Rotate the top three items on the stack (FORTH: ROT)
   # ( a b c -- b c a )
