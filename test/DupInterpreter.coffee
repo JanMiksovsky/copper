@@ -65,6 +65,13 @@ $ ->
   test "DUP: / (divide)", ->
     runEqual "7 3/", [ 1, 2 ]
 
+  test "DUP: : (store in memory)", ->
+    interpreter.run "7 3:"
+    deepEqual interpreter.memory, [ undefined, undefined, undefined, 7 ]
+
+  test "DUP: ; (retrieve from memory)", ->
+    runEqual "7 3: 1 2+;", [ 7 ]
+
   test "DUP: < (less than)", ->
     runEqual "1 2<", [ -1 ]
     runEqual "2 1<", [ 0 ]
