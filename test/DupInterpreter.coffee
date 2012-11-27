@@ -197,3 +197,16 @@ $ ->
   test "DUP: \" (string)", ->
     runEqual "1\"ABC\"", [ 4 ]
     deepEqual interpreter.memory, [ undefined, 65, 66, 67 ]
+
+  ###
+  The following integration tests come from Ian Osgood's DUP demos at
+  http://www.quirkster.com/iano/js/dup.html
+  ###
+  test "DUP: factorial program", ->
+    runEqual "[$1>[$1-f;!*][%1]?]f: 6f;!", [ 720 ]
+
+  test "DUP: greatest common denominator program", ->
+    runEqual "[[$][\\^/%]#%]g: 12 8g;! 63 18g;! 53 25g;!", [ 4, 9, 1 ]
+
+  test "DUP: integer power program", ->
+    runEqual "[1\\[2/\\[@@^*@][]?$][@$*@@]#%\\%]p: 3 5p;!", [ 243 ]

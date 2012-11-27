@@ -34,6 +34,7 @@ class window.DupInterpreter
     if program?
       @program = program
     @reset()
+    return unless @program?
     number = null
     while @pc < @program.length
       character = @program[@pc]
