@@ -15,7 +15,10 @@ class window.DupInterpreter
 
   # Force program to end by setting program counter past end of program.
   end: ->
-    @pc = @program.length
+    @goto @program.length
+
+  goto: ( index ) ->
+    @pc = index
 
   # Program memory
   memory: null
@@ -76,7 +79,7 @@ class window.DupInterpreter
     @stack = []
     @returnStack = []
     @memory = []
-    @pc = 0
+    @goto 0
 
   # Return stack (also known as the secondary stack)
   returnStack: null
@@ -84,13 +87,30 @@ class window.DupInterpreter
   # Advance the program counter to the specified character.
   # If not found, the program counter is advanced to the end of the program.
   # TODO: Cache results
-  # TODO: Deal with nested braces, quotes, etc.
   seek: ( character ) ->
     index = @program.indexOf character, @pc + 1
     if index < 0
       @end() # Not found
     else
-      @pc = index
+      @goto index
+
+  # Advance the program counter to the matching right bracket, taking care to
+  # avoid right brackets which might appear in comments, strings, or quoted
+  # characters.
+  seekRightBracket: ->
+    while @pc < @program.length
+      character = @program.charAt ++@pc
+      switch character
+        when "]"
+          return
+        when "["
+          @seekRightBracket()
+        when "\""
+          @seek "\""
+        when "{"
+          @seek "}"
+        when "'"
+          @pc++
 
   # The stack
   stack: null
@@ -118,16 +138,26 @@ DupInterpreter.commands =
   # ( function -- )
   "!": ->
     @returnStack.push @pc
-    @pc = @pop()
+    @goto @pop()
 
   # While loop
   # ( [condition] [body] -- )
   "#": ->
-    # ret.push ip, @pick(1), @pop()
-    # ip = @pop()
+    return
+    
+    body = @pop()
+    condition = @pop()
+    @subroutineCall condition
+    result = @pop()
+    if result != 0
+      # Execute body, then come back to this "while" check
+      @returnStack.push condition
+      @returnStack.push body
+      @returnStack.push @pc
+      @goto body
 
   # Duplicate the top of stack (FORTH: DUP)
-  # ( n -- n n )
+  # ( a -- a a )
   "$": ->
     @push @pick 0
 
@@ -231,7 +261,7 @@ DupInterpreter.commands =
     trueLambda = @pop()
     condition = @pop()
     @returnStack.push @pc
-    @pc = if condition
+    @goto if condition
       trueLambda
     else
       falseLambda
@@ -249,7 +279,7 @@ DupInterpreter.commands =
   # Begin a function lambda, reading up to the matching right brace.
   "[": ->
     @push @pc
-    @seek "]"
+    @seekRightBracket()
 
   # Swap the top two items on the stack (FORTH: SWAP)
   # ( a b -- b a )
@@ -271,7 +301,12 @@ DupInterpreter.commands =
 
   # End a function lambda and place it on the stack.
   "]": ->
-    @pc = @returnStack.pop()
+    @goto @returnStack.pop()
+
+  # Copy the second item from the top of the stack (FORTH: OVER)
+  # ( a b -- a b a )
+  "^": ->
+    @push @pick 1
 
   # Negate the number at the top of the stack.
   # ( n -- -n )
@@ -320,7 +355,7 @@ DupInterpreter.commands =
     character = @program.charAt ++@pc
     @commands[ character ] = =>
       @returnStack.push @pc
-      @pc = lambda
+      @goto lambda
 
   # Copy string to memory
   # ( address -- address+length )

@@ -149,6 +149,23 @@ $ ->
     # So this should skip over the "8" and execute the "9".
     runEqual "3(]89", [ 9 ]
 
+  test "DUP: ignore ] as a quoted character", ->
+    runEqual "[']]!", [ 93 ] # Value of right bracket character
+
+  test "DUP: ignore ] in a quoted string", ->
+    # Store a string with a single right bracket at memory position 0, check it.
+    runEqual "[0\"]\"%]! 0;", [ 93 ]
+
+  test "DUP: ignore ] in a comment", ->
+    runEqual "[{ Comment with a bracket] }1]!", [ 1 ]
+
+  test "DUP: nested lambdas", ->
+    # Outer lambda pushes a 1 if TOS is non-zero, 2 if zero
+    runEqual "0[[1][2]?]!", [ 2 ]
+
+  test "DUP: ^ (over)", ->
+    runEqual "3 2^", [ 3, 2, 3 ]
+
   test "DUP: _ (negate)", ->
     runEqual "3_", [ -3 ]
 
