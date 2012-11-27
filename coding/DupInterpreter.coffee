@@ -17,6 +17,12 @@ class window.DupInterpreter
   end: ->
     @goto @program.length
 
+  # Call the program at the indicated point, then come back to this point.
+  gosub: ( index ) ->
+    @returnStack.push @pc
+    @goto index
+
+  # Move the program counter to the indicated point in the program.
   goto: ( index ) ->
     @pc = index
 
@@ -143,18 +149,46 @@ DupInterpreter.commands =
   # While loop
   # ( [condition] [body] -- )
   "#": ->
-    return
-    
-    body = @pop()
-    condition = @pop()
-    @subroutineCall condition
-    result = @pop()
-    if result != 0
-      # Execute body, then come back to this "while" check
+
+    # Check the return stack to look for a marker indicating we've just finished
+    # running the condition lambda or the body lambda.
+    topOfReturn = @returnStack[ @returnStack.length - 1 ]
+    isWhileMarker = ( topOfReturn == @pc )
+
+    if !isWhileMarker
+      # Invoking while loop for first time.
+      # Pop lambdas off data stack.
+      body = @pop()
+      condition = @pop()
+      lambda = condition
+    else
+      @returnStack.pop() # Pop off marker
+      # Next item on return stack indicates whether we were executing condition
+      # or body lambda.
+      executedCondition = @returnStack.pop()
+      body = @returnStack.pop()
+      condition = @returnStack.pop()
+      lambda = if executedCondition
+        # Just executed condition lambda, which left its result on the stack.
+        if @pop() == 0
+          # While condition returned false. Terminate while loop.
+          null
+        else
+          # While condition returned true. Execute body lambda.
+          body
+      else
+        # Just executed body, now execute condition lambda.
+        condition
+
+    if lambda?
+      # Prepare to invoke lambda, leaving markers on return stack sufficient
+      # to reconstruct the while loop state when control returns to "#".
       @returnStack.push condition
       @returnStack.push body
-      @returnStack.push @pc
-      @goto body
+      @returnStack.push lambda == condition
+      @returnStack.push @pc # Marker
+      @returnStack.push @pc - 1 # Come back here
+      @goto lambda
 
   # Duplicate the top of stack (FORTH: DUP)
   # ( a -- a a )
@@ -260,11 +294,8 @@ DupInterpreter.commands =
     falseLambda = @pop()
     trueLambda = @pop()
     condition = @pop()
-    @returnStack.push @pc
-    @goto if condition
-      trueLambda
-    else
-      falseLambda
+    lambda = if condition then trueLambda else falseLambda
+    @gosub lambda
 
   # Rotate the top three items on the stack (FORTH: ROT)
   # ( a b c -- b c a )
@@ -354,8 +385,7 @@ DupInterpreter.commands =
     lambda = @pop()
     character = @program.charAt ++@pc
     @commands[ character ] = =>
-      @returnStack.push @pc
-      @goto lambda
+      @gosub lambda
 
   # Copy string to memory
   # ( address -- address+length )
