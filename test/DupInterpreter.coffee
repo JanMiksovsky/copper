@@ -176,3 +176,7 @@ $ ->
 
   test "DUP: unknown character gets pushed onto stack", ->
     runEqual "abc", [ "a", "b", "c" ]
+
+  test "DUP: \" (string)", ->
+    runEqual "1\"ABC\"", [ 4 ]
+    deepEqual interpreter.memory, [ undefined, 65, 66, 67 ]

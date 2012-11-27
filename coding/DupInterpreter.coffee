@@ -322,9 +322,14 @@ DupInterpreter.commands =
       @returnStack.push @pc
       @pc = lambda
 
-  # String
-  # '"': ->
-  #   for (var i=@pop(); code.charAt(++ip) != '"'; ++i)
-  #     vars[i] = code.charCodeAt(ip);
-  #     stack.push(i);
-  #   }
+  # Copy string to memory
+  # ( address -- address+length )
+  '"': ->
+    memoryStart = @pop()
+    stringStart = @pc + 1
+    @seek "\""
+    stringEnd = @pc - 1
+    length = stringEnd - stringStart + 1
+    for i in [ 0 .. length - 1 ]
+      @memory[ memoryStart + i ] = @program.charCodeAt stringStart + i
+    @push memoryStart + length
