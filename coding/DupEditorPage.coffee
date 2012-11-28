@@ -5,7 +5,7 @@ class window.DupEditorPage extends Page
       control: HorizontalPanels
       constrainHeight: true
       content:
-        html: "<textarea/>", ref: "program", content: "1 1+ ."
+        html: "<textarea/>", ref: "program", content: "[$1>[$1-f*][%1]?]⇒f 6f."
       right:
         control: "DupStackTrace", ref: "stackTrace"
     fill: true
