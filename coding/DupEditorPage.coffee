@@ -30,4 +30,12 @@ class window.DupEditorPage extends Page
     interpreter = new DupInterpreter()
     interpreter.write = ( s ) -> console?.log s
     interpreter.run program
-    @$stackTrace().items interpreter.trace
+
+    shiftedTrace = []
+    previousStack = []
+    for step in interpreter.trace
+      shiftedTrace.push
+        op: step.op
+        stack: previousStack
+      previousStack = step.stack
+    @$stackTrace().items shiftedTrace # interpreter.trace
