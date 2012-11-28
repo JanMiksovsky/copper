@@ -17,14 +17,14 @@ class window.DupInterpreter
   end: ->
     @goto @program.length
 
-  # Call the program at the indicated point, then come back to this point.
-  gosub: ( index ) ->
-    @returnStack.push @pc
-    @goto index
-
   # Move the program counter to the indicated point in the program.
   goto: ( index ) ->
     @pc = index
+
+  # The index of matching characters in the program. E.g., if a "[" is found in
+  # the program at position 8, then matches[8] will contain the index of the
+  # matching "]" operator.
+  matches: null
 
   # Program memory
   memory: null
@@ -83,6 +83,7 @@ class window.DupInterpreter
   # Reset the machine state.
   reset: ->
     @commands = DupInterpreter.commands
+    @matches = []
     @stack = []
     @returnStack = []
     @memory = []
@@ -93,11 +94,14 @@ class window.DupInterpreter
 
   # Advance the program counter to the specified character.
   # If not found, the program counter is advanced to the end of the program.
-  # TODO: Cache results
   seek: ( character ) ->
-    index = @program.indexOf character, @pc + 1
+    start = @pc
+    index = @matches[start]
+    unless index?
+      index = @program.indexOf character, @pc + 1
+      @matches[start] = index
     if index < 0
-      @end() # Not found
+      @end # Not found
     else
       @goto index
 
@@ -105,19 +109,24 @@ class window.DupInterpreter
   # avoid right brackets which might appear in comments, strings, or quoted
   # characters.
   seekRightBracket: ->
-    while @pc < @program.length
-      character = @program.charAt ++@pc
-      switch character
-        when "]"
-          return
-        when "["
-          @seekRightBracket()
-        when "\""
-          @seek "\""
-        when "{"
-          @seek "}"
-        when "'"
-          @pc++
+    start = @pc
+    if @matches[start]?
+      @goto @matches[start]
+    else
+      while @pc < @program.length
+        character = @program.charAt ++@pc
+        switch character
+          when "]"
+            @matches[start] = @pc
+            return
+          when "["
+            @seekRightBracket()
+          when "\""
+            @seek "\""
+          when "{"
+            @seek "}"
+          when "'"
+            @pc++
 
   # The stack
   stack: null
@@ -149,27 +158,50 @@ DupInterpreter.commands =
 
   # While loop
   # ( [condition] [body] -- )
+  #
+  # This is, by far, the hairiest of the built-in primitives. The main issue is
+  # that the "#" operator has to invoke two different lambdas repeatedly, which
+  # means it needs to keep track of which of three states it's in:
+  # 1) First invocation: invoke the condition lambda.
+  # 2) The condition lambda has just been invoked: if condition evaluated to
+  #    true, invoke the body lambda, otherwise exit the loop.
+  # 3) The body lambda has just been invoked: invoke the condition lambda.
+  #
+  # For simplicity, we track all this while loop state on the return stack.
+  # Each time the "#" operator is executed, it inspects the return stack and
+  # reconstructs the state of the loop. If the loop is being hit for the first
+  # time, the return stack will have no information. If the condition or body
+  # lambdas have already executed at least once, then the return stack will
+  # contain:
+  # ( [condition] [body] [flag] [marker] )
+  #
+  # Where flag = 0 if we just executed the condition lambda, or 1 if the body,
+  # and marker = the program index of the "#" that put that information on the
+  # return stack.
   "#": ->
 
-    # Check the return stack to look for a marker indicating we've just finished
-    # running the condition lambda or the body lambda.
+    # Peek at the top of the return stack to look for a marker indicating we've
+    # just finished running the condition lambda or the body lambda. The marker
+    # here is just the index of the "#" operator being executed. I.e., if that
+    # index is found at the top of the return stack, we deduce that we're
+    # already in the middle of running a while loop.
     topOfReturn = @returnStack[ @returnStack.length - 1 ]
     isWhileMarker = ( topOfReturn == @pc )
-
     if !isWhileMarker
       # Invoking while loop for first time.
       # Pop lambdas off data stack.
       body = @pop()
       condition = @pop()
+      # Execute condition for the first time.
       lambda = condition
     else
       @returnStack.pop() # Pop off marker
       # Next item on return stack indicates whether we were executing condition
       # or body lambda.
-      executedCondition = @returnStack.pop()
+      flag = @returnStack.pop()
       body = @returnStack.pop()
       condition = @returnStack.pop()
-      lambda = if executedCondition
+      lambda = if flag == 0
         # Just executed condition lambda, which left its result on the stack.
         if @pop() == 0
           # While condition returned false. Terminate while loop.
@@ -184,11 +216,17 @@ DupInterpreter.commands =
     if lambda?
       # Prepare to invoke lambda, leaving markers on return stack sufficient
       # to reconstruct the while loop state when control returns to "#".
+      flag = if lambda == condition then 0 else 1
       @returnStack.push condition
       @returnStack.push body
-      @returnStack.push lambda == condition
+      @returnStack.push flag
       @returnStack.push @pc # Marker
-      @returnStack.push @pc - 1 # Come back here
+      # Lastly, we put the address we want control execution to return to
+      # once the lambda is finished. We want control to come back to the current
+      # point in the program, but since the main execution loop will advance the
+      # program counter by 1, we need to put the index *before* the current
+      # program counter in order to come back to the "#".
+      @returnStack.push @pc - 1
       @goto lambda
 
   # Duplicate the top of stack (FORTH: DUP)
@@ -296,7 +334,8 @@ DupInterpreter.commands =
     trueLambda = @pop()
     condition = @pop()
     lambda = if condition then trueLambda else falseLambda
-    @gosub lambda
+    @returnStack.push @pc
+    @goto lambda
 
   # Rotate the top three items on the stack (FORTH: ROT)
   # ( a b c -- b c a )
@@ -386,7 +425,9 @@ DupInterpreter.commands =
     lambda = @pop()
     character = @program.charAt ++@pc
     @commands[ character ] = =>
-      @gosub lambda
+      @returnStack.push @pc
+      @goto lambda
+
 
   # Copy string to memory
   # ( address -- address+length )
