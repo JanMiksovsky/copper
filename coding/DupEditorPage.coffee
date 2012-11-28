@@ -5,9 +5,15 @@ class window.DupEditorPage extends Page
       control: HorizontalPanels
       constrainHeight: true
       content:
-        html: "<textarea/>", ref: "program", content: "[$1>[$1-f*][%1]?]⇒f 6f."
+        control: VerticalPanels
+        ref: "leftPane"
+        content:
+          html: "<textarea/>", ref: "program", content: "[$1>[$1-f*][%1]?]⇒f 6f."
+        bottom:
+          control: "DupHelp"
+          class: "pane"
       right:
-        control: "DupStackTrace", ref: "stackTrace"
+        control: "DupStackTrace", ref: "stackTrace", class: "pane"
     fill: true
     title: "DUP Editor"
 
