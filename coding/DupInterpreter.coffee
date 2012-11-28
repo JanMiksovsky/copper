@@ -84,7 +84,12 @@ class window.DupInterpreter
 
   # Reset the machine state.
   reset: ->
-    @commands = DupInterpreter.commands
+
+    # Copy the set of commands to erase any contamination from previous runs.
+    @commands = {}
+    for command, value of DupInterpreter.commands
+      @commands[ command ] = value
+      
     @matches = []
     @stack = []
     @returnStack = []
