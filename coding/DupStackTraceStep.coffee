@@ -11,7 +11,13 @@ class window.DupStackTraceStep extends Control
       " "
     ,
       html: "<span>", ref: "op"
+    ,
+      " "
+    ,
+      html: "<span>", ref: "content"
     ]
+
+  content: Control.chain "$content", "content"
 
   op: Control.chain "$op", "content"
 

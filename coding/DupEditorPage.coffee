@@ -31,11 +31,13 @@ class window.DupEditorPage extends Page
     interpreter.write = ( s ) -> console?.log s
     interpreter.run program
 
-    shiftedTrace = []
+    # The trace actually looks better if the op goes next to the *previous*
+    # stack state, so we shift each op back a step.
+    trace = []
     previousStack = []
     for step in interpreter.trace
-      shiftedTrace.push
+      trace.push
         op: step.op
         stack: previousStack
       previousStack = step.stack
-    @$stackTrace().items shiftedTrace # interpreter.trace
+    @$stackTrace().items trace

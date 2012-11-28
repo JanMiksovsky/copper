@@ -45,7 +45,7 @@ class window.DupInterpreter
       else
         if number?
           # Reached the end of a number, push that first.
-          @tracePush number
+          @tracePush number, @pc - 1
           number = null
         # Ignore whitespace
         unless /\s/.test character
@@ -53,14 +53,14 @@ class window.DupInterpreter
           if command?
             # Execute command
             command.call @
-            @traceOperator character
+            @traceOperator character, @pc
           else
             # Any other character gets pushed onto stack.
-            @tracePush character
+            @tracePush character, @pc
       @pc++
     if number?
       # Program ended with a number; push that.
-      @tracePush number
+      @tracePush number, @pc - 1
       number = null
     # Return the interpreter so calls can be chained
     @
@@ -142,15 +142,16 @@ class window.DupInterpreter
   # The trace of stack operations
   trace: null
 
-  traceOperator: ( operator ) ->
+  traceOperator: ( operator, index ) ->
     @trace.push
       op: operator
+      index: index
       stack: @stack.slice()
 
   # Push something on the stack as a traceable operation.
-  tracePush: ( item ) ->
+  tracePush: ( item, index ) ->
     @push item
-    @traceOperator item
+    @traceOperator item, index
 
   # Write a character to the output stream.
   # This method should be overridden to direct output to the desired location.

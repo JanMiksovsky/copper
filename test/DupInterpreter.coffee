@@ -219,11 +219,14 @@ $ ->
     runEqual "1 1+", [ 2 ]
     deepEqual interpreter.trace, [
       op: 1
+      index: 0
       stack: [ 1 ]
     ,
       op: 1
+      index: 2
       stack: [ 1, 1 ]
     ,
       op: "+"
+      index: 3
       stack: [ 2 ]
     ]
