@@ -51,9 +51,9 @@ class window.DupInterpreter
         unless /\s/.test character
           command = @commands[ character ]
           if command?
+            @traceOperator character, @pc
             # Execute command
             command.call @
-            @traceOperator character, @pc
           else
             # Any other character gets pushed onto stack.
             @tracePush character, @pc
@@ -143,10 +143,19 @@ class window.DupInterpreter
   trace: null
 
   traceOperator: ( operator, index ) ->
+    # For context, include the bits of the program before and after the op.
+    contextLength = 4
+    before = if index < contextLength
+      @program.substr 0, index
+    else
+      @program.substr index - contextLength, contextLength
+    after = @program.substr index + 1, contextLength
     @trace.push
       op: operator
       index: index
       stack: @stack.slice()
+      before: before
+      after: after
 
   # Push something on the stack as a traceable operation.
   tracePush: ( item, index ) ->

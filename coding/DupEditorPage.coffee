@@ -36,8 +36,7 @@ class window.DupEditorPage extends Page
     trace = []
     previousStack = []
     for step in interpreter.trace
-      trace.push
-        op: step.op
-        stack: previousStack
+      { op, stack, before, after } = step
+      trace.push { op, stack: previousStack, before, after }
       previousStack = step.stack
     @$stackTrace().items trace
