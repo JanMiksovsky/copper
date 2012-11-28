@@ -39,10 +39,14 @@ window.files =
     jamesm: {}
     jancea: {}
     janm:
-      foo: "Foo\n"
       bar: "Bar\n"
+      "fact.dup": "[$1>[$1-f*][%1]?]⇒f f."
+      foo: "Foo\n"
+      "foo.dup": "1 1+."
+      "ftoc.dup": "32- 9/\\% 5* ."
       google: "http://google.com"
       maze: "-> /usr/danaa"
+      "pop.dup": "."
     jasminp: {}
     jasonc: {}
     jasons: {}

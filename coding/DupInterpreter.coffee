@@ -30,10 +30,10 @@ class window.DupInterpreter
   memory: null
 
   # Reset the machine, then execute the program.
-  run: ( program ) ->
-    if program?
-      @program = program
+  run: ( program, stack ) ->
+    @program = program if program?
     @reset()
+    @stack = stack if stack?
     return unless @program?
     number = null
     while @pc < @program.length
