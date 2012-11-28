@@ -33,7 +33,8 @@ class window.DupInterpreter
   run: ( program, stack ) ->
     @program = program if program?
     @reset()
-    @stack = stack if stack?
+    if stack?
+      @tracePush item for item in stack
     return unless @program?
     number = null
     while @pc < @program.length
@@ -44,7 +45,7 @@ class window.DupInterpreter
       else
         if number?
           # Reached the end of a number, push that first.
-          @push number
+          @tracePush number
           number = null
         # Ignore whitespace
         unless /\s/.test character
@@ -52,13 +53,14 @@ class window.DupInterpreter
           if command?
             # Execute command
             command.call @
+            @traceOperator character
           else
             # Any other character gets pushed onto stack.
-            @push character
+            @tracePush character
       @pc++
     if number?
       # Program ended with a number; push that.
-      @push number
+      @tracePush number
       number = null
     # Return the interpreter so calls can be chained
     @
@@ -87,6 +89,7 @@ class window.DupInterpreter
     @stack = []
     @returnStack = []
     @memory = []
+    @trace = []
     @goto 0
 
   # Return stack (also known as the secondary stack)
@@ -130,6 +133,19 @@ class window.DupInterpreter
 
   # The stack
   stack: null
+
+  # The trace of stack operations
+  trace: null
+
+  traceOperator: ( operator ) ->
+    @trace.push
+      op: operator
+      stack: @stack.slice()
+
+  # Push something on the stack as a traceable operation.
+  tracePush: ( item ) ->
+    @push item
+    @traceOperator item
 
   # Write a character to the output stream.
   # This method should be overridden to direct output to the desired location.

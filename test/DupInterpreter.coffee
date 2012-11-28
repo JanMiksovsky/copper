@@ -211,3 +211,19 @@ $ ->
   test "integer power program", ->
     runEqual "[1\\[2/\\[@@^*@][]?$][@$*@@]#%\\%]p: 3 5p;!", [ 243 ]
 
+  ###
+  Trace functionality
+  ###
+
+  test "trace", ->
+    runEqual "1 1+", [ 2 ]
+    deepEqual interpreter.trace, [
+      op: 1
+      stack: [ 1 ]
+    ,
+      op: 1
+      stack: [ 1, 1 ]
+    ,
+      op: "+"
+      stack: [ 2 ]
+    ]
