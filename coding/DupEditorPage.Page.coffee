@@ -127,6 +127,8 @@ class window.DupEditorPage extends Page
     content: "Temperature", src: "temp.dup"
   ,
     content: "Threat Quotient", src: "threat.dup"
+  ,
+    content: "Truth Table", src: "truth.dup"
   ]
 
   # Save the program and associated test input.

@@ -28,6 +28,7 @@ class window.DupHelpPane extends DupTab
         a b \\   b a (swap)
       ... n ø   Pick nth item from top
             ]   Return from function
+        a b ^   Copy a to top of stack
           n _   Negative n
             `   Read character from input
             {   Start comment

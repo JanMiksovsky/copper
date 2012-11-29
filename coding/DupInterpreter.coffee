@@ -452,7 +452,7 @@ DupInterpreter.commands =
     @seek "}"
 
   # Bitwise XOR
-  # ( a b -- a^b )
+  # ( a b -- a|b )
   "|": ->
     @push @pop() ^ @pop()
 
