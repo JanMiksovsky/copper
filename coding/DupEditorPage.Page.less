@@ -1,8 +1,9 @@
 .DupEditorPage {
 
+  background: #222;
   overflow: none;
 
-  &.generic,
+  &,
   button,
   input,
   textarea {
@@ -38,6 +39,22 @@
     height: 100%;
     overflow-y: auto;
     width: 350px;
+  }
+
+  .MenuBar.generic {
+    background: #222;
+  }
+  .Menu.generic {
+    .PopupSource_content:hover,
+    &.opened .PopupSource_content {
+      background: #444;
+    }
+  }
+  .MenuItem.generic:hover {
+    background: #888;
+  }
+  .Popup.generic {
+    background: #444;
   }
 
 }

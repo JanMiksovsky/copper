@@ -7,6 +7,12 @@ class window.DupEditorPage extends Page
       content:
         control: VerticalPanels
         ref: "leftPane"
+        top:
+          control: MenuBar, content: [
+            control: Menu, content: "Programs", popup: [
+              control: MenuItem, content: "Hello, world"
+            ]
+          ]
         content:
           html: "<textarea spellcheck='false'/>", ref: "program", content: "[$1>[$1-f*][%1]?]⇒f 6f."
         bottom:
@@ -24,6 +30,7 @@ class window.DupEditorPage extends Page
       right:
         control: "DupStackTrace", ref: "stackTrace"
     fill: true
+    generic: false
     title: "DUP Editor"
 
   # Clear output pane.
