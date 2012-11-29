@@ -1,6 +1,8 @@
-[|~.10,]⇒x
+[10,]⇒r     { new line }
 
-0 0x
-0 1_x
-1_ 0x
-1_ 1_x
+[|~.]⇒x  { truth table }
+
+0 0xr
+0 1_xr
+1_ 0xr
+1_ 1_xr

@@ -1,4 +1,4 @@
-{ Calculate m to the nth power. ( n m -- n^m ) }
+{ Calculate m to the nth power. ( m n -- m^n ) }
 
 [
   $0>        { n greater than 0? }
