@@ -33,10 +33,10 @@ class window.DupEditorPage extends Page
 
     # The trace actually looks better if the op goes next to the *previous*
     # stack state, so we shift each op back a step.
-    trace = []
-    previousStack = []
-    for step in interpreter.trace
-      { op, stack, before, after } = step
-      trace.push { op, stack: previousStack, before, after }
-      previousStack = step.stack
-    @$stackTrace().items trace
+    # trace = []
+    # previousStack = []
+    # for step in interpreter.trace
+    #   { op, stack, before, after } = step
+    #   trace.push { op, stack: previousStack, before, after }
+    #   previousStack = step.stack
+    @$stackTrace().items interpreter.trace # trace

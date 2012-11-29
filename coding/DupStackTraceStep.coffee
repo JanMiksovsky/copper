@@ -6,23 +6,15 @@ class window.DupStackTraceStep extends Control
 
   inherited:
     content: [
-      html: "<td>", content: [
-        html: "<span>", ref: "before"
-      ,
-        "---"
-      ,
-        html: "<span>", ref: "after"
-      ]
+      html: "<td>", ref: "stack"
     ,
-      html: "<td>", content: [
-        " "
-      ,
-        html: "<span>", ref: "stack"
-      ,
-        " "
-      ,
-        html: "<span>", ref: "op"
-      ]
+      html: "<td>&nbsp;&nbsp;</td>"
+    ,
+      html: "<td>", ref: "before"
+    ,
+      html: "<td>", ref: "op"
+    ,
+      html: "<td>", ref: "after"
     ]
 
   after: Control.chain "$after", "content"

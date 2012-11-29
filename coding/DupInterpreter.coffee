@@ -38,25 +38,26 @@ class window.DupInterpreter
     return unless @program?
     number = null
     while @pc < @program.length
-      character = @program[@pc]
+      index = @pc
+      character = @program[index]
       if /\d/.test character
         # Add digit to current number
         number = ( number ? 0 ) * 10 + parseInt character
       else
         if number?
           # Reached the end of a number, push that first.
-          @tracePush number, @pc - 1
+          @tracePush number, index - 1
           number = null
         # Ignore whitespace
         unless /\s/.test character
           command = @commands[ character ]
           if command?
-            @traceOperator character, @pc
             # Execute command
             command.call @
+            @traceOperator character, index
           else
             # Any other character gets pushed onto stack.
-            @tracePush character, @pc
+            @tracePush character, index
       @pc++
     if number?
       # Program ended with a number; push that.
@@ -142,7 +143,13 @@ class window.DupInterpreter
   # The trace of stack operations
   trace: null
 
-  traceOperator: ( operator, index ) ->
+  traceOperator: ( op, index ) ->
+    
+    # Filter operators that can clutter the stack trace
+    switch op
+      when "[", "]", "{"
+        return
+
     # For context, include the bits of the program before and after the op.
     contextLength = 4
     before = if index < contextLength
@@ -150,17 +157,15 @@ class window.DupInterpreter
     else
       @program.substr index - contextLength, contextLength
     after = @program.substr index + 1, contextLength
-    @trace.push
-      op: operator
-      index: index
-      stack: @stack.slice()
-      before: before
-      after: after
+    stack = @stack.slice() # Copy the stack
+    @trace.push { op, index, stack, before, after }
 
   # Push something on the stack as a traceable operation.
   tracePush: ( item, index ) ->
     @push item
-    @traceOperator item, index
+    op = item.toString()
+    op = op.slice op.length - 1 # Just use last character as the operator.
+    @traceOperator op, index
 
   # Write a character to the output stream.
   # This method should be overridden to direct output to the desired location.
