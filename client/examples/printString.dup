@@ -1,0 +1,7 @@
+{ print a null-terminated string }
+[[$;][$;,1+]#%]⇒p
+
+{ null-terminated string }
+0"Hello, world"0\:
+
+0p
