@@ -26,6 +26,9 @@ class window.DupEditorPage extends Page
     fill: true
     title: "DUP Editor"
 
+  # Clear output pane.
+  clear: Control.chain "$outputPane", "clear"
+
   initialize: ->
 
     $( document ).on "keydown", ( event ) =>
@@ -44,18 +47,30 @@ class window.DupEditorPage extends Page
   program: Control.chain "$program", "content"
 
   run: ->
+
     # See if the URL specifies a stack as comma separated integers.
     stackParam = @urlParameters().stack
     if stackParam?
       # Convert stack to array of integers
       stack = ( parseInt n for n in stackParam.split "," )
 
-    program = @program()
-    interpreter = new DupInterpreter()
-    interpreter.write = ( s ) -> console?.log s
-    interpreter.run program, stack
+    # Reset output
+    @clear()
+    wroteOutput = false
 
+    # Create an interpreter and wire it up to input and output panes.
+    interpreter = new DupInterpreter()
+    interpreter.write = ( s ) =>
+      wroteOutput = true
+      @write s
+    
+    # Run program.
+    interpreter.run @program(), stack
+
+    # Update stack trace.
     @$stackTrace().items @shiftTrace interpreter.trace, stack
+    if wroteOutput
+      @$tabs().selectedTabIndex 2
 
     # Auto-save program only after successful completion.
     Cookie.set "program", @program()
@@ -79,3 +94,5 @@ class window.DupEditorPage extends Page
         before: ""
         after: ""
     shiftedTrace
+
+  write: Control.chain "$outputPane", "write"
