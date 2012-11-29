@@ -26,6 +26,9 @@ class window.DupInterpreter
   # matching "]" operator.
   matches: null
 
+  # The maximum number of cycles permitted per program run.
+  @MAX_CYCLES: 10000
+
   # Program memory
   memory: null
 
@@ -37,6 +40,7 @@ class window.DupInterpreter
       @push item for item in stack
     return unless @program?
     number = null
+    cycles = 0
     while @pc < @program.length
       index = @pc
       character = @program[index]
@@ -59,6 +63,10 @@ class window.DupInterpreter
             # Any other character gets pushed onto stack.
             @tracePush character, index
       @pc++
+      if ++cycles > DupInterpreter.MAX_CYCLES
+        # Probably hit an infinite loop.
+        @writeString "*** Program Runtime Exceeded ***"
+        return @
     if number?
       # Program ended with a number; push that.
       @tracePush number, @pc - 1
@@ -174,6 +182,10 @@ class window.DupInterpreter
   # Write a character to the output stream.
   # This method should be overridden to direct output to the desired location.
   write: ( character ) ->
+
+  # Write a string to the output stream.
+  writeString: ( s ) ->
+    @write c for c in s
 
 ###
 DUP built-in commands
