@@ -5,6 +5,6 @@
 [[`$1_=~][^:1+]#%0\:]⇒r
 
 { Parse null-terminated string as number }
-[1[\$;][,1+]#]⇒i
+[0\[$;$][48-@10*+\1+]#%%]⇒i
 
-0r 0i
+0r 0i .

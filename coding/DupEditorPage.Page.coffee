@@ -8,7 +8,7 @@ class window.DupEditorPage extends Page
         control: VerticalPanels
         ref: "leftPane"
         content:
-          html: "<textarea/>", ref: "program", content: "[$1>[$1-f*][%1]?]⇒f 6f."
+          html: "<textarea spellcheck='false'/>", ref: "program", content: "[$1>[$1-f*][%1]?]⇒f 6f."
         bottom:
           control: Tabs
           ref: "tabs"
