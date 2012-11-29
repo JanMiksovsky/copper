@@ -10,9 +10,19 @@ class window.DupEditorPage extends Page
         content:
           html: "<textarea/>", ref: "program", content: "[$1>[$1-f*][%1]?]⇒f 6f."
         bottom:
-          control: "DupHelp", ref: "helpPane", class: "pane"
+          control: Tabs
+          ref: "tabs"
+          generic: false
+          tabButtonClass: "DupTabButton"
+          content: [
+            control: "DupHelpPane", ref: "helpPane"
+          ,
+            control: "DupInputPane", ref: "inputPane"
+          ,
+            control: "DupOutputPane", ref: "outputPane"
+          ]
       right:
-        control: "DupStackTrace", ref: "stackTrace", class: "pane"
+        control: "DupStackTrace", ref: "stackTrace"
     fill: true
     title: "DUP Editor"
 

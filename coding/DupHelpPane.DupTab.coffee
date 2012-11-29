@@ -1,4 +1,4 @@
-class window.DupHelp extends Control
+class window.DupHelpPane extends DupTab
 
   inherited:
     content: """
@@ -39,5 +39,6 @@ class window.DupHelp extends Control
           f ⇒  Define next character as a function
           n "   Copy string to memory address n
     """
+    description: "Help"
 
   tag: "pre"
