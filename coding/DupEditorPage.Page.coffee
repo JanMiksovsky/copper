@@ -9,9 +9,8 @@ class window.DupEditorPage extends Page
         ref: "leftPane"
         top:
           control: MenuBar, content: [
-            control: Menu, content: "Programs", popup: [
-              control: MenuItem, content: "Hello, world"
-            ]
+            control: Menu, content: "Programs", popup:
+              control: List, ref: "sampleProgramList", itemClass: "DupSampleMenuItem"
           ]
         content:
           html: "<textarea spellcheck='false'/>", ref: "program", content: "[$1>[$1-f*][%1]?]⇒f 6f."
@@ -40,6 +39,16 @@ class window.DupEditorPage extends Page
 
   initialize: ->
 
+    @$sampleProgramList().items [
+      content: "Hello, world", src: "hello.dup"
+    ,
+      content: "Strings", src: "strings.dup"
+    ]
+    @$sampleProgramList().on "click", ".DupSampleMenuItem", ( event ) =>
+      menuItem = $( event.target ).control()
+      if menuItem?
+        @loadFile "examples/#{menuItem.src()}"
+
     $( document ).on "keydown", ( event ) =>
       if event.which == 13 and event.ctrlKey
         @run()
@@ -53,6 +62,10 @@ class window.DupEditorPage extends Page
     @run()
 
     @$program().focus()
+
+  loadFile: ( src ) ->
+    $.get src, ( data ) =>
+      @program data
 
   program: Control.chain "$program", "content"
 
