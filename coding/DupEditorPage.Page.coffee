@@ -34,6 +34,7 @@ class window.DupEditorPage extends Page
     $( document ).on "keydown", ( event ) =>
       if event.which == 13 and event.ctrlKey
         @run()
+        false
     @$program().blur =>
       Cookie.set "program", @program()
 
@@ -46,6 +47,8 @@ class window.DupEditorPage extends Page
 
   program: Control.chain "$program", "content"
 
+  read: Control.chain "$inputPane", "read"
+
   run: ->
 
     # See if the URL specifies a stack as comma separated integers.
@@ -54,12 +57,15 @@ class window.DupEditorPage extends Page
       # Convert stack to array of integers
       stack = ( parseInt n for n in stackParam.split "," )
 
-    # Reset output
+    # Reset input and output
+    @$inputPane().position 0
     @clear()
     wroteOutput = false
 
     # Create an interpreter and wire it up to input and output panes.
     interpreter = new DupInterpreter()
+    interpreter.read = =>
+      @read() ? -1
     interpreter.write = ( s ) =>
       wroteOutput = true
       @write s
