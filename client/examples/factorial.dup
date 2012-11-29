@@ -11,5 +11,5 @@ Factorial
   ?
 ]⇒f          { Define the factorial function }
 
-{ Calculate factorial of the top number on the stack }
-f
+{ Sample }
+7f.

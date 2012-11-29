@@ -11,9 +11,11 @@ class window.DupEditorPage extends Page
           control: MenuBar, content: [
             control: Menu, content: "Programs", popup:
               control: List, ref: "sampleProgramList", itemClass: "DupSampleMenuItem"
+          ,
+            html: "<span>    Run again = Ctrl+Enter</span>", ref: "instruction"
           ]
         content:
-          html: "<textarea spellcheck='false'/>", ref: "program", content: "[$1>[$1-f*][%1]?]⇒f 6f."
+          html: "<textarea spellcheck='false'/>", ref: "program"
         bottom:
           control: Tabs
           ref: "tabs"
@@ -39,15 +41,14 @@ class window.DupEditorPage extends Page
 
   initialize: ->
 
-    @$sampleProgramList().items [
-      content: "Hello, world", src: "hello.dup"
-    ,
-      content: "Strings", src: "strings.dup"
-    ]
+    @$sampleProgramList().items @samplePrograms
     @$sampleProgramList().on "click", ".DupSampleMenuItem", ( event ) =>
       menuItem = $( event.target ).control()
       if menuItem?
-        @loadFile "examples/#{menuItem.src()}"
+        src = menuItem.src()
+        if src?
+          src = "examples/#{src}"
+        @loadFile src
 
     $( document ).on "keydown", ( event ) =>
       if event.which == 13 and event.ctrlKey
@@ -64,8 +65,17 @@ class window.DupEditorPage extends Page
     @$program().focus()
 
   loadFile: ( src ) ->
-    $.get src, ( data ) =>
-      @program data
+    if src?
+      $.get src, ( program ) =>
+        @loadProgram program
+    else
+      @$tabs().selectedTabIndex 0
+      @loadProgram ""
+
+  loadProgram: ( program ) ->
+    @program program
+    @run()
+    @$program().focus()
 
   program: Control.chain "$program", "content"
 
@@ -102,6 +112,22 @@ class window.DupEditorPage extends Page
 
     # Auto-save program only after successful completion.
     @save()
+
+  samplePrograms: [
+    content: "New"
+  ,
+    content: "Hello, world", src: "hello.dup"
+  ,
+    content: "Factorial", src: "factorial.dup"
+  ,
+    content: "Power", src: "power.dup"
+  ,
+    content: "Strings", src: "strings.dup"
+  ,
+    content: "Temperature", src: "temp.dup"
+  ,
+    content: "Threat Quotient", src: "threat.dup"
+  ]
 
   # Save the program and associated test input.
   save: ->

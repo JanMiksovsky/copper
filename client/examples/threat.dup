@@ -1,5 +1,4 @@
 {
-
 Program: Calculate threat level
 Dept. of Unified Protection - Threat Systems Division
 
@@ -20,9 +19,9 @@ c:b:a:i:
 
 i;
 
-553421540 .
+553421540 .10,
 
-[|~.]⇒x
+[|~.10,]⇒x
 
 0 0x
 0 1_x
