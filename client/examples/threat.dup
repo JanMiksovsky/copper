@@ -1,0 +1,20 @@
+{
+
+Program: Calculate threat level
+Dept. of Unified Protection - Threat Systems Division
+
+Inputs via stack:
+* Suspect ID
+* something
+* something
+* something
+
+Outputs via stack:
+* Threat Assessment Level (TAL). This is a number from 0 to 100, with 0 being of
+  minimal interest and 100 being an emergent threat.
+
+Modification of this algorithm is unauthorized without prior review by the DUP
+Threat Authority Board.
+
+}
+

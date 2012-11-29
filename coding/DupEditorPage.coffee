@@ -17,26 +17,34 @@ class window.DupEditorPage extends Page
     title: "DUP Editor"
 
   initialize: ->
+
     $( document ).on "keydown", ( event ) =>
       if event.which == 13 and event.ctrlKey
         @run()
+    @$program().blur =>
+      Cookie.set "program", @program()
+
+    # Load any program that was being edited.
+    program = Cookie.get "program"
+    @program program if program?
     @$program().focus()
+
     @run()
 
   program: Control.chain "$program", "content"
 
   run: ->
+    # See if the URL specifies a stack as comma separated integers.
+    stackParam = @urlParameters().stack
+    if stackParam?
+      # Convert stack to array of integers
+      stack = ( parseInt n for n in stackParam.split "," )
+
     program = @program()
     interpreter = new DupInterpreter()
     interpreter.write = ( s ) -> console?.log s
-    interpreter.run program
-
-    # The trace actually looks better if the op goes next to the *previous*
-    # stack state, so we shift each op back a step.
-    # trace = []
-    # previousStack = []
-    # for step in interpreter.trace
-    #   { op, stack, before, after } = step
-    #   trace.push { op, stack: previousStack, before, after }
-    #   previousStack = step.stack
+    interpreter.run program, stack
     @$stackTrace().items interpreter.trace # trace
+
+    # Auto-save program only after successful completion.
+    Cookie.set "program", @program()

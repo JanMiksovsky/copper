@@ -1,0 +1,9 @@
+{
+Convert Fahrenheit to Celsius
+( f -- c )
+}
+
+32 -
+9 /
+\% { drop remainder }
+5 *

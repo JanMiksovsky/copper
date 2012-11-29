@@ -34,7 +34,8 @@ class window.DupInterpreter
     @program = program if program?
     @reset()
     if stack?
-      @tracePush item for item in stack
+      @push item for item in stack
+      @traceOperator null
     return unless @program?
     number = null
     while @pc < @program.length
@@ -151,12 +152,16 @@ class window.DupInterpreter
         return
 
     # For context, include the bits of the program before and after the op.
-    contextLength = 4
-    before = if index < contextLength
-      @program.substr 0, index
+    if op?
+      contextLength = 4
+      before = if index < contextLength
+        @program.substr 0, index
+      else
+        @program.substr index - contextLength, contextLength
+      after = @program.substr index + 1, contextLength
     else
-      @program.substr index - contextLength, contextLength
-    after = @program.substr index + 1, contextLength
+      before = null
+      after = null
     stack = @stack.slice() # Copy the stack
     @trace.push { op, index, stack, before, after }
 
