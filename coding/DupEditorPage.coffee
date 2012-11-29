@@ -44,7 +44,28 @@ class window.DupEditorPage extends Page
     interpreter = new DupInterpreter()
     interpreter.write = ( s ) -> console?.log s
     interpreter.run program, stack
-    @$stackTrace().items interpreter.trace # trace
+
+    @$stackTrace().items @shiftTrace interpreter.trace, stack
 
     # Auto-save program only after successful completion.
     Cookie.set "program", @program()
+
+  # The trace actually looks better if the stack for step n is shown to the
+  # left of the op for step n+1, so we shift all the stacks down a step.
+  shiftTrace: ( trace, initialStack ) ->
+    shiftedTrace = []
+    previousStack = initialStack ? []
+    shiftedTrace = ( for step in trace
+      { op, stack, before, after } = step
+      shiftedStep = { op, stack: previousStack, before, after }
+      previousStack = step.stack
+      shiftedStep
+    )
+    if previousStack.length > 0
+      # If the program left something on the stack, show that as a final step.
+      shiftedTrace.push
+        op: ""
+        stack: previousStack
+        before: ""
+        after: ""
+    shiftedTrace

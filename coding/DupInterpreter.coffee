@@ -35,7 +35,6 @@ class window.DupInterpreter
     @reset()
     if stack?
       @push item for item in stack
-      @traceOperator null
     return unless @program?
     number = null
     while @pc < @program.length
