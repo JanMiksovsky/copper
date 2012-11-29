@@ -29,6 +29,8 @@ class window.DupEditorPage extends Page
   # Clear output pane.
   clear: Control.chain "$outputPane", "clear"
 
+  input: Control.chain "$inputPane", "content"
+
   initialize: ->
 
     $( document ).on "keydown", ( event ) =>
@@ -38,12 +40,12 @@ class window.DupEditorPage extends Page
     @$program().blur =>
       Cookie.set "program", @program()
 
-    # Load any program that was being edited.
+    # Load and run any program that was being edited.
     program = Cookie.get "program"
     @program program if program?
-    @$program().focus()
-
     @run()
+
+    @$program().focus()
 
   program: Control.chain "$program", "content"
 
@@ -79,7 +81,12 @@ class window.DupEditorPage extends Page
       @$tabs().selectedTabIndex 2
 
     # Auto-save program only after successful completion.
+    @save()
+
+  # Save the program and associated test input.
+  save: ->
     Cookie.set "program", @program()
+    @$inputPane().save()
 
   # The trace actually looks better if the stack for step n is shown to the
   # left of the op for step n+1, so we shift all the stacks down a step.
