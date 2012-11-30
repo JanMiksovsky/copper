@@ -5,7 +5,7 @@ class window.DupStackTrace extends Control
       html: "<tr>", ref: "heading", content: [
         html: "<td>Stack</td>", ref: "columnHeadingStack"
       ,
-        html: "<td/>"
+        html: "<td>&nbsp;&nbsp;</td>"
       ,
         html: "<td/>"
       ,
