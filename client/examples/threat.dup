@@ -1,29 +1,31 @@
 {
-Program: Calculate threat level
-Dept. of Unified Protection - Threat Systems Division
+Function: Determine whether input criteria satisfy threat conditions
+Author: Dept. of Unified Protection - Threat Systems Division
 
-Inputs via stack:
-( SuspectID  something something something )
+Given three values stored at location x, y, and z, the function t
+produces a single true/false value indicating whether a suspect
+is a threat or not.
 
-Outputs via stack:
-( TAQ )
-The TAQ (Threat Assessment Quotient) is an integer from 0 to 100,
-with 0 being of minimal interest and 100 being an emergent threat.
-
-Modification of this algorithm is unauthorized without prior
-review by the DUP Threat Authority Board.
+Modification of this algorithm unauthorized without prior review by
+D.U.P. Threat Authority Board.
 }
 
-{ Store values }
-c:b:a:i:
+[z:y:x:]⇒s       { helper: store top three values to x, y, z }
+[y;~z;~&x;&~]⇒a  { function a = NOT(x AND (NOT(y) AND NOT(z))) }
+[x;y;z;||]⇒b     { function b = x XOR y XOR z }
+[ab&]⇒t          { function t = a AND b }
 
-i;
+[st.10,]⇒p       { store, test, then print }
 
-553421540 .10,
 
-[|~.10,]⇒x
+{ Test all combinations }
+{ Note that 1_ is DUP notation for -1 (true) }
 
-0 0x
-0 1_x
-1_ 0x
-1_ 1_x
+0 0 0 p   { 0 (false) is the expected result }
+0 0 1_p   { -1 (true) is the expecedd result }
+0 1_0 p   { -1 }
+0 1_1_p   { 0  }
+1_0 0 p   { 0  }
+1_0 1_p   { 0  }
+1_1_0 p   { 0  }
+1_1_1_p   { -1 }

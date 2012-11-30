@@ -39,7 +39,7 @@ class window.DupEditorPage extends Page
 
   defaultProgram: """
     { Type code here, then press Ctrl+Enter. Try: \"1 1 + .\" }
-    
+
   """
 
   input: Control.chain "$inputPane", "content"
@@ -133,10 +133,10 @@ class window.DupEditorPage extends Page
     content: "Strings", src: "strings.dup"
   ,
     content: "Temperature", src: "temp.dup"
+  # ,
+  #   content: "Threat Quotient", src: "threat.dup"
   ,
-    content: "Threat Quotient", src: "threat.dup"
-  ,
-    content: "Truth Table", src: "truth.dup"
+    content: "Threat Assessment", src: "threat.dup"
   ]
 
   # Save the program and associated test input.
