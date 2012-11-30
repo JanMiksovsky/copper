@@ -11,9 +11,9 @@ D.U.P. Threat Authority Board.
 }
 
 [z:y:x:]⇒s       { helper: store top three values to x, y, z }
-[&x;y;~z;~&]⇒a   { a returns x AND NOT(y) AND NOT(z) }
-[x;y;z;||]⇒b     { b returns x XOR y XOR z }
-[a~b&]⇒t         { t returns NOT(a) AND b }
+[x;y;z;||]⇒a     { a returns x XOR y XOR z }
+[x;y;~z;~&&]⇒b   { b returns ??? }
+[ab~&]⇒t         { t returns a AND NOT(b) }
 
 [st.10,]⇒p       { store, test, then print }
 
