@@ -12,7 +12,7 @@ class window.DupEditorPage extends Page
             control: Menu, content: "Programs", popup:
               control: List, ref: "sampleProgramList", itemClass: "DupSampleMenuItem"
           ,
-            html: "<span>    Run again = Ctrl+Enter</span>", ref: "instruction"
+            html: "<span>    Run = Ctrl+Enter</span>", ref: "instruction"
           ]
         content:
           html: "<textarea spellcheck='false'/>", ref: "program"
@@ -37,6 +37,11 @@ class window.DupEditorPage extends Page
   # Clear output pane.
   clear: Control.chain "$outputPane", "clear"
 
+  defaultProgram: """
+    { Type code here, then press Ctrl+Enter. Try: \"1 1 + .\" }
+    
+  """
+
   input: Control.chain "$inputPane", "content"
 
   initialize: ->
@@ -59,7 +64,10 @@ class window.DupEditorPage extends Page
 
     # Load and run any program that was being edited.
     program = Cookie.get "program"
-    @program program if program?
+    #if program?
+    #  @program program
+    #else
+    @program @defaultProgram
     @run()
 
     @$program().focus()
