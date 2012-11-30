@@ -106,7 +106,7 @@ class window.DupEditorPage extends Page
     interpreter.run @program(), stack
 
     # Update stack trace.
-    @$stackTrace().items @shiftTrace interpreter.trace, stack
+    @$stackTrace().trace @shiftTrace interpreter.trace, stack
     if wroteOutput
       @$tabs().selectedTabIndex 2
 
