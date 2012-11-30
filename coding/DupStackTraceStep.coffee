@@ -18,7 +18,9 @@ class window.DupStackTraceStep extends Control
     ]
 
   after: Control.chain "$after", "content"
+
   before: Control.chain "$before", "content"
+
   op: Control.chain "$op", "content"
 
   stack: Control.property ( stack ) ->

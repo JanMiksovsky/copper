@@ -55,6 +55,9 @@ class window.DupEditorPage extends Page
           src = "examples/#{src}"
         @loadFile src
 
+    @$stackTrace().on "selectionChanged", =>
+      console?.log @$stackTrace().selectedStep().index
+
     $( document ).on "keydown", ( event ) =>
       if event.which == 13 and event.ctrlKey
         @run()
@@ -63,11 +66,7 @@ class window.DupEditorPage extends Page
       Cookie.set "program", @program()
 
     # Load and run any program that was being edited.
-    program = Cookie.get "program"
-    #if program?
-    #  @program program
-    #else
-    @program @defaultProgram
+    @program ( Cookie.get "program" ) ? @defaultProgram
     @run()
 
     @$program().focus()
@@ -150,8 +149,8 @@ class window.DupEditorPage extends Page
     shiftedTrace = []
     previousStack = initialStack ? []
     shiftedTrace = ( for step in trace
-      { op, stack, before, after } = step
-      shiftedStep = { op, stack: previousStack, before, after }
+      { op, index, stack, before, after } = step
+      shiftedStep = { op, index, stack: previousStack, before, after }
       previousStack = step.stack
       shiftedStep
     )
