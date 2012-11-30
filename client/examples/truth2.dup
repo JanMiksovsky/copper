@@ -1,0 +1,24 @@
+{
+Threat condition
+
+Given three true/false values on the stack, the function x
+produces a single true/false value indicating whether a suspect
+is a threat or not.
+}
+
+[2ø2ø2ø]⇒d    { helper: copy top three values }
+[~\~&&~]⇒a     { first clause }
+[||]⇒b        { second clause }
+[da(b)&]⇒t    { is the suspect a threat? }
+
+[.10,]⇒p  { print value and new line }
+
+{ Test cases }
+0 0 0 tp
+0 0 1_tp
+0 1_0 tp
+0 1_1_tp
+1_0 0 tp
+1_0 1_tp
+1_1_0 tp
+1_1_1_tp
