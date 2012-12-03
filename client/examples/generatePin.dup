@@ -1,0 +1,6 @@
+{ Generate 2a + 3b + 5c }
+{ Want roughly 4 to 9 digit number: 1000 to 999999999 }
+1a:
+1b:
+1c:
+1$«$1+^^+

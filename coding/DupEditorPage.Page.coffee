@@ -15,7 +15,7 @@ class window.DupEditorPage extends Page
             html: "<span>    Run = Ctrl+Enter</span>", ref: "instruction"
           ]
         content:
-          html: "<textarea spellcheck='false'/>", ref: "program"
+          control: "DupProgram", ref: "program"
         bottom:
           control: Tabs
           ref: "tabs"
