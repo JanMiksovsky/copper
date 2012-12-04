@@ -5,20 +5,10 @@ DUP interpreter unit tests
 $ ->
 
   interpreter = null
-  input = null
-  output = null
 
   module "DUP interpreter",
     setup: ->
       interpreter = new DupInterpreter()
-      input = ""
-      output = ""
-      interpreter.read = ->
-        character = input[0]
-        input = input.slice 1
-        character
-      interpreter.write = ( character ) ->
-        output += character
 
   stackEqual = ( expectedStack ) ->
     deepEqual interpreter.stack, expectedStack
@@ -68,7 +58,7 @@ $ ->
 
   test ", (output character)", ->
     runEqual "65,", []
-    equal output, "A"
+    equal interpreter.output, "A"
 
   test "$ (dup)", ->
     runEqual "1$", [ 1, 1]
@@ -98,7 +88,7 @@ $ ->
 
   test ". (output number)", ->
     runEqual "10 10*.", []
-    equal output, "100"
+    equal interpreter.output, "100"
 
   test "/ (divide)", ->
     runEqual "7 3/", [ 1, 2 ]
@@ -170,7 +160,7 @@ $ ->
     runEqual "3_", [ -3 ]
 
   test "` (read character)", ->
-    input = "ABC"
+    interpreter.input = "ABC"
     runEqual "````", [ 65, 66, 67, -1 ]
 
   test "{ (begin comment)", ->

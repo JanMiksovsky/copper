@@ -17,6 +17,12 @@ class window.DupInterpreter
   end: ->
     @goto @program.length
 
+  # The string from which the read() method will read characters.
+  input: ""
+
+  # The current position in the input string.
+  inputPosition: null
+
   # Move the program counter to the indicated point in the program.
   goto: ( index ) ->
     @pc = index
@@ -88,8 +94,12 @@ class window.DupInterpreter
     @stack.push n
 
   # Read a character from the input stream.
-  # This method should be overridden to obtain input from the desired location.
+  # This method can be overridden to obtain input from another source.
   read: ->
+    if @inputPosition < @input.length
+      @input[ @inputPosition++ ]
+    else
+     null
 
   # Reset the machine state.
   reset: ->
@@ -98,7 +108,9 @@ class window.DupInterpreter
     @commands = {}
     for command, value of DupInterpreter.commands
       @commands[ command ] = value
-      
+    
+    @inputPosition = 0
+    @output = ""
     @matches = []
     @stack = []
     @returnStack = []
@@ -180,8 +192,9 @@ class window.DupInterpreter
     @traceOperator op, index
 
   # Write a character to the output stream.
-  # This method should be overridden to direct output to the desired location.
+  # This method can be overridden to direct output to the desired location.
   write: ( character ) ->
+    @output += character
 
   # Write a string to the output stream.
   writeString: ( s ) ->

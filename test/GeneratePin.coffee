@@ -4,7 +4,7 @@ Confirm that generated DUP fragments correctly calculate the expected PIN.
 
 $ ->
 
-  module "PasswordValidator"
+  module "GeneratePin"
 
   interpreter = new DupInterpreter()
 
