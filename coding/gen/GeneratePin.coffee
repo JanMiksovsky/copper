@@ -1,10 +1,11 @@
 ###
-Build-time tool to generate a set of PINs which can be used as the agent's
-existing (expired) numeric password.
+Build-time tool to generate a set of PINs and corresponding DUP expressions that
+can generate those PINs. These PINs can be used as temporary agent password.
 
 To run:
 coffee --compile GeneratePin.coffee
 node GeneratePin.js
+
 ###
 
 class PinGenerator
