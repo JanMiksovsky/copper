@@ -54,9 +54,13 @@ module.exports = function(grunt) {
                 dest: "test/unittests.js"
             },
             /* Build-time tools, not included in client. */
-            // tools: {
+            // password: {
             //     src: "password/gen/*.coffee",
-            //     dest: "build/tools.js"
+            //     dest: "build/password.js"
+            // },
+            // pin: {
+            //     src: "coding/gen/*.coffee",
+            //     dest: "build/pin.js"
             // },
             utilities: {
                 src: sortDependencies.sortFiles( "utilities/*.coffee" ),

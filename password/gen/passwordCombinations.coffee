@@ -1,5 +1,9 @@
 ###
 Build-time class to generate the ranges of allowable password combinations.
+
+To run:
+coffee --compile PasswordCombinations.coffee
+node PasswordCombinations.js
 ###
 
 class PasswordCombinations
