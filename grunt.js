@@ -29,6 +29,11 @@ module.exports = function(grunt) {
                 src: sortDependencies.sortFiles( "facebook/*.coffee" ),
                 dest: "build/facebook.js"
             },
+            // Code that generates puzzles not included by run-time client pages.
+            gen: {
+                src: "gen/*.coffee",
+                dest: "build/gen.js"
+            },
             missions: {
                 src: sortDependencies.sortFiles(
                     "chatter/*.coffee",
@@ -53,15 +58,6 @@ module.exports = function(grunt) {
                 src: "test/*.coffee",
                 dest: "test/unittests.js"
             },
-            /* Build-time tools, not included in client. */
-            // password: {
-            //     src: "password/gen/*.coffee",
-            //     dest: "build/password.js"
-            // },
-            // pin: {
-            //     src: "coding/gen/*.coffee",
-            //     dest: "build/pin.js"
-            // },
             utilities: {
                 src: sortDependencies.sortFiles( "utilities/*.coffee" ),
                 dest: "build/utilities.js"

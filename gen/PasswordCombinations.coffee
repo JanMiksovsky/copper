@@ -4,6 +4,13 @@ Build-time class to generate the ranges of allowable password combinations.
 To run:
 coffee --compile PasswordCombinations.coffee
 node PasswordCombinations.js
+
+This file contains experimental code to explore the puzzle space of the
+password validation puzzle. Following analysis of its results, it was
+determined that puzzles could be quickly generated on the client instead of
+needing to be generated at build time. This code is retained in case its
+desired that we change the password puzzle and need to reconsider what sorts
+of puzzles are possible.
 ###
 
 class PasswordCombinations
@@ -108,4 +115,4 @@ if require? and process?
   if path.basename( process.argv[1] ) == "PasswordCombinations.js"
     console?.log PasswordCombinations.puzzles()
 
-module.exports = PasswordCombinations
+window?.PasswordCombinations = PasswordCombinations

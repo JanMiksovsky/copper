@@ -10,27 +10,29 @@ node GeneratePin.js
 
 class PinGenerator
 
-  @puzzle: ( power ) ->
-    { m, n, value } = power
+  # Given numbers m, n, and a PIN which is m^n, return a puzzle with a DUP
+  # code fragment that will generate that PIN.
+  @puzzle: ( combination ) ->
+    { m, n, pin } = combination
     mExpression = @multiplicationExpressions[ m ]
     nExpression = @numberExpressions[ n ]
-    code = "1$#{nExpression}[$0>][\\#{mExpression}\\1-]#%."
-    { m, n, value, code }
+    program = "1$#{nExpression}[$0>][\\#{mExpression}\\1-]#%."
+    { m, n, pin, program }
 
   @puzzles: ->
-    ( @puzzle power for power in @powers() )
+    ( @puzzle combination for combination in @combinations() )
 
-  # Return the set of pairs [m, n] such that m^n is a six- to nine-digit number.
-  # Ignore cases where m = 10, because the resulting number is uninteresting as
-  # a PIN.
-  @powers: ->
+  # Return the set of six- to nine-digit PINs that can be expressed as m^n,
+  # where m and n are integers. Ignore cases where m = 10, because the resulting
+  # number would have too many repeating zeros to be interesting as a PIN.
+  @combinations: ->
     results = []
     for m in [2..19]
       for n in [2..19]
         if m != 10
-          value = Math.pow( m, n )
-          if value >= 100000 and value <= 999999999
-            results.push { m, n, value }
+          pin = Math.pow( m, n )
+          if pin >= 100000 and pin <= 999999999
+            results.push { m, n, pin }
     results
 
   @multiplicationExpressions:
@@ -76,5 +78,7 @@ if require? and process?
   path = require "path"
   if path.basename( process.argv[1] ) == "GeneratePin.js"
     for puzzle in PinGenerator.puzzles()
-      { m, n, value, code } = puzzle
-      console?.log "#{m}\t#{n}\t#{value}\t#{code}"
+      { m, n, pin, program } = puzzle
+      console?.log "#{m}\t#{n}\t#{pin}\t#{program}"
+
+window?.PinGenerator = PinGenerator
