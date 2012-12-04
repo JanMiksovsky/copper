@@ -44,7 +44,7 @@ messageTemplates =
 
 app.get "/verify", ( request, response ) ->
   console?.log "Verifying password"
-  response.send "4"
+  response.send "/4"
 
 # Very basic file server.
 app.get /(.*)/, ( request, response ) ->
