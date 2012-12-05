@@ -20,7 +20,7 @@ class IvrHandler
   @handlePasswordVerificationRequest: ( request, response ) ->
 
     { phone, password } = request.query
-    console?.log "Verifying password #{password} for phone #{phone}"
+    # console?.log "Verifying password #{password} for phone #{phone}"
 
     if phone? and password?
       validator = new passwords.PasswordValidator phone
