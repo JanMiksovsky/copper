@@ -29,11 +29,12 @@ class EmailHandler
       response.send confirmation
 
   # Create reusable transport method (opens pool of SMTP connections).
-  @smtpTransport: nodemailer.createTransport "SMTP",
+  @smtpTransport: nodemailer.createTransport( "SMTP",
     service: "Gmail"
     auth:
       user: "copper.mailer@gmail.com"
       pass: "copper.mailer"
+  )
 
   @templates:
     intro:
