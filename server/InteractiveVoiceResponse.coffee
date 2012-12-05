@@ -40,16 +40,16 @@ class InteractiveVoiceResponse
   # See https://www.socialtext.net/ivrwiki/transaction_page_reference_guide
   @passwordResponse:
     """
-    <angelxml>
-      <message>
-        <play>
-          <prompt type="text">
+    <ANGELXML>
+      <MESSAGE>
+        <PLAY>
+          <PROMPT type="text">
             {{message}}
-          </prompt>
-        </play>
-        <goto destination="/{{destination}}" />
-      </message>
-    </angelxml>
+          </PROMPT>
+        </PLAY>
+        <GOTO destination="/{{destination}}" />
+      </MESSAGE>
+    </ANGELXML>
     """
 
   # "Page numbers" on the hosted Angel.com IVR.
