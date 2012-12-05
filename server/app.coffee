@@ -15,9 +15,13 @@ nodemailer = require "nodemailer"
 port = process.env.PORT ? 5000
 server.listen port
 
+# Phone verification endpoint for Angel.com
+app.get "/verifyPhone", ( request, response ) ->
+  InteractiveVoiceResponse.verifyPhone request, response
+
 # Password verification endpoint for Angel.com
-app.get "/verify", ( request, response ) ->
-  InteractiveVoiceResponse.verify request, response
+app.get "/verifyPassword", ( request, response ) ->
+  InteractiveVoiceResponse.verifyPassword request, response
 
 # Very basic file server.
 # This simply maps URLs to file paths within the /client folder.

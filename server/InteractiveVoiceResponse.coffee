@@ -8,12 +8,14 @@ class InteractiveVoiceResponse
 
   # Construct an AngelXML response
   @angelXmlResponse: ( message, destination ) ->
-    xml = @passwordResponse
+    xml = @xmlResponseTemplate
     xml = xml.replace "{{message}}", message
     xml = xml.replace "{{destination}}", destination
     xml
 
-  @verify: ( request, response ) ->
+
+  # Verify an attempt to change a password.
+  @verifyPassword: ( request, response ) ->
 
     { phone, password } = request.query
     console?.log "Verifying password #{password} for phone #{phone}"
@@ -32,13 +34,39 @@ class InteractiveVoiceResponse
       # Let player try again
       @pageNumbers.enterNewPassword
 
-    xml = @angelXmlResponse message, destination
     response.set "Content-Type", "text/xml"
-    response.send xml
+    response.send @angelXmlResponse message, destination
 
-  # Response to Angel.com using AngelXML
+
+  # Verify an incoming phone number for use on the IVR.
+  @verifyPhone: ( request, response ) ->
+
+    { phone } = request.query
+    console?.log "Verifying phone #{phone}"
+    # TODO: Look up phone number in player database and verify that it's
+    # associated with a player.
+    valid = ( phone == "2063693297" )
+    message = ""
+    if valid
+      destination = @pageNumbers.greeting
+    else
+      destination = @pageNumbers.unknownPhone
+
+    response.set "Content-Type", "text/xml"
+    response.send @angelXmlResponse message, destination
+
+
+  # "Page numbers" on the hosted Angel.com IVR.
+  # These are effectively ID numbers for steps in the IVR flow.
+  @pageNumbers:
+    greeting: 1
+    passwordChanged: 4
+    enterNewPassword: 5
+    unknownPhone: 11
+
+  # Template for AngelXML responses to requests from Angel.com.
   # See https://www.socialtext.net/ivrwiki/transaction_page_reference_guide
-  @passwordResponse:
+  @xmlResponseTemplate:
     """
     <ANGELXML>
       <MESSAGE>
@@ -51,9 +79,3 @@ class InteractiveVoiceResponse
       </MESSAGE>
     </ANGELXML>
     """
-
-  # "Page numbers" on the hosted Angel.com IVR.
-  # These are effectively ID numbers for steps in the IVR flow.
-  @pageNumbers:
-    passwordChanged: 4
-    enterNewPassword: 5
