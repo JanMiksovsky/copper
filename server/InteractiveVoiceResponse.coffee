@@ -25,7 +25,7 @@ class InteractiveVoiceResponse
       # Bad request
       message = "A system problem has occurred."
 
-    destination = if message == "Password changed"
+    destination = if message == "Your password has been changed."
       # Player solved the puzzle
       @pageNumbers.passwordChanged
     else
