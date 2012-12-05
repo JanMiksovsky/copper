@@ -13,15 +13,25 @@ nodemailer = require "nodemailer"
 port = process.env.PORT ? 5000
 server.listen port
 
+PasswordValidator = ( require "./build/password.js" ).PasswordValidator
+
+# Password verification endpoint for Angel.com
 app.get "/verify", ( request, response ) ->
-  console?.log "Verifying password"
-  response.send "/4"
+  { phone, password } = request.query
+  console?.log "Verifying password #{password} for phone #{phone}"
+  validator = new PasswordValidator phone
+  result = validator.validate password
+  console?.log "Validation result: #{result}"
+  response.send result
 
 # Very basic file server.
+# This simply maps URLs to file paths within the /client folder.
 app.get /(.*)/, ( request, response ) ->
   # console?.log "get: #{request.params[0]}"
   sendFile request.params[0], response
 
+# Email notification endpoint.
+# Used during registration process.
 app.post "/email/:template/:email", ( request, response ) ->
   console?.log "Sending #{request.params.template} message to #{request.params.email}"
   message = messageTemplates[ request.params.template ]

@@ -1,3 +1,4 @@
+# The following line lets this module be used on either the client or server.
 exports = window ? module.exports
 
 class exports.PasswordValidator
@@ -24,6 +25,19 @@ class exports.PasswordValidator
           puzzles.push [ i, j ]
     puzzles
 
+  # Return the unique members of the given array (or string).
+  @unique: ( array ) ->
+    result = []
+    for item in array
+      found = false
+      for existingItem in result
+        if item == existingItem
+          found = true
+          break
+      unless found
+        result.push item
+    result
+
   # Verify whether the indicated password passes the constraints for the
   # current puzzle.
   validate: ( password ) ->
@@ -33,7 +47,7 @@ class exports.PasswordValidator
       "Password too short"
     else if not /^[0-9]*$/.test password  # All digits?
       "Password can contain only numeric digits"
-    else if Utilities.unique( password ).length < password.length
+    else if PasswordValidator.unique( password ).length < password.length
       "Digits may not be repeated"
     else if checksumHead != @checksum password.slice 0, 3
       "First three digits must add to #{checksumHead}"
@@ -41,6 +55,3 @@ class exports.PasswordValidator
       "Last three digits must add to #{checksumTail}"
     else
       "Password changed"
-
-  @test: ->
-    "/4"
