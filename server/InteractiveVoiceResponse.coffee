@@ -33,6 +33,7 @@ class InteractiveVoiceResponse
       @pageNumbers.enterNewPassword
 
     xml = @angelXmlResponse message, destination
+    response.set "Content-Type", "text/xml"
     response.send xml
 
   # Response to Angel.com using AngelXML
