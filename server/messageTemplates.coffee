@@ -1,10 +1,10 @@
 ###
-Email messages templates
+Templates for email messages, web pages, etc.
 ###
 
-messageTemplates =
+templates =
 
-  intro:
+  introMessage:
     from: "Ann Williams <ann.williams@facebook.com>" # sender address
     subject: "Not quite sure about the Dept. of Unified Protection" # Subject line
     html: """

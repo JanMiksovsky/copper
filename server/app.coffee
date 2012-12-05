@@ -1,8 +1,10 @@
 ###
 Copper web server
 
-This is a basic web server in Node.js + Express.
-This also ties in the nodemailer module for sending email via SMTP.
+Endpoints for:
+* A basic web server using Express (http://expressjs.com/)
+* Email to players via nodemailer (https://github.com/andris9/Nodemailer)
+* IVR (Interactive Voice Response) backend support for IVR hosted at angel.com.
 ###
 
 app = require( "express" )()
@@ -13,16 +15,9 @@ nodemailer = require "nodemailer"
 port = process.env.PORT ? 5000
 server.listen port
 
-PasswordValidator = ( require "./build/password.js" ).PasswordValidator
-
 # Password verification endpoint for Angel.com
 app.get "/verify", ( request, response ) ->
-  { phone, password } = request.query
-  console?.log "Verifying password #{password} for phone #{phone}"
-  validator = new PasswordValidator phone
-  result = validator.validate password
-  console?.log "Validation result: #{result}"
-  response.send result
+  InteractiveVoiceResponse.verify request, response
 
 # Very basic file server.
 # This simply maps URLs to file paths within the /client folder.
@@ -32,9 +27,11 @@ app.get /(.*)/, ( request, response ) ->
 
 # Email notification endpoint.
 # Used during registration process.
+# TODO: Don't require/allow client to specify recipient email address, because
+# that could be abused. Instead, obtain email address from player account.
 app.post "/email/:template/:email", ( request, response ) ->
-  console?.log "Sending #{request.params.template} message to #{request.params.email}"
-  message = messageTemplates[ request.params.template ]
+  # console?.log "Sending #{request.params.template} message to #{request.params.email}"
+  message = templates[ request.params.template ]
   message.to = request.params.email
   smtpTransport.sendMail message, ( error, result ) =>
     confirmation = {}
