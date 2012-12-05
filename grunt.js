@@ -84,16 +84,6 @@ module.exports = function(grunt) {
                 ],
                 dest: "client/copper.js"
             }
-            /*
-            ,
-            server: {
-                src: [
-                    "build/password.js",
-                    "build/server.js"
-                ],
-                dest: "app.js"
-            }
-            */
         },
         less: {
             all: {

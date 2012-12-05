@@ -1,10 +1,12 @@
 ###
-Handles requests to the Angel.com IVR (Interactive Voice Response) system.
+Handles requests to the IVR (Interactive Voice Response) system.
+
+The IVR is hosted in the cloud at angel.com.
 ###
 
-PasswordValidator = ( require "./build/password.js" ).PasswordValidator
+passwords = require "./build/password.js"
 
-class InteractiveVoiceResponse
+class IvrHandler
 
   # Construct an AngelXML response
   @angelXmlResponse: ( message, destination ) ->
@@ -15,13 +17,13 @@ class InteractiveVoiceResponse
 
 
   # Verify an attempt to change a password.
-  @verifyPassword: ( request, response ) ->
+  @handlePasswordVerificationRequest: ( request, response ) ->
 
     { phone, password } = request.query
     console?.log "Verifying password #{password} for phone #{phone}"
 
     if phone? and password?
-      validator = new PasswordValidator phone
+      validator = new passwords.PasswordValidator phone
       message = validator.validate password
     else
       # Bad request
@@ -39,7 +41,7 @@ class InteractiveVoiceResponse
 
 
   # Verify an incoming phone number for use on the IVR.
-  @verifyPhone: ( request, response ) ->
+  @handlePhoneVerificationRequest: ( request, response ) ->
 
     { phone } = request.query
     console?.log "Verifying phone #{phone}"
