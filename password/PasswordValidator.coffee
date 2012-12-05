@@ -44,14 +44,14 @@ class exports.PasswordValidator
     checksumHead = @puzzle[0]
     checksumTail = @puzzle[1]
     if password.length < 9
-      "Password too short"
+      "That password is too short."
     else if not /^[0-9]*$/.test password  # All digits?
-      "Password can contain only numeric digits"
+      "A password can contain only numeric digits."
     else if PasswordValidator.unique( password ).length < password.length
-      "Digits may not be repeated"
+      "Password digits may not be repeated."
     else if checksumHead != @checksum password.slice 0, 3
-      "First three digits must add to #{checksumHead}"
+      "The first three digits must add to #{checksumHead}."
     else if checksumTail != @checksum password.slice password.length - 3
-      "Last three digits must add to #{checksumTail}"
+      "The last three digits must add to #{checksumTail}."
     else
-      "Password changed"
+      "Your password has been changed."

@@ -1,3 +1,11 @@
+###
+Change password from within terminal.
+
+TODO: Actually save password, or remove this command, or leave this command but
+have it just spit out a message like "Please use the agent verification system
+to change your password." (I.e., point people at the IVR.)
+###
+
 commands.passwd = ( phone, password ) ->
 
   if not ( phone? and password? )
