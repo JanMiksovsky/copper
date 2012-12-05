@@ -17,10 +17,6 @@ module.exports = function(grunt) {
     // Project configuration.
     grunt.initConfig({
         coffee: {
-            app: {
-                src: "app.coffee",
-                dest: "app.js"
-            },
             controls: {
                 src: sortDependencies.sortFiles( "controls/*.coffee" ),
                 dest: "build/controls.js"
@@ -54,6 +50,16 @@ module.exports = function(grunt) {
                 ),
                 dest: "build/os.js"
             },
+            // Password used by both client (for testing) and server.
+            password: {
+                src: "password/*.coffee",
+                dest: "build/password.js"
+            },
+            server: {
+                src: "server/*.coffee",
+                dest: "app.js",
+                options: { bare: true }
+            },
             test: {
                 src: "test/*.coffee",
                 dest: "test/unittests.js"
@@ -64,7 +70,7 @@ module.exports = function(grunt) {
             }
         },
         concat: {
-            js: {
+            client: {
                 src: [
                     /* These initial declarations should come before the missions. */
                     "lib/*.js",
@@ -73,10 +79,21 @@ module.exports = function(grunt) {
                     "build/facebook.js",
                     /* Remaining declarations can come in any order. */
                     "build/missions.js",
+                    "build/password.js",
                     "build/os.js"
                 ],
                 dest: "client/copper.js"
             }
+            /*
+            ,
+            server: {
+                src: [
+                    "build/password.js",
+                    "build/server.js"
+                ],
+                dest: "app.js"
+            }
+            */
         },
         less: {
             all: {

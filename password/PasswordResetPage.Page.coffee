@@ -1,4 +1,7 @@
-class window.PasswordResetPage extends DupPage
+###
+Not ready for use yet
+
+class exports.PasswordResetPage extends DupPage
 
   inherited:
     content: [
@@ -18,3 +21,4 @@ class window.PasswordResetPage extends DupPage
       alert message
 
   validator: Control.property()
+###

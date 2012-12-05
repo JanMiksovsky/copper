@@ -1,4 +1,6 @@
-class window.PasswordValidator
+exports = window ? module.exports
+
+class exports.PasswordValidator
 
   constructor: ( @accountId ) ->
     # Pick a puzzle for this account to solve.
@@ -39,3 +41,6 @@ class window.PasswordValidator
       "Last three digits must add to #{checksumTail}"
     else
       "Password changed"
+
+  @test: ->
+    "/4"
