@@ -43,14 +43,14 @@ class InteractiveVoiceResponse
 
     { phone } = request.query
     console?.log "Verifying phone #{phone}"
-    # TODO: Look up phone number in player database and verify that it's
-    # associated with a player.
-    valid = ( phone == "2063693297" )
-    message = ""
+    # TODO: Look up the contents of the phone variable in player database and
+    # verify that it's associated with a player.
+    valid = true
     if valid
       destination = @pageNumbers.greeting
     else
       destination = @pageNumbers.unknownPhone
+    message = ""
 
     response.set "Content-Type", "text/xml"
     response.send @angelXmlResponse message, destination
