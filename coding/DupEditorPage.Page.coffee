@@ -12,7 +12,11 @@ class window.DupEditorPage extends Page
             control: Menu, content: "Programs", popup:
               control: List, ref: "sampleProgramList", itemClass: "DupSampleMenuItem"
           ,
-            html: "<span>    Run = Ctrl+Enter</span>", ref: "instruction"
+            "   "
+          ,
+            control: "DupSampleMenuItem", ref: "runButton", content: "Run"
+          ,
+            html: "<span>(Ctrl+Enter)</span>", ref: "instruction"
           ]
         content:
           control: "DupProgram", ref: "program"
@@ -54,6 +58,7 @@ class window.DupEditorPage extends Page
         if src?
           src = "examples/#{src}"
         @loadFile src
+    @$runButton().click => @run()
 
     @$stackTrace().on "selectionChanged", =>
       console?.log @$stackTrace().selectedStep().index
