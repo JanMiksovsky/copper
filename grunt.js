@@ -70,7 +70,7 @@ module.exports = function(grunt) {
                 dest: "client/dup/dup.css"
             },
             dupJs: {
-                src: [ "lib/*.js", "build/common.js", "build/dup.js" ],
+                src: [ "lib/*.js", "build/common.js", "build/facebook.js", "build/dup.js" ],
                 dest: "client/dup/dup.js"
             },
             duplangCss: {
