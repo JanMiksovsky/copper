@@ -47,7 +47,8 @@ module.exports = function(grunt) {
             },
             password: {
                 src: sortDependencies.sortFiles( "server/password/*.coffee" ),
-                dest: "build/password.js"
+                dest: "build/password.js",
+                options: { bare: true }
             },
             timeline: {
                 src: sortDependencies.sortFiles( "timeline/*.coffee", "timeline/*/*.coffee" ),
@@ -55,8 +56,8 @@ module.exports = function(grunt) {
             },
             server: {
                 src: "server/*.coffee",
-                dest: "build/server.js"
-                // options: { bare: true }
+                dest: "build/server.js",
+                options: { bare: true }
             },
             test: {
                 src: "test/*.coffee",

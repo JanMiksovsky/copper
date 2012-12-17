@@ -4,8 +4,6 @@ Handles requests to the IVR (Interactive Voice Response) system.
 The IVR is hosted in the cloud at angel.com.
 ###
 
-passwords = require "./build/password.js"
-
 class IvrHandler
 
   # Construct an AngelXML response
@@ -23,7 +21,7 @@ class IvrHandler
     # console?.log "Verifying password #{password} for phone #{phone}"
 
     if phone? and password?
-      validator = new passwords.PasswordValidator phone
+      validator = new PasswordValidator phone
       message = validator.validate password
     else
       # Bad request

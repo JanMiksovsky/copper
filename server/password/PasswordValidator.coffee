@@ -1,7 +1,4 @@
-# The following line lets this module be used on either the client or server.
-exports = window ? module.exports
-
-class exports.PasswordValidator
+class PasswordValidator
 
   constructor: ( @accountId ) ->
     # Pick a puzzle for this account to solve.
