@@ -27,7 +27,7 @@ html {
 $( function() {
     // If we don't have an access token, call FB and redirect to this page.
     if ( Facebook.accessToken() == null ) {
-        Facebook.authorize( Application.id(), window.location );
+        Facebook.authorize( FacebookApplication.id(), window.location );
     } else {
         $( "body" ).control( HeroinePage );
     }

@@ -26,7 +26,7 @@ class window.HomePage extends DupPage
 
   # Send the user to the registration page.
   register: ->
-    applicationId = Application.id()
+    applicationId = FacebookApplication.id()
     # Facebook auth needs an absolute URL, but we want this app to be able to
     # run in multiple locations (localhost, etc.), so we build a URL ourselves.
     parts = window.location.href.split "/"
