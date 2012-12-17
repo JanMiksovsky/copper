@@ -33,6 +33,16 @@ class window.ThankYouPage extends DupPage
   initialize: ->
     suspectId = @urlParameters().suspectId
     if suspectId?
-      @$suspectTile().suspect
-        id: suspectId
-        picture: Facebook.pictureUrlForUser suspectId
+      if suspectId < 0
+        # Fake suspect ID
+        suspects = FakeSuspects.suspectWithId parseInt suspectId
+        if suspects?
+          suspect = suspects[0]
+      else
+        # Facebook ID
+        suspect = {
+          id: suspectId
+          picture: Facebook.pictureUrlForUser suspectId
+        }
+      if suspect?
+        @$suspectTile().suspect suspect

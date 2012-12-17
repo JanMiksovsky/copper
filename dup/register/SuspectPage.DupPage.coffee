@@ -20,18 +20,13 @@ class window.SuspectPage extends DupPage
         your family, and your associates to investigation and/or indefinite
         incarceration.
         """
-        { control: Link, ref: "linkAbstain", content: "Abstain" }
       ]}
     ]
     title: "Do you know any of these people?"
 
   initialize: ->
     @$linkReload().click => @$suspectList().reload()
-    @$suspectList().on "selectFriend selectStranger", ( event, suspect ) =>
-      # TODO: Lose karma
-      @next suspect
-    @$linkAbstain().click =>
-      # TODO: Gain karma
+    @$suspectList().on "selectSuspect", ( event, suspect ) =>
       @next suspect
 
   next: ( suspect ) ->

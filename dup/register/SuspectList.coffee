@@ -26,16 +26,13 @@ class window.SuspectList extends Control
 
     # Get random suspects
     friends = @friends()
-    suspects = Suspects.select 5, friends
+    suspects = FakeSuspects.select 5, friends
 
     # Add in some of the user's friends
-    # friendIndex = Math.floor Math.random() * friends.length
-    # friend = friends[ friendIndex ]
     selectedFriends = @_selectFriends friends, 3
     for friend in selectedFriends
       suspects.push
         id: friend.id
-        isFriend: true
         name: friend.name
         picture: Facebook.pictureUrlForUser friend
 

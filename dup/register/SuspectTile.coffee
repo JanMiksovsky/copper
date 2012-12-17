@@ -13,10 +13,7 @@ class window.SuspectTile extends Control
 
   initialize: ->
     @click =>
-      if @suspect().isFriend
-        @trigger "selectFriend", [ @suspect() ]
-      else
-        @trigger "selectStranger"
+      @trigger "selectSuspect", [ @suspect() ]
 
   picture: Control.chain "$picture", "prop/src"
 
