@@ -1,4 +1,4 @@
-class window.FaceboookApplication
+class window.FacebookApplication
 
   # App id depends on whether we're running locally or in production.
   @id: ->
