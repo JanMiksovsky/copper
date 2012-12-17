@@ -35,6 +35,7 @@ module.exports = function(grunt) {
                     "chatter/*.coffee",
                     "citizen/*.coffee",
                     "coding/*.coffee",
+                    "karma/*.coffee",
                     "retail/*.coffee",
                     "password/*.coffee",
                     "satellite/*.coffee",
