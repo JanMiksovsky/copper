@@ -45,14 +45,18 @@ module.exports = function(grunt) {
                 src: sortDependencies.sortFiles( "karma/*.coffee", "karma/*/*.coffee" ),
                 dest: "build/karma.js"
             },
+            password: {
+                src: sortDependencies.sortFiles( "server/password/*.coffee" ),
+                dest: "build/password.js"
+            },
             timeline: {
                 src: sortDependencies.sortFiles( "timeline/*.coffee", "timeline/*/*.coffee" ),
                 dest: "build/timeline.js"
             },
             server: {
                 src: "server/*.coffee",
-                dest: "app.js",
-                options: { bare: true }
+                dest: "build/server.js"
+                // options: { bare: true }
             },
             test: {
                 src: "test/*.coffee",
@@ -83,6 +87,10 @@ module.exports = function(grunt) {
             karmaJs: {
                 src: [ "lib/*.js", "build/common.js", "build/facebook.js", "build/karma.js" ],
                 dest: "client/karma/karma.js"
+            },
+            server: {
+                src: [ "build/server.js", "build/password.js" ],
+                dest: "app.js"
             },
             timelineCss: {
                 src: [ "build/common.css", "build/facebook.css", "build/timeline.css" ],

@@ -834,6 +834,12 @@ General-purpose utility functions
 }).call(this);
 
 (function() {
+
+  window.commands = {};
+
+}).call(this);
+
+(function() {
   var __slice = [].slice;
 
   commands.cat = function() {
@@ -2127,12 +2133,6 @@ Handles formatting arrays of text into columns a la "ls" command output.
       return (new Array(count + 1)).join(s);
     }
   };
-
-}).call(this);
-
-(function() {
-
-  window.commands = {};
 
 }).call(this);
 
