@@ -6,3 +6,6 @@
 /known_hosts
 /node_modules/
 /test/unittests.js
+/.gitignore
+/npm-debug.log
+/.vagrant
