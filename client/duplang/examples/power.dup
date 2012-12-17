@@ -1,0 +1,11 @@
+{ Calculate m to the nth power. ( m n -- m^n ) }
+
+[
+  $0>        { n greater than 0? }
+    [1-^\p*] { power(m, n) = m * power(m, n-1) }
+    [%%1]    { power(m, 0) = 1 }
+  ?
+]⇒p
+
+{ Calculate 3 to the power of 5 }
+3 5p.

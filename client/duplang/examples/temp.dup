@@ -1,0 +1,9 @@
+{ Convert Fahrenheit to Celsius ( f -- c ) }
+
+[
+  32 -
+  9/\% { divide and drop remainder }
+  5 *
+]⇒c
+
+212c.

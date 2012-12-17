@@ -1,0 +1,5 @@
+{ Hello, world in DUP }
+
+[[$;][$;,1+]#%]⇒p   { print null-terminated string }
+0"Hello, world."0\:  { store a string }
+0p                   { print the string }
