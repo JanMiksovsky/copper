@@ -4,7 +4,7 @@ can generate those PINs. These PINs can be used as temporary agent password.
 
 To run:
 coffee --compile GeneratePin.coffee
-node GeneratePin.js
+node GeneratePin.js > pins.txt
 
 ###
 

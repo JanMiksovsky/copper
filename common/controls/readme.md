@@ -1,0 +1,1 @@
+These are general-purpose control files shared by multiple aspects of Copper.

@@ -17,78 +17,100 @@ module.exports = function(grunt) {
     // Project configuration.
     grunt.initConfig({
         coffee: {
-            controls: {
-                src: sortDependencies.sortFiles( "controls/*.coffee" ),
-                dest: "build/controls.js"
-            },
-            facebook: {
-                src: sortDependencies.sortFiles( "facebook/*.coffee" ),
-                dest: "build/facebook.js"
+            common: {
+                src: sortDependencies.sortFiles(
+                    "common/*.coffee",
+                    "common/*/*.coffee"
+                ),
+                dest: "build/common.js"
             },
             // Code that generates puzzles not included by run-time client pages.
             gen: {
                 src: "gen/*.coffee",
                 dest: "build/gen.js"
             },
-            missions: {
-                src: sortDependencies.sortFiles(
-                    "chatter/*.coffee",
-                    "citizen/*.coffee",
-                    "coding/*.coffee",
-                    "retail/*.coffee",
-                    "password/*.coffee",
-                    "satellite/*.coffee",
-                    "terminal/*.coffee",
-                    "timeline/*.coffee"
-                ),
-                dest: "build/missions.js"
+            dup: {
+                src: sortDependencies.sortFiles( "dup/*.coffee", "dup/*/*.coffee" ),
+                dest: "build/dup.js"
             },
-            os: {
-                src: sortDependencies.sortFiles(
-                    "terminal/shell/*.coffee",
-                    "terminal/commands/*.coffee"
-                ),
-                dest: "build/os.js"
+            duplang: {
+                src: sortDependencies.sortFiles( "duplang/*.coffee", "duplang/*/*.coffee" ),
+                dest: "build/duplang.js"
             },
-            // Password used by both client (for testing) and server.
+            facebook: {
+                src: sortDependencies.sortFiles( "facebook/*.coffee" ),
+                dest: "build/facebook.js"
+            },
+            karma: {
+                src: sortDependencies.sortFiles( "karma/*.coffee", "karma/*/*.coffee" ),
+                dest: "build/karma.js"
+            },
             password: {
-                src: "password/*.coffee",
-                dest: "build/password.js"
+                src: sortDependencies.sortFiles( "server/password/*.coffee" ),
+                dest: "build/password.js",
+                options: { bare: true }
+            },
+            timeline: {
+                src: sortDependencies.sortFiles( "timeline/*.coffee", "timeline/*/*.coffee" ),
+                dest: "build/timeline.js"
             },
             server: {
                 src: "server/*.coffee",
-                dest: "app.js",
+                dest: "build/server.js",
                 options: { bare: true }
             },
             test: {
                 src: "test/*.coffee",
                 dest: "test/unittests.js"
-            },
-            utilities: {
-                src: sortDependencies.sortFiles( "utilities/*.coffee" ),
-                dest: "build/utilities.js"
             }
         },
         concat: {
-            client: {
-                src: [
-                    /* These initial declarations should come before the missions. */
-                    "lib/*.js",
-                    "build/utilities.js",
-                    "build/controls.js",
-                    "build/facebook.js",
-                    /* Remaining declarations can come in any order. */
-                    "build/missions.js",
-                    "build/password.js",
-                    "build/os.js"
-                ],
-                dest: "client/copper.js"
-            }
+            dupCss: {
+                src: [ "build/common.css", "build/dup.css" ],
+                dest: "client/dup/dup.css"
+            },
+            dupJs: {
+                src: [ "lib/*.js", "build/common.js", "build/facebook.js", "build/dup.js" ],
+                dest: "client/dup/dup.js"
+            },
+            duplangCss: {
+                src: [ "build/common.css", "build/duplang.css" ],
+                dest: "client/duplang/duplang.css"
+            },
+            duplangJs: {
+                src: [ "lib/*.js", "build/common.js", "build/duplang.js" ],
+                dest: "client/duplang/duplang.js"
+            },
+            karmaCss: {
+                src: [ "build/common.css", "build/facebook.css", "build/karma.css" ],
+                dest: "client/karma/karma.css"
+            },
+            karmaJs: {
+                src: [ "lib/*.js", "build/common.js", "build/facebook.js", "build/karma.js" ],
+                dest: "client/karma/karma.js"
+            },
+            server: {
+                src: [ "build/server.js", "build/password.js" ],
+                dest: "app.js"
+            },
+            timelineCss: {
+                src: [ "build/common.css", "build/facebook.css", "build/timeline.css" ],
+                dest: "client/timeline/timeline.css"
+            },
+            timelineJs: {
+                src: [ "lib/*.js", "build/common.js", "build/facebook.js", "build/timeline.js" ],
+                dest: "client/timeline/timeline.js"
+            },
         },
         less: {
             all: {
                 files: {
-                    "client/copper.css": sortDependencies.sortFiles( "*/*.less" )
+                    "build/common.css": sortDependencies.sortFiles( "common/*.less", "common/*/*.less" ),
+                    "build/dup.css": sortDependencies.sortFiles( "dup/*.less", "dup/*/*.less" ),
+                    "build/duplang.css": sortDependencies.sortFiles( "duplang/*.less", "duplang/*/*.less" ),
+                    "build/facebook.css": sortDependencies.sortFiles( "facebook/*.less" ),
+                    "build/karma.css": sortDependencies.sortFiles( "karma/*.less", "karma/*/*.less" ),
+                    "build/timeline.css": sortDependencies.sortFiles( "timeline/*.less", "timeline/*/*.less" )
                 }
             }
         }
