@@ -5,9 +5,9 @@
 /client/dup/dup.js
 /client/duplang/duplang.css
 /client/duplang/duplang.js
+/client/karma/karma.css
 /client/karma/karma.js
-/client/karma/karma.js
-/client/timeline/timeline.js
+/client/timeline/timeline.css
 /client/timeline/timeline.js
 /.gitignore
 /known_hosts
