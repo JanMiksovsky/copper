@@ -11,6 +11,8 @@ class window.DupPage extends Page
           html: "h3", ref: "organization", content: "Department of Unified Protection"
         ,
           html: "h1", ref: "DupPage_title"
+        ,
+          control: "NavigationBar", ref: "navigationBar"
         ]
     ,
       html: "div", ref: "contentContainer", class: "container", content: [

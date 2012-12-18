@@ -1,7 +1,7 @@
 class window.TerminalPage extends Page
 
   inherited:
-    title: "Copper Terminal"
+    title: "DUP Agent Terminal"
     content: [
       { control: "Terminal", ref: "terminal" }
     ]
