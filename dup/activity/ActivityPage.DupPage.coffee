@@ -4,7 +4,7 @@ class window.ActivityPage extends DupPage
     content: [
       "<h2>Activity Map</h2>"
     ,
-      control: "GoogleMap", ref: "map"
+      control: "GoogleMap", ref: "map", zoom: 12
     ]
     title: "Bio-Terrorist Activity in Your Area"
 

@@ -19,8 +19,9 @@ class window.GoogleMap extends Control
   initialize: ->
     # Create map
     canvas = this.$canvas()[0]
+    zoom = @_deferredZoom() ? 18
     options =
-      zoom: 18
+      zoom: zoom
       mapTypeControl: false
       navigationControlOptions:
         style: google.maps.NavigationControlStyle.SMALL
@@ -42,3 +43,19 @@ class window.GoogleMap extends Control
 
   mapTypeId: Control.property ( mapTypeId ) ->
     @map()?.setMapTypeId mapTypeId
+
+  # The map's zoom level.
+  zoom: ( zoom ) ->
+    map = @map()
+    if map?
+      if zoom is undefined
+        map.getZoom()
+      else
+        map.setZoom zoom
+        @
+    else
+      if zoom isnt undefined
+        @_deferredZoom zoom
+
+  # Zoom set before map was created
+  _deferredZoom: Control.property()
