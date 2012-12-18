@@ -7,3 +7,4 @@ class window.AboutPage extends DupPage
       <p>... more rabble-rousing goes here ...</p>
       """
     ]
+    title: "About the Bio-Terrorism Threat"
