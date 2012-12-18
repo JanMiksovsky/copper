@@ -1,6 +1,8 @@
 /*.sublime*
 /app.js
 /build/
+/client/copper.css
+/client/copper.js
 /client/dup/dup.css
 /client/dup/dup.js
 /client/duplang/duplang.css

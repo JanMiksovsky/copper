@@ -31,19 +31,15 @@ module.exports = function(grunt) {
             },
             dup: {
                 src: sortDependencies.sortFiles( "dup/*.coffee", "dup/*/*.coffee" ),
-                dest: "build/dup.js"
+                dest: "client/dup/dup.js"
             },
             duplang: {
                 src: sortDependencies.sortFiles( "duplang/*.coffee", "duplang/*/*.coffee" ),
-                dest: "build/duplang.js"
-            },
-            facebook: {
-                src: sortDependencies.sortFiles( "facebook/*.coffee" ),
-                dest: "build/facebook.js"
+                dest: "client/duplang/duplang.js"
             },
             karma: {
                 src: sortDependencies.sortFiles( "karma/*.coffee", "karma/*/*.coffee" ),
-                dest: "build/karma.js"
+                dest: "client/karma/karma.js"
             },
             password: {
                 src: sortDependencies.sortFiles( "server/password/*.coffee" ),
@@ -52,7 +48,7 @@ module.exports = function(grunt) {
             },
             timeline: {
                 src: sortDependencies.sortFiles( "timeline/*.coffee", "timeline/*/*.coffee" ),
-                dest: "build/timeline.js"
+                dest: "client/timeline/timeline.js"
             },
             server: {
                 src: "server/*.coffee",
@@ -65,52 +61,35 @@ module.exports = function(grunt) {
             }
         },
         concat: {
-            dupCss: {
-                src: [ "build/common.css", "build/dup.css" ],
-                dest: "client/dup/dup.css"
+            // The copper.js and copper.css files contain a concatenation of
+            // files shared by all Copper UI.
+            copperCss: {
+                src: [
+                    "lib/quickui.css",
+                    "lib/quickui.catalog.css",
+                    "build/common.css"
+                ],
+                dest: "client/copper.css"
             },
-            dupJs: {
-                src: [ "lib/*.js", "build/common.js", "build/facebook.js", "build/dup.js" ],
-                dest: "client/dup/dup.js"
-            },
-            duplangCss: {
-                src: [ "build/common.css", "build/duplang.css" ],
-                dest: "client/duplang/duplang.css"
-            },
-            duplangJs: {
-                src: [ "lib/*.js", "build/common.js", "build/duplang.js" ],
-                dest: "client/duplang/duplang.js"
-            },
-            karmaCss: {
-                src: [ "build/common.css", "build/facebook.css", "build/karma.css" ],
-                dest: "client/karma/karma.css"
-            },
-            karmaJs: {
-                src: [ "lib/*.js", "build/common.js", "build/facebook.js", "build/karma.js" ],
-                dest: "client/karma/karma.js"
-            },
-            server: {
-                src: [ "build/server.js", "build/password.js" ],
-                dest: "app.js"
-            },
-            timelineCss: {
-                src: [ "build/common.css", "build/facebook.css", "build/timeline.css" ],
-                dest: "client/timeline/timeline.css"
-            },
-            timelineJs: {
-                src: [ "lib/*.js", "build/common.js", "build/facebook.js", "build/timeline.js" ],
-                dest: "client/timeline/timeline.js"
-            },
+            copperJs: {
+                src: [
+                    "lib/jquery-1.8.2.js",
+                    "lib/quickui.js",
+                    "lib/quickui.catalog.js",
+                    "lib/seedrandom.js",
+                    "build/common.js"
+                ],
+                dest: "client/copper.js"
+            }
         },
         less: {
             all: {
                 files: {
                     "build/common.css": sortDependencies.sortFiles( "common/*.less", "common/*/*.less" ),
-                    "build/dup.css": sortDependencies.sortFiles( "dup/*.less", "dup/*/*.less" ),
-                    "build/duplang.css": sortDependencies.sortFiles( "duplang/*.less", "duplang/*/*.less" ),
-                    "build/facebook.css": sortDependencies.sortFiles( "facebook/*.less" ),
-                    "build/karma.css": sortDependencies.sortFiles( "karma/*.less", "karma/*/*.less" ),
-                    "build/timeline.css": sortDependencies.sortFiles( "timeline/*.less", "timeline/*/*.less" )
+                    "client/dup/dup.css": sortDependencies.sortFiles( "dup/*.less", "dup/*/*.less" ),
+                    "client/duplang/duplang.css": sortDependencies.sortFiles( "duplang/*.less", "duplang/*/*.less" ),
+                    "client/karma/karma.css": sortDependencies.sortFiles( "karma/*.less", "karma/*/*.less" ),
+                    "client/timeline/timeline.css": sortDependencies.sortFiles( "timeline/*.less", "timeline/*/*.less" )
                 }
             }
         }

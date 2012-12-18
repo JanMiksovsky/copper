@@ -1,10 +1,14 @@
+###
+Chat test page.
+###
+
 class window.ChatPage extends Page
 
   inherited:
     content: [
       control: "Log", ref: "log"
     ,
-      control: TextBoxWithButton2, ref: "userInput"
+      control: TextBoxWithButton, ref: "userInput"
     ]
 
   initialize: ->
