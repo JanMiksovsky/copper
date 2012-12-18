@@ -14,7 +14,14 @@ class window.ActivityPage extends DupPage
         ,
           control: "GoogleMap", ref: "map", zoom: 12
         ,
-          "<h2>Suspicious Persons List</h2>"
+          """
+          <h2>Suspicious Persons List</h2>
+          <p>
+          Please notify Department of Unified Protection agents if you see
+          the following individuals or are aware of their location. Do not
+          approach them or offer them assistance.
+          </p>
+          """
         ,
           control: "SuspiciousPersonsList"
         ]
