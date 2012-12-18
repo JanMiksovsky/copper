@@ -47,17 +47,6 @@ class window.RegisterPage extends DupPage
       ,
         html: "<textarea spellcheck='false'>", ref: "address"
       ]
-    # ,
-    #   html: "div", content: [
-    #     "<div class='label'>Preferred email address if we have questions:</div>"
-    #   ,
-    #     control: ValidatingTextBox
-    #     ref: "email"
-    #     generic: false
-    #     required: true
-    #     spellcheck: false
-    #     type: "email"
-    #   ]
     ,
       html: "div", content: [
         "<div class='label'>Do you believe you have paranormal abilities?</div>"
@@ -93,8 +82,6 @@ class window.RegisterPage extends DupPage
   currentUser: Control.property ->
     @$submitButton().disabled false
 
-  # email: Control.chain "$email", "content"
-
   haveParanormal: ->
     @_yesNoGroupValue "haveParanormal"
 
@@ -105,11 +92,8 @@ class window.RegisterPage extends DupPage
       # TODO: Remove ability to skip validation by holding down CTRL.
       valid = event.ctrlKey or @valid()
       if valid
-        # TODO: Send address and preferred email to service
         Cookie.set "address", @address()
-        # Cookie.set "email", @email()
-        Cookie.set "email", @currentUser().email
-        @navigateWithAccessToken "referral.html"
+        window.location = "referral.html"
 
   name: Control.chain "$name", "content"
 
@@ -117,7 +101,6 @@ class window.RegisterPage extends DupPage
     @$name().valid() \
     and @birthday()? \
     and @address().length > 0 \
-    # and @$email().valid() \
     and @haveParanormal()? \
     and @witnessedParanormal()?
 

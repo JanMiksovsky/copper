@@ -1,4 +1,4 @@
-class window.DupPage extends Page
+class window.DupPage extends CopperPage
 
   inherited:
     title: "Dept. of Unified Protection"
@@ -20,20 +20,9 @@ class window.DupPage extends Page
       ]
     ]
 
-  accessToken: ->
-    Page.urlParameters().access_token
-
-  applicationId: ->
-    Page.urlParameters().applicationId
-
   content: Control.chain "$DupPage_content", "content"
 
   header: Control.chain "$DupPage_header", "content"
-
-  navigateWithAccessToken: ( url, params ) ->
-    params = if params? then params + "&" else ""
-    params += "access_token=#{@accessToken()}"
-    window.location = "#{url}?#{params}"
 
   title: ( title ) ->
     result = super title

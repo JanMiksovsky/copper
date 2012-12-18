@@ -32,5 +32,5 @@ class window.HomePage extends DupPage
     parts = window.location.href.split "/"
     parts[ parts.length - 1 ] = "register.html" # Replace page
     url = parts.join "/"
-
+    
     Facebook.authorize applicationId, url, [ "email", "user_birthday" ]

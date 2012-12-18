@@ -31,13 +31,16 @@ class window.SuspectPage extends DupPage
 
   next: ( suspect ) ->
     @sendIntroMessage()
+    url = "thankYou.html"
     params = if suspect?
-      "suspectId=#{suspect.id}"
-    @navigateWithAccessToken "thankYou.html", params
+      url += "?suspectId=#{suspect.id}"
+    window.location = url
 
   sendIntroMessage: ->
-    email = Cookie.get "email"
-    if email?
-      url = "#{window.location.origin}/email/intro/#{email}"
-      $.post url, null, ( data ) =>
-        console?.log "Intro message sent"
+    Facebook.currentUser ( user ) =>
+      email = user.email
+      if email?
+        url = "#{window.location.origin}/email/intro/#{email}"
+        $.post url, null, ( data ) =>
+          # TODO: If message was NOT sent, need some way for user to resend?
+          # Do they have to complete registration again?

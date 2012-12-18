@@ -4,18 +4,18 @@ Wrap access to Facebook.
 
 class window.Facebook
 
-  @accessToken: ->
-    Page.urlParameters().access_token
+  @accessToken: ( accessToken ) ->
+    if accessToken is undefined
+      Cookie.get "accessToken"
+    else
+      Cookie.set "accessToken", accessToken
 
   # Get an access token
   @authorize: ( applicationId, redirectUri, scopes, params ) ->
     scopesParam = if scopes? then scopes.join "," else ""
     url = "https://graph.facebook.com/oauth/authorize?client_id=#{applicationId}&scope=#{scopesParam}&type=user_agent&display=page&redirect_uri=#{redirectUri}"
-    
-    # We also pass along the application ID as a param for use by the destination page.
-    params = params or []
-    params.push "applicationId=" + applicationId
-    url += "?" + escape params.join "&"
+    if params?
+      url += "?" + escape params.join "&"
     window.location = url
 
   @currentUser: ( callback ) ->
@@ -24,6 +24,23 @@ class window.Facebook
   @currentUserFriends: ( callback ) ->
     @_cachedFacebookCall "me/friends", null, ( result ) =>
       callback result.data
+
+  # Check to make sure we have an access token from Facebook.
+  # If not, get one and redirect back to the current page.
+  @ensureAccessToken: ( applicationId ) ->
+    # See if there's an access token on the URL.
+    accessToken = Page.urlParameters().access_token
+    if accessToken?
+      # Use token from URL.
+      @accessToken accessToken
+    else
+      # Rely upon token in cookie.
+      accessToken = @accessToken()
+    unless accessToken?
+      # Get a new token.
+      # Redirect back to this page
+      url = window.location.origin + window.location.pathname
+      @authorize applicationId, url, [ "email", "user_birthday" ]
 
   @isFakeUser: ( user ) ->
     id = user.id ? user

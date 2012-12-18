@@ -30,9 +30,6 @@ class window.GoogleMap extends Control
     if not @mapTypeId()?
       @mapTypeId google.maps.MapTypeId.ROADMAP
 
-    # google.maps.event.addListener map, "click", ( event ) =>
-    #   @trigger "mapClick", event.latLng
-
   center: ( latLng ) ->
     if latLng is undefined
       @map().getCenter()
@@ -45,7 +42,3 @@ class window.GoogleMap extends Control
 
   mapTypeId: Control.property ( mapTypeId ) ->
     @map()?.setMapTypeId mapTypeId
-
-  _unsupported: ->
-    # TODO
-    # this.content "Map features are not supported on your browser"
