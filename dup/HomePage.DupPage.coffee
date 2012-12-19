@@ -24,4 +24,3 @@ class window.HomePage extends DupPage
     @$buttonRegister().click =>
       window.location = "register.html"
     @$linkAbout().click => Dialog.showDialog AboutDialog
-

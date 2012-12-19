@@ -1,3 +1,7 @@
+###
+A canvas page in a Facebook application.
+###
+
 class window.FacebookPage extends Page
 
   inherited:

@@ -1,4 +1,8 @@
-class window.TimelinePage extends FacebookPage
+###
+Ann's fake timeline page.
+###
+
+class window.TimelinePage extends CopperFacebookPage
   
   inherited:
     # Many of the refs use Facebook's name to facilitate borrowing their styles.
