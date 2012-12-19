@@ -16,4 +16,4 @@ commands.open = ( args... ) ->
     if file.contents?
       filePath = file.path()
       Cookie.set filePath, file.contents
-      window.open "editFile.html#path=#{filePath}"
+      window.open "viewFile.html#path=#{filePath}"
