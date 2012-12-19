@@ -27,6 +27,9 @@ class window.Facebook
 
   # Check to make sure we have an access token from Facebook.
   # If not, get one and redirect back to the current page.
+  #
+  # TODO: When the cookie'd token expires, we need to get a new one.
+  #
   @ensureAccessToken: ( applicationId, scopes ) ->
     # See if there's an access token on the URL.
     accessToken = Page.urlParameters().access_token

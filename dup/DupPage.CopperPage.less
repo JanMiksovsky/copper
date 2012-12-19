@@ -80,5 +80,16 @@
       margin-bottom: 0;
     }
   }
+
+  // Used for tabular forms.
+  .table {
+    display: table;
+    > * {
+      display: table-row;
+      > * {
+        display: table-cell;
+      }
+    }
+  }
   
 }
