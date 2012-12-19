@@ -8,7 +8,7 @@ class window.GoogleMap extends Control
     geocoder = new google.maps.Geocoder()
     geocoder.geocode { address }, ( data ) =>
       [ results, status ] = data
-      if not status? or status == "OK"
+      if ( not status? or status == "OK" ) and results?
         result = if results.length > 0 then results[0] else results
         @center result.geometry.location
 

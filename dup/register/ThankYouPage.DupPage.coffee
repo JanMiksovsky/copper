@@ -31,7 +31,7 @@ class window.ThankYouPage extends DupPage
     ]
 
   initialize: ->
-    suspectId = @urlParameters().suspectId
+    suspectId = Cookie.get "implicatedFriend"
     if suspectId?
       if suspectId < 0
         # Fake suspect ID

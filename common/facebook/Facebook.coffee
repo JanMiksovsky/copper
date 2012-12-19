@@ -31,8 +31,10 @@ class window.Facebook
     # See if there's an access token on the URL.
     accessToken = Page.urlParameters().access_token
     if accessToken?
-      # Use token from URL.
+      # We've returned from a Facebook auth redirect.
+      # Get the token from the URL, and remove everything after the "#".
       @accessToken accessToken
+      window.location.hash = ""
     else
       # Rely upon token in cookie.
       accessToken = @accessToken()

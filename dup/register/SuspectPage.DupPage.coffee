@@ -31,10 +31,9 @@ class window.SuspectPage extends DupPage
 
   next: ( suspect ) ->
     @sendIntroMessage()
-    url = "thankYou.html"
-    params = if suspect?
-      url += "?suspectId=#{suspect.id}"
-    window.location = url
+    if suspect?
+      Cookie.set "implicatedFriend", suspect.id
+    window.location = "thankYou.html"
 
   sendIntroMessage: ->
     Facebook.currentUser ( user ) =>
