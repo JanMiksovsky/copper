@@ -1,15 +1,23 @@
-window.fs =
+###
+Simple "file system" manipulations.
+###
 
-  exists: ( path ) ->
-    fs.root.exists path
+class window.fs
 
-  join: ( path1, path2 ) ->
-    fs.normalize path1 + fs.separator + path2
+  @absolutePath: ( path ) ->
+    fullPath = @join env.currentDirectory.path(), path
+    @normalize fullPath
 
-  normalize: ( path ) ->
+  @exists: ( path ) ->
+    @root.exists path
+
+  @join: ( path1, path2 ) ->
+    @normalize path1 + @separator + path2
+
+  @normalize: ( path ) ->
     # Replace multiple slashes
     parts = []
-    for part in path.split fs.separator
+    for part in path.split @separator
       switch part
         when ""
           break
@@ -17,8 +25,8 @@ window.fs =
           parts.pop()
         else
           parts.push part
-    fs.separator + parts.join fs.separator
+    @separator + parts.join @separator
 
-  root: null # Filesystem populated by env.setUser()
+  @root: null # Filesystem populated by env.setUser()
 
-  separator: "/"
+  @separator: "/"

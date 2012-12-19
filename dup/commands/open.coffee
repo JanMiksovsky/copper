@@ -1,5 +1,5 @@
 ###
-Open file for editing
+Open a file.
 ###
 
 commands.open = ( args... ) ->
@@ -14,5 +14,7 @@ commands.open = ( args... ) ->
       return
 
     if file.contents?
-      Cookie.set "fileContents", file.contents
-      window.open "editFile.html"
+      # Cookie.set "fileContents", file.contents
+      # editFile = window.open "editFile.html"
+      path = 
+      window.open "editFile.html#path="
