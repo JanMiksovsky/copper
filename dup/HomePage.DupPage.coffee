@@ -21,16 +21,7 @@ class window.HomePage extends DupPage
     title: "Department of Unified Protection"
 
   initialize: ->
-    @$buttonRegister().click => @register()
+    @$buttonRegister().click =>
+      window.location = "register.html"
     @$linkAbout().click => Dialog.showDialog AboutDialog
 
-  # Send the user to the registration page.
-  register: ->
-    applicationId = FacebookApplication.id()
-    # Facebook auth needs an absolute URL, but we want this app to be able to
-    # run in multiple locations (localhost, etc.), so we build a URL ourselves.
-    parts = window.location.href.split "/"
-    parts[ parts.length - 1 ] = "register.html" # Replace page
-    url = parts.join "/"
-    
-    Facebook.authorize applicationId, url, [ "email", "user_birthday" ]

@@ -27,7 +27,7 @@ class window.Facebook
 
   # Check to make sure we have an access token from Facebook.
   # If not, get one and redirect back to the current page.
-  @ensureAccessToken: ( applicationId ) ->
+  @ensureAccessToken: ( applicationId, scopes ) ->
     # See if there's an access token on the URL.
     accessToken = Page.urlParameters().access_token
     if accessToken?
@@ -40,7 +40,7 @@ class window.Facebook
       # Get a new token.
       # Redirect back to this page
       url = window.location.origin + window.location.pathname
-      @authorize applicationId, url, [ "email", "user_birthday" ]
+      @authorize applicationId, url, scopes
 
   @isFakeUser: ( user ) ->
     id = user.id ? user

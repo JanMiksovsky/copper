@@ -15,4 +15,7 @@ class window.CopperPage extends Page
         "400736616662108" # Production
 
   initialize: ->
-    Facebook.ensureAccessToken @applicationId()
+    Facebook.ensureAccessToken @applicationId(), @facebookPermissionsScopes
+
+  # Permission scopes required by the app.
+  facebookPermissionsScopes: [ "email", "user_birthday" ]
