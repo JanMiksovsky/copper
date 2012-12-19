@@ -23,6 +23,7 @@ window.files =
     chrishe: {}
     christopherb: {}
     chrisz: {}
+    colin9sf82: {}
     dannyw: {}
     darrenb: {}
     davem: {}
@@ -38,6 +39,7 @@ window.files =
     jaimeg: {}
     jamesm: {}
     jancea: {}
+    # TODO: Remove these test files.
     janm:
       bar: "Bar\n"
       "fact.dup": "[$1>[$1-f*][%1]?]⇒f f."
@@ -103,7 +105,7 @@ window.files =
 ###
 Maze puzzle in Dana's folder.
 ###
-window.files.usr.danaa =
+window.files.usr.colin9sf82 =
   plans:
     round1:
       copy: "-> /usr/danaa/plans-review/copy"
