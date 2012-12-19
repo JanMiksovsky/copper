@@ -14,7 +14,7 @@ class EmailHandler
   # TODO: Don't require/allow client to specify recipient email address, because
   # that could be abused. Instead, obtain email address from player account.
   #
-  @handleMessageRequest: ( request, response ) ->
+  @handleEmailRequest: ( request, response ) ->
     { template, email } = request.params
     # console?.log "Sending #{template} message to #{email}"
     message = @templates[ template ]

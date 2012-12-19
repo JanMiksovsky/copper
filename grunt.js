@@ -52,7 +52,7 @@ module.exports = function(grunt) {
             },
             server: {
                 src: "server/*.coffee",
-                dest: "build/server.js",
+                dest: "app.js",
                 options: { bare: true }
             },
             test: {
