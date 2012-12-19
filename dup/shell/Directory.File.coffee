@@ -48,10 +48,6 @@ class window.Directory extends File
       else
         null
 
-  path: ->
-    parentPath = if @parent? then @parent.path() else ""
-    fs.join parentPath, @name
-
   _dataToFile: ( name, data ) ->
     if typeof data == "string"
       if data.substr( 0, 3 ) == "-> "

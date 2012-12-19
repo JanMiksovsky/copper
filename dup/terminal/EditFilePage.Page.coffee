@@ -14,6 +14,11 @@ class window.EditFilePage extends Page
 
   initialize: ->
     # Extract the contents of the file passed to this window via cookie.
-    content = Cookie.get "fileContents"
-    @content content
-    Cookie.delete "fileContents"
+    path = @urlParameters().path
+    if path?
+      @open path
+
+  open: ( path ) ->
+    content = Cookie.get path
+    @content content if content?
+    # Cookie.delete "fileContents"
