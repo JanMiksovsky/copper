@@ -12,7 +12,7 @@ window.fakeFacebookUsers =
   "-2":
     name: "Cody Kuether"
     link: "PAGEGOESHERE"
-    picture: "resources/pictures/male3.jpg"
+    picture: "../dup/resources/pictures/male3.jpg"
 
 # Give each fake user an id property
 fakeUser.id = fakeUserId for fakeUserId, fakeUser of fakeFacebookUsers
