@@ -9,10 +9,10 @@ class window.DupEditor extends Page
         ref: "leftPane"
         top:
           control: MenuBar, content: [
-            control: Menu, content: "Programs", popup:
-              control: List, ref: "sampleProgramList", itemClass: "DupSampleMenuItem"
+            html: "div", ref: "customMenus"
           ,
-            "   "
+            control: Menu, content: "Examples", popup:
+              control: List, ref: "sampleProgramList", itemClass: "DupSampleMenuItem"
           ,
             control: "DupSampleMenuItem", ref: "runButton", content: "Run"
           ,
@@ -42,6 +42,8 @@ class window.DupEditor extends Page
   clear: Control.chain "$outputPane", "clear"
 
   content: Control.chain "program"
+
+  customMenus: Control.chain "$customMenus", "content"
 
   defaultProgram: """
     { Type code here, then press Ctrl+Enter. Try: \"1 1 + .\" }
@@ -139,8 +141,6 @@ class window.DupEditor extends Page
     content: "Strings", src: "strings.dup"
   ,
     content: "Temperature", src: "temp.dup"
-  # ,
-  #   content: "Threat Quotient", src: "threat.dup"
   ,
     content: "Threat Assessment", src: "threat.dup"
   ]
