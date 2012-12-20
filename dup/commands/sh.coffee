@@ -24,6 +24,8 @@ commands.sh = ->
             existingFile = env.currentDirectory.getFileWithName redirect
             if existingFile?
               outputFile = existingFile
+              if outputFile instanceof TextFile
+                existingFile.contents = ""
             else
               outputFile = new TextFile redirect, env.currentDirectory
               env.currentDirectory.contents.push outputFile
@@ -35,7 +37,7 @@ commands.sh = ->
 
 commands.sh.parse = ( s ) ->
   parts = s.split ">"
-  main = parts[0]
+  main = parts[0].trim()
   redirect = parts[1]?.trim()
   args = main.split " "
   command = args.shift()
