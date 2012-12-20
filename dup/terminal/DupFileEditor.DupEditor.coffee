@@ -8,11 +8,16 @@ class window.DupFileEditor extends DupEditor
     customMenus: [
       control: Menu, content: "File", popup: [
         control: MenuItem, ref: "fileSaveMenuItem", content: "Save"
+      ,
+        control: MenuItem, ref: "fileCloseMenuItem", content: "Close"
       ]
     ]
 
+  close: ->
+    
   initialize: ->
     @$fileSaveMenuItem().click => @save()
+    @$fileCloseMenuItem().click => @close()
     # Extract the contents of the file passed to this window via cookie.
     path = @urlParameters().path
     if path?

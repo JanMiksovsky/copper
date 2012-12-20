@@ -23,4 +23,6 @@ commands.open = ( args... ) ->
         else
           "viewFile.html" # Anything else
       url = "#{page}#path=#{filePath}"
-      window.open url
+      # window.open url
+      Dialog.showDialog DupEditorDialog, file.contents, =>
+        stdout.writeln "Back in the shell"
