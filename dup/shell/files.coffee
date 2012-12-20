@@ -39,7 +39,10 @@ window.files =
     jaimeg: {}
     jamesm: {}
     jancea: {}
-    # TODO: Remove these test files.
+    # TODO: Remove these test files. Alternatively, turn these into the folders
+    # the DUP contractor (Harry) was working on. This would give players a set
+    # of simple files to explore before heading off to find the secret plans in
+    # the account of another agent (Colin).
     janm:
       bar: "Bar\n"
       "fact.dup": "[$1>[$1-f*][%1]?]⇒f f."

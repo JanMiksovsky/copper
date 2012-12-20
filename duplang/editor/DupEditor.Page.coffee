@@ -1,4 +1,4 @@
-class window.DupEditorPage extends Page
+class window.DupEditor extends Page
 
   inherited:
     content:
@@ -40,6 +40,8 @@ class window.DupEditorPage extends Page
 
   # Clear output pane.
   clear: Control.chain "$outputPane", "clear"
+
+  content: Control.chain "program"
 
   defaultProgram: """
     { Type code here, then press Ctrl+Enter. Try: \"1 1 + .\" }

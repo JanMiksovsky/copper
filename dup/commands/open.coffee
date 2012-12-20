@@ -14,6 +14,13 @@ commands.open = ( args... ) ->
       return
 
     if file.contents?
+      # Save contents for viewer/editor to find.
       filePath = file.path()
       Cookie.set filePath, file.contents
-      window.open "viewFile.html#path=#{filePath}"
+      page = switch file.extension()
+        when "dup"
+          "editor.html" # DUP program
+        else
+          "viewFile.html" # Anything else
+      url = "#{page}#path=#{filePath}"
+      window.open url
