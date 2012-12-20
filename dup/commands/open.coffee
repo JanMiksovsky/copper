@@ -1,5 +1,5 @@
 ###
-Open a file.
+Open a file in a FileEditor.
 ###
 
 commands.open = ( args... ) ->
@@ -17,15 +17,12 @@ commands.open = ( args... ) ->
       # Save contents for viewer/editor to find.
       filePath = file.path()
       Cookie.set filePath, file.contents
-      page = switch file.extension()
+      editorClass = switch file.extension()
         when "dup"
-          "editor.html" # DUP program
+          DupFileEditor # DUP program
         else
-          "viewFile.html" # Anything else
-      url = "#{page}#path=#{filePath}"
-      # window.open url
+          FileEditor # Anything else
       options =
         content: file.contents
         path: filePath
-      Dialog.showDialog DupEditorDialog, options, =>
-        stdout.writeln "Back in the shell"
+      Dialog.showDialog editorClass, options, =>
