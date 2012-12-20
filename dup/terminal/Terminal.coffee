@@ -2,24 +2,19 @@ class window.Terminal extends Control
 
   inherited:
     content: [
-      { control: "Log", ref: "log" }
-      {
-        control: "HorizontalPanels"
-        left:
-          html: "pre", ref: "prompt"
-        content:
-          html: "<input type='text' spellcheck='false'/>", ref: "userInput"
-      }
+      control: "Log", ref: "log"
+    ,
+      control: "HorizontalPanels"
+      left:
+        html: "pre", ref: "prompt"
+      content:
+        html: "<input type='text' spellcheck='false'/>", ref: "userInput"
     ]
 
   clear: Control.chain "$log", "clear"    
 
-  focusOnUserInput: ->
-    @$userInput().focus()
-
   initialize: ->
-    @click =>
-      @focusOnUserInput()
+    @click => @restoreFocus()
     @$userInput().keydown ( event ) =>
       switch event.which
         when 13 # Enter
@@ -32,7 +27,7 @@ class window.Terminal extends Control
           @_navigateHistory -1
           false
     @inDocument ->
-      @focusOnUserInput()
+      @restoreFocus()
 
   history: Control.property( null, [] )
 
@@ -44,9 +39,13 @@ class window.Terminal extends Control
 
   readln: ( callback ) ->
     @prompt env.prompt
-    @focusOnUserInput()
+    @restoreFocus()
     @scrollToUserInput()
     @_readlnCallbacks().push callback
+
+  # If the focus was lost for some reason, put it back on the user input area.
+  restoreFocus: ->
+    @$userInput().focus()
 
   # Scroll to the user input field if it's not in view.
   scrollToUserInput: ->

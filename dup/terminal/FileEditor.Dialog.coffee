@@ -26,7 +26,7 @@ class window.FileEditor extends Dialog
   # The path of the file being edited.
   # Setting this loads the file's contents.
   path: Control.property ( path ) ->
-    # @editorContent @file()?.contents
+    @editorContent @file()?.contents
 
   # Let CSS do the positioning.
   positionPopup: ->

@@ -8,7 +8,7 @@ class window.SatellitePhoto extends Control
     content: [
       control: "GoogleMap", ref: "map"
     ,
-      html: "div", ref: "caption"
+      html: "<div>", ref: "caption"
     ,
       html: "<img src='resources/circle.png'/>", ref: "circle", class: "markings"
     ,

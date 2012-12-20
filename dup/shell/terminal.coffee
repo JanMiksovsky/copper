@@ -10,6 +10,9 @@ window.terminal =
   readln: ( callback ) ->
     @page().readln callback
 
+  restoreFocus: ->
+    @page().restoreFocus()
+
   page: ->
     $( "body" ).control()
 

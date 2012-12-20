@@ -23,6 +23,7 @@ commands.open = ( args... ) ->
         else
           FileEditor # Anything else
       options =
-        content: file.contents
         path: filePath
       Dialog.showDialog editorClass, options, =>
+        # User closed editor.
+        terminal.restoreFocus()

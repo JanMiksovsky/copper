@@ -7,7 +7,7 @@ class window.DupFileEditor extends FileEditor
   inherited:
     content: [
       control: DupEditor
-      ref: "editor"
+      ref: "editor" # Base class will use this element to edit file content.
       customMenus: [
         control: Menu, content: "File", popup: [
           control: MenuItem, ref: "fileSaveMenuItem", content: "Save"
