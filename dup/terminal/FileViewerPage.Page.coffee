@@ -2,15 +2,15 @@
 Generic "file" viewing window used for all files other than DUP files.
 ###
 
-class window.ViewFilePage extends Page
+class window.FileViewerPage extends Page
 
   inherited:
     content: [
-      html: "pre", ref: "ViewFilePage_content"
+      html: "pre", ref: "FileViewerPage_content"
     ]
     title: "View File"
 
-  content: Control.chain "$ViewFilePage_content", "content"
+  content: Control.chain "$FileViewerPage_content", "content"
 
   initialize: ->
     # Extract the contents of the file passed to this window via cookie.
