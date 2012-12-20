@@ -23,7 +23,6 @@ login._startShellForUser = ( userName ) ->
   commands.sh()
 
 login.welcome = """
-DUPos/X 12.0d
 Welcome to the D.U.P. agent console
 
 This server is for use only by authorized Department of Unified Protection
