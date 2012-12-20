@@ -2,21 +2,17 @@
 Host the DUP editor in a modal window that fills the page.
 ###
 
-class window.DupFileEditor extends FileEditor
+class window.DupFileEditor extends DupEditor
 
   inherited:
-    content: [
-      control: DupEditor
-      ref: "editor" # Base class will use this element to edit file content.
-      customMenus: [
-        control: Menu, content: "File", popup: [
-          control: MenuItem, ref: "fileSaveMenuItem", content: "Save"
-        ,
-          control: MenuItem, ref: "fileCloseMenuItem", content: "Close"
-        ]
+    customMenus: [
+      control: Menu, content: "File", popup: [
+        control: MenuItem, ref: "fileSaveMenuItem", content: "Save"
+      ,
+        control: MenuItem, ref: "fileCloseMenuItem", content: "Close"
       ]
     ]
 
   initialize: ->
-    @$fileSaveMenuItem().click => @save()
-    @$fileCloseMenuItem().click => @close()
+    @$fileSaveMenuItem().click => @trigger "save"
+    @$fileCloseMenuItem().click => @trigger "close"

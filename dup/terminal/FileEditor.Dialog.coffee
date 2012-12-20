@@ -13,11 +13,16 @@ class window.FileEditor extends Dialog
     cancelOnWindowScroll: false
     # Base class uses a textarea to edit.
     content: [
-      html: "<textarea/>", ref: "editor"
+      control: "TextEditor", ref: "editor"
     ]
     generic: false
 
   editorContent: Control.chain "$editor", "content"
+
+  initialize: ->
+    @on
+      close: => @close()
+      save: => @save()
 
   # The file being edited.
   file: ->
