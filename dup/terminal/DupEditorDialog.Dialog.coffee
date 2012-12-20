@@ -16,6 +16,7 @@ class window.DupEditorDialog extends Dialog
           control: MenuItem, ref: "fileCloseMenuItem", content: "Close"
         ]
       ]
+    ]
     generic: false
 
   content: Control.chain "$editor", "content"
@@ -24,9 +25,9 @@ class window.DupEditorDialog extends Dialog
     @$fileSaveMenuItem().click => @save()
     @$fileCloseMenuItem().click => @close()
     # Extract the contents of the file passed to this window via cookie.
-    path = @urlParameters().path
-    if path?
-      @path path
+    # path = @urlParameters().path
+    # if path?
+    #   @path path
 
   path: Control.property ( path ) ->
     content = Cookie.get path
@@ -40,4 +41,3 @@ class window.DupEditorDialog extends Dialog
     file = fs.root.getFileWithPath @path()
     if file?
       file.contents = @content()
-    ]
