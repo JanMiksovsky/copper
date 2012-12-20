@@ -9,6 +9,13 @@ window.files =
   etc: {}
 
   usr:
+    # These are just placeholder accounts using suckerpunch.com email addresses.
+    # These account names should be changed to be consistent. E.g., if Colin's
+    # account is colin9sf82 -- a name and then some alphanumerics -- then most
+    # or all of the accounts should follow suit. It might be fun to preserve the
+    # (first) names of Sucker Punch employees as the agent names. In that case,
+    # it'd be good to update this set at some point with a fuller list of Sucker
+    # Punch employee names.
     adrianb: {}
     andrewk: {}
     andreww: {}
@@ -24,6 +31,7 @@ window.files =
     christopherb: {}
     chrisz: {}
     colin9sf82: {}
+    danaa: {} # Dana Anderson's account
     dannyw: {}
     darrenb: {}
     davem: {}
