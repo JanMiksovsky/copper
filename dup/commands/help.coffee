@@ -15,6 +15,7 @@ logout              Log out
 ls                  List directory contents
 open [file]         Open a file
 pwd                 Display the name of the current directory
+threats             Display the current Suspicious Persons List
 whoami              show the name of the current user
 
 """
