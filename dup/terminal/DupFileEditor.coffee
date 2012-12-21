@@ -7,16 +7,22 @@ may be deployed at a site (e.g., duplang.org) that doesn't have the context of
 the DUP terminal.
 ###
 
-class window.DupFileEditor extends DupEditor
+class window.DupFileEditor extends Control
 
   inherited:
-    customMenus: [
-      control: Menu, content: "File", popup: [
-        control: MenuItem, ref: "fileSaveMenuItem", content: "Save"
-      ,
-        control: MenuItem, ref: "fileCloseMenuItem", content: "Close"
+    content: [
+      control: "DupEditor"
+      ref: "editor"
+      customMenus: [
+        control: Menu, content: "File", popup: [
+          control: MenuItem, ref: "fileSaveMenuItem", content: "Save"
+        ,
+          control: MenuItem, ref: "fileCloseMenuItem", content: "Close"
+        ]
       ]
     ]
+
+  content: Control.chain "$editor", "content"
 
   initialize: ->
     @$fileSaveMenuItem().click => @trigger "save"
