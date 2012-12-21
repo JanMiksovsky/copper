@@ -1,4 +1,22 @@
 .TextEditor {
+
+  background: #222;
+
+  &,
+  button,
+  input,
+  textarea {
+    color: white;
+    font-family: "Courier New", Courier, monospace;
+    font-size: 13px;
+  }
+
+  button,
+  input,
+  textarea {
+    background: transparent;
+  }
+
   .textarea {
     border: none;
     box-sizing: border-box;
@@ -9,4 +27,21 @@
     top: 0;
     width: 100%;
   }
+
+  .MenuBar.generic {
+    background: #222;
+  }
+  .Menu.generic {
+    .PopupSource_content:hover,
+    &.opened .PopupSource_content {
+      background: #444;
+    }
+  }
+  .MenuItem.generic:hover {
+    background: #888;
+  }
+  .Popup.generic {
+    background: #444;
+  }
+
 }
