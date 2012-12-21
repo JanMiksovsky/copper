@@ -50,7 +50,8 @@ class window.EditFileDialog extends Dialog
   path: Control.property ( path ) ->
     @editorContent @file()?.contents
 
-  # Let CSS do the positioning.
+  # We want the dialog to be full screen. Override the base class behavior,
+  # which centers the dialog on the page.
   positionPopup: ->
 
   # Save back to the path used to open this file.
