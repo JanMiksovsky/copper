@@ -14,7 +14,7 @@ commands.open = ( args... ) ->
     stdout.writeln "open: #{arg}: No such file"
     return
   if not file instanceof TextFile
-    stdout.writeln "open: #{arg}: not a text file"
+    stdout.writeln "open: #{arg}: Not a text file"
     return
 
   # Prepare to open a dialog that can edit the indicated file.
@@ -24,7 +24,7 @@ commands.open = ( args... ) ->
       DupFileEditor # DUP program
     else
       TextEditor # Anything else
-  options = { path, editorClass }
+  options = { editorClass, path } # Set editorClass first.
 
   # Open the editor.
   Dialog.showDialog EditFileDialog, options, =>

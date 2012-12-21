@@ -8,7 +8,7 @@ Available commands:
 cat [filename]      Display the contents of file(s)
 cd [directoryname]  Change directory. Enter "cd .." to go up one level.
 clear               Clear the terminal console
-dup [file.dup]      Run a DUP program
+dup [file.dup|expr] Run the DUP program in a file, or evaluate a DUP expression
 echo [arguments]    Echo arguments
 help                Display this message
 logout              Log out
