@@ -17,6 +17,19 @@ class window.EditFileDialog extends Dialog
       html: "<div>", ref: "editor"
     generic: false
 
+  close: ->
+    if @dirty()
+      # TODO: Should really use a Yes/No/Cancel dialog. Since JavaScript doesn't
+      # have one, need to hand-roll a subclass of Dialog for that.
+      response = confirm "Save changes before closing?"
+      if response
+        @save() # OK
+    super()
+
+  # Return true if the file in memory differs from that on "disk"
+  dirty: ->
+    @file()?.contents != @editorContent()
+
   editorClass: Control.property.class ( editorClass ) ->
     $new = @$editor().transmute editorClass, true
     @referencedElement "editor", $new
