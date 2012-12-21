@@ -1310,6 +1310,8 @@
 
 .Menu.generic .PopupSource_content {
     border: 1px solid transparent;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
     padding: 0.5em;
 }
 .Menu.generic .PopupSource_content:hover {
@@ -1336,7 +1338,7 @@
     background: white;
     border-color: #ccc; /* IE8 */
     border-color: rgba(0, 0, 0, 0.2);
-    border-bottom-style: none;
+    border-bottom-color: transparent; /* Hides bottom border */
 }
 
 /*** ModalOverlay ***/

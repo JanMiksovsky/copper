@@ -5,6 +5,7 @@ Menu of DUP example programs.
 class window.ExampleProgramsMenu extends Menu
 
   inherited:
+    cancelOnWindowBlur: false
     content: "Examples"
     popup:
       control: List, ref: "programList", itemClass: "ExampleProgramMenuItem"
