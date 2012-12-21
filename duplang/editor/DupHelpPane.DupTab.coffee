@@ -17,7 +17,7 @@ class window.DupHelpPane extends DupTab
             n ,   Output Unicode character n
           a b -   a-b
             a .   Output integer a
-          a b /   a/b
+          a b /   divide b by a; get remainder, quotient
           a n :   Store a at memory address n
             n ;   Fetch from memory address n
           a b <   -1 if a < b, else 0
