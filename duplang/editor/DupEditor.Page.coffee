@@ -11,10 +11,9 @@ class window.DupEditor extends Page
           control: MenuBar, content: [
             html: "div", ref: "customMenus"
           ,
-            control: Menu, content: "Examples", popup:
-              control: List, ref: "sampleProgramList", itemClass: "DupSampleMenuItem"
+            control: "ExampleProgramsMenu", ref: "exampleProgramsMenu"
           ,
-            control: "DupSampleMenuItem", ref: "runButton", content: "Run"
+            control: MenuItem, ref: "runButton", content: "Run"
           ,
             html: "<span>(Ctrl+Enter)</span>", ref: "instruction"
           ]
@@ -54,14 +53,9 @@ class window.DupEditor extends Page
 
   initialize: ->
 
-    @$sampleProgramList().items @samplePrograms
-    @$sampleProgramList().on "click", ".DupSampleMenuItem", ( event ) =>
-      menuItem = $( event.target ).control()
-      if menuItem?
-        src = menuItem.src()
-        if src?
-          src = "examples/#{src}"
-        @loadFile src
+    @$exampleProgramsMenu().on "loadProgram", ( event, program ) =>
+      @$tabs().selectedTabIndex 0
+      @loadProgram program
     @$runButton().click => @run()
 
     @$stackTrace().on "selectionChanged", =>
@@ -71,22 +65,13 @@ class window.DupEditor extends Page
       if event.which == 13 and event.ctrlKey
         @run()
         false
-    @$program().blur =>
-      Cookie.set "program", @program()
+    @$program().blur => Cookie.set "program", @program()
 
     # Load and run any program that was being edited.
     @program ( Cookie.get "program" ) ? @defaultProgram
     @run()
 
     @$program().focus()
-
-  loadFile: ( src ) ->
-    if src?
-      $.get src, ( program ) =>
-        @loadProgram program
-    else
-      @$tabs().selectedTabIndex 0
-      @loadProgram ""
 
   loadProgram: ( program ) ->
     @program program
@@ -145,7 +130,7 @@ class window.DupEditor extends Page
     content: "Threat Assessment", src: "threat.dup"
   ]
 
-  # Save the program and associated test input.
+  # Save the program and associated test input in a cookie.
   save: ->
     Cookie.set "program", @program()
     @$inputPane().save()
