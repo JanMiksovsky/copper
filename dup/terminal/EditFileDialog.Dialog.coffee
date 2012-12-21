@@ -1,9 +1,11 @@
 ###
 A full-page modal editor for a file within the DUP terminal.
-This is the type of window opened by the "open" command.
+
+This is the type of window opened by the "open" command. The open command
+determines exactly which editor will be used within the dialog.
 ###
 
-class window.FileEditor extends Dialog
+class window.EditFileDialog extends Dialog
 
   inherited:
     cancelOnEscapeKey: false
@@ -11,11 +13,13 @@ class window.FileEditor extends Dialog
     cancelOnWindowBlur: false
     cancelOnWindowResize: false
     cancelOnWindowScroll: false
-    # Base class uses a textarea to edit.
-    content: [
-      control: "TextEditor", ref: "editor"
-    ]
+    content:
+      html: "<div>", ref: "editor"
     generic: false
+
+  editorClass: Control.property.class ( editorClass ) ->
+    $new = @$editor().transmute editorClass, true
+    @referencedElement "editor", $new
 
   editorContent: Control.chain "$editor", "content"
 

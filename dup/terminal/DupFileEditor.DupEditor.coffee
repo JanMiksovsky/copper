@@ -1,5 +1,10 @@
 ###
-Host the DUP editor in a modal window that fills the page.
+A DUP program editor extended with some file commands for integration with the
+DUP terminal.
+
+The file features are factored out of the core DUP editor so that that editor
+may be deployed at a site (e.g., duplang.org) that doesn't have the context of
+the DUP terminal.
 ###
 
 class window.DupFileEditor extends DupEditor
