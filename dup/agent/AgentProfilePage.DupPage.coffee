@@ -17,6 +17,13 @@ class window.AgentProfilePage extends DupPage
           control: BasicButton, ref: "submitButton", content: "Submit"
         ]
       ]
+    ,
+      """
+      <p>
+      Your new employee training materials have been prepared. Please use the
+      following Cloud Print document retrieval code: 1234657.
+      </p>
+      """
     ]
     title: "Update Your Agent Profile"
 
