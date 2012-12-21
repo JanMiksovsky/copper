@@ -10,13 +10,12 @@ Modification of this algorithm unauthorized without prior review by
 D.U.P. Threat Authority Board.
 }
 
-[z:y:x:]⇒s       { helper: store top three values to x, y, z }
 [x;y;z;||]⇒a     { a returns x XOR y XOR z }
-[x;y;~z;~&&]⇒b   { b returns ??? }
-[ab~&]⇒t         { t returns a AND NOT(b) }
+[x;y;~z;~&&~]⇒b  { b returns ??? }
+[ab&]⇒t          { t returns a AND NOT(b) }
 
-[st.10,]⇒p       { store, test, then print }
-
+[z:y:x:]⇒s       { helper: store top three values to x, y, z }
+[st.10,]⇒p       { test: store, evaluate with function t, then print }
 
 { Test all combinations }
 { Note that 1_ is DUP notation for -1 (true) }
