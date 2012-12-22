@@ -1,3 +1,7 @@
+###
+Ask the user to choose from a mix of fake people and real Facebook friends.
+###
+
 class window.SuspectPage extends DupPage
 
   inherited:

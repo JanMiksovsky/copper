@@ -1,3 +1,7 @@
+###
+A text area for editing a DUP program.
+###
+
 class window.DupProgram extends Control
 
   inherited:

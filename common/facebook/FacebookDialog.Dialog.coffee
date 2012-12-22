@@ -1,3 +1,7 @@
+###
+A dialog with the Facebook look.
+###
+
 class window.FacebookDialog extends Dialog
 
   inherited:

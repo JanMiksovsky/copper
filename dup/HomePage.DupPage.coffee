@@ -1,3 +1,7 @@
+###
+The main DUP home page.
+###
+
 class window.HomePage extends DupPage
 
   inherited:

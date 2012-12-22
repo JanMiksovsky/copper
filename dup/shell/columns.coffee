@@ -1,5 +1,5 @@
 ###
-Handles formatting arrays of text into columns a la "ls" command output.
+Format arrays of text into columns for "ls" command output.
 ###
 
 window.columns =

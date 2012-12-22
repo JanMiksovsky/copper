@@ -1,3 +1,7 @@
+###
+The fake top-level Facebook timeline page for Copper's heroine.
+###
+
 class window.HeroinePage extends TimelinePage
 
   inherited:

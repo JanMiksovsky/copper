@@ -1,5 +1,5 @@
 ###
-Execute a DUP program
+Execute a DUP program.
 ###
 
 commands.dup = ( args... ) ->

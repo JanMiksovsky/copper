@@ -1,3 +1,7 @@
+###
+A comment-composing area in a fake Facebook post.
+###
+
 class window.CommentComposer extends CommentItem
 
   inherited:

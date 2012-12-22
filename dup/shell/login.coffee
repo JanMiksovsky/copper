@@ -1,3 +1,7 @@
+###
+Let the user log in into the DUP terminal.
+###
+
 window.login = ( userName ) ->
 
   terminal.clear()

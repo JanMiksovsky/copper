@@ -1,3 +1,7 @@
+###
+List files in a directory.
+###
+
 commands.ls = ( arg ) ->
 
   if arg?

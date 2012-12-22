@@ -1,5 +1,5 @@
 ###
-A single step in a DUP stack trace
+A single step in a DUP stack trace.
 ###
 
 class window.DupStackTraceStep extends Control

@@ -1,3 +1,7 @@
+###
+A page hosting the DUP terminal.
+###
+
 class window.TerminalPage extends Page
 
   inherited:

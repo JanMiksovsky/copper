@@ -1,3 +1,7 @@
+###
+A comment in a fake Facebook post.
+###
+
 class window.CommentItem extends Control
 
   inherited:

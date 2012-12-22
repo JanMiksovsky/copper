@@ -1,3 +1,7 @@
+###
+Ask the user to provide some personal details.
+###
+
 class window.RegisterPage extends DupPage
 
   inherited:

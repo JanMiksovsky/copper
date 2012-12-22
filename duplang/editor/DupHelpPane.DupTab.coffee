@@ -1,3 +1,7 @@
+###
+The DUP editor's Help pane.
+###
+
 class window.DupHelpPane extends DupTab
 
   inherited:

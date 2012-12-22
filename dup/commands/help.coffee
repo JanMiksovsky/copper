@@ -1,3 +1,7 @@
+###
+Display a list of supported commands.
+###
+
 commands.help = ->
   stdout.writeln commands.help.message
 

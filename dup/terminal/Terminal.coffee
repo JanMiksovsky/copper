@@ -1,3 +1,11 @@
+###
+An old-school character based terminal window.
+
+Note: This currently uses a slightly hacky arrangement to position a shell
+prompt ("$") in front of the user input box. That generally works, unless the
+shell command being run fails to add a newline.
+###
+
 class window.Terminal extends Control
 
   inherited:

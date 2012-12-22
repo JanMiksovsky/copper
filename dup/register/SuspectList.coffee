@@ -1,3 +1,7 @@
+###
+A list of suspected people, either real or fake.
+###
+
 class window.SuspectList extends Control
 
   inherited:

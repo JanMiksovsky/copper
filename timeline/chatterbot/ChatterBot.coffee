@@ -1,3 +1,7 @@
+###
+An ELIZA-style chatterbot.
+###
+
 class window.ChatterBot
 
   # Find the best (first match).

@@ -1,3 +1,7 @@
+###
+The background of a Facebook dialog.
+###
+
 class window.FacebookOverlay extends Overlay
 
   initialize: ->

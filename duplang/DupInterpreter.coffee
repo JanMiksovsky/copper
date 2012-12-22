@@ -1,7 +1,7 @@
 ###
 An interpreter for the DUP programming language, a variant of FALSE.
 DUP created by Ian Osgood, FALSE by Wouter van Oortmerssen.
-http://esolangs.org/wiki/DUP
+See http://esolangs.org/wiki/DUP.
 ###
 
 class window.DupInterpreter

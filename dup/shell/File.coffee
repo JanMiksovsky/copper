@@ -1,3 +1,7 @@
+###
+A file in the DUP filesystem.
+###
+
 class window.File
 
   constructor: ( @name, @parent, @contents ) ->

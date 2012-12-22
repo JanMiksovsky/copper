@@ -1,3 +1,7 @@
+###
+An interactive development editor for the DUP programming language.
+###
+
 class window.DupEditor extends Page
 
   inherited:

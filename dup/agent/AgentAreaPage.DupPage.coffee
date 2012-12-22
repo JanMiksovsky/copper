@@ -1,3 +1,7 @@
+###
+The main page for the agents-only area on the DUP site.
+###
+
 class window.AgentAreaPage extends DupPage
 
   inherited:

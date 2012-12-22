@@ -1,3 +1,7 @@
+###
+A page on the DUP site.
+###
+
 class window.DupPage extends CopperPage
 
   inherited:

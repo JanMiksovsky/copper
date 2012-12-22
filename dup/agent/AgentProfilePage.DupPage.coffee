@@ -1,3 +1,7 @@
+###
+A page which DUP agents can use to edit their agent profile.
+###
+
 class window.AgentProfilePage extends DupPage
 
   inherited:

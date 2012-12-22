@@ -1,3 +1,7 @@
+###
+A dialog that shows a satellite photo.
+###
+
 class window.SatelliteDialog extends FacebookDialog
 
   inherited:

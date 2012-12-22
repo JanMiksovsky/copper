@@ -1,3 +1,7 @@
+###
+Lets a DUP agent sign in.
+###
+
 class window.AgentSignInPage extends DupPage
 
   inherited:

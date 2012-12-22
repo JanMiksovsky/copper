@@ -1,3 +1,7 @@
+###
+A post in a fake Facebook timeline.
+###
+
 class window.TimelinePost extends TimelineUnit
 
   inherited:

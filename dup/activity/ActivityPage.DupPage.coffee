@@ -1,3 +1,7 @@
+###
+A page showing suspicious conduit activity in your area.
+###
+
 class window.ActivityPage extends DupPage
 
   inherited:

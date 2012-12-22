@@ -1,3 +1,7 @@
+###
+The DUP editor's Input pane.
+###
+
 class window.DupInputPane extends DupTab
 
   inherited:

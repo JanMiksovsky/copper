@@ -1,3 +1,7 @@
+###
+A page describing the DUP.
+###
+
 class window.AboutPage extends DupPage
 
   inherited:

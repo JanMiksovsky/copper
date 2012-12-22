@@ -1,3 +1,7 @@
+###
+Change directory
+###
+
 commands.cd = ( arg ) ->
   if arg?.substr( 0, 1 ) == fs.separator
     stdout.writeln "cd: Absolute addressing disabled due to exigent circumstances."

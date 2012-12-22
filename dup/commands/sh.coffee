@@ -1,3 +1,10 @@
+###
+Interactive shell.
+
+This gets a string from the terminal input, runs it as a command, then
+recursively calls the shell again.
+###
+
 commands.sh = ->
 
   # For debugging, uncomment the lines below to expose all commands on the
@@ -33,7 +40,7 @@ commands.sh = ->
           commandFn args...
         else
           stdout.writeln "#{command}: command not found"
-    commands.sh()
+    commands.sh() # Recurse to get another command
 
 commands.sh.parse = ( s ) ->
   parts = s.split ">"

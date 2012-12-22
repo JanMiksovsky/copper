@@ -1,3 +1,7 @@
+###
+A directory in the DUP filesystem.
+###
+
 class window.Directory extends File
 
   addFile: ( file ) ->

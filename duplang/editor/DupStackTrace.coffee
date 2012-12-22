@@ -1,3 +1,7 @@
+###
+A stack trace of a DUP program execution.
+###
+
 class window.DupStackTrace extends Control
 
   inherited:

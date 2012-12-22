@@ -1,3 +1,7 @@
+###
+A headshot of a suspected person.
+###
+
 class window.SuspectTile extends Control
 
   inherited:

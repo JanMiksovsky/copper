@@ -1,3 +1,7 @@
+###
+A field in a DUP form that can display a notice (e.g., for a validation error).
+###
+
 class window.FieldWithNotice extends Control
 
   inherited:

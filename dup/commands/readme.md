@@ -1,0 +1,1 @@
+These Unix-style commands can be run within the DUP terminal.

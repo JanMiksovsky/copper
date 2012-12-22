@@ -1,5 +1,5 @@
 ###
-Simple "file system" manipulations.
+Simple DUP "filesystem" manipulations.
 ###
 
 class window.fs

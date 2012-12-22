@@ -1,3 +1,8 @@
+###
+A dialog that explains Copper is a game.
+This is invoked by the "What's This?" buttons on many Copper pages.
+###
+
 class window.AboutDialog extends Dialog
 
   inherited:    

@@ -1,3 +1,7 @@
+###
+A text file in the DUP filesystem.
+###
+
 class window.TextFile extends File
 
   constructor: ( @name, @parent, @contents ) ->

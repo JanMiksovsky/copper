@@ -1,3 +1,7 @@
+###
+Thank the user for registering and implicating a friend.
+###
+
 class window.ThankYouPage extends DupPage
 
   inherited:
@@ -24,6 +28,8 @@ class window.ThankYouPage extends DupPage
       Our agents will use that information to better monitor your activities so
       we can keep you safe. If an agent contacts you with questions in the
       future, it is essential that you continue to cooperate with them.
+      In the meantime, the individual above has been added to the D.U.P.'s
+      <a href='activity.html'>Suspicious Persons List</a>.
       </p>
       <h2>Suspicion Breeds Confidence</h2>
       <p>Always report suspicious activity to local law enforcement.</p>

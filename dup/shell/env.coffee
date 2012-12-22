@@ -1,3 +1,7 @@
+###
+Global shell-style environment variables.
+###
+
 window.env =
 
   currentDirectory: null

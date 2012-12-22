@@ -1,3 +1,7 @@
+###
+A fake Facebook timeline.
+###
+
 class window.Timeline extends List
 
   inherited:

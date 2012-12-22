@@ -1,3 +1,7 @@
+###
+The DUP editor's Output pane.
+###
+
 class window.DupOutputPane extends DupTab
 
   inherited:

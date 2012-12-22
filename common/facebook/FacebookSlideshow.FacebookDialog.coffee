@@ -1,3 +1,7 @@
+###
+A simulation of the Facebook photo slideshow UI.
+###
+
 class window.FacebookSlideshow extends FacebookDialog
 
   inherited:

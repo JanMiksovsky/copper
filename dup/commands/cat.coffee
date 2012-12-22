@@ -1,3 +1,7 @@
+###
+Concatenate files
+###
+
 commands.cat = ( args... ) ->
   for arg in args
     file = env.currentDirectory.getFileWithPath arg

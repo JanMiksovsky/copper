@@ -1,3 +1,7 @@
+###
+Navigation bar for the DUP site.
+###
+
 class window.NavigationBar extends Control
 
   inherited:
